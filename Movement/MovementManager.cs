@@ -26,11 +26,16 @@ namespace GameDev_project.Movement
             movable.Position = futurePosition;
             movable.Position += distance;
 
+            if ((futurePosition.X < (30 - 30) && futurePosition.X > 0) && (futurePosition.Y < 30 - 30 && futurePosition.Y > 0))
+            {
+                movable.Position = futurePosition;
+            }
+
             movable.Position += movable.Velocity;
             if (direction.Y < 0 && jump == false)
             {
                 currentHeight = movable.Position.Y;
-                movable.Position -= new Vector2(0,-10f);
+                movable.Position -= new Vector2(0, -10f);
                 movable.Velocity -= new Vector2(0, -5f);
                 jump = true;
             }
@@ -38,7 +43,7 @@ namespace GameDev_project.Movement
             if (jump == true)
             {
                 float gravity = 1;
-                movable.Velocity += new Vector2(0, 0.15f * gravity);
+                movable.Velocity += new Vector2(0, 0.25f * gravity);
             }
 
             if (movable.Position.Y >= currentHeight)

@@ -14,6 +14,7 @@ namespace GameDev_project
     {
         private Texture2D texture;
         public Vector2 Position { get; set; }
+        public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
         public IInputReader InputReader { get; set; }
         private MovementManager movementManager;
