@@ -14,9 +14,9 @@ namespace GameDev_project
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         Texture2D background;
-        Texture2D pressEnter;
         Texture2D dinoHead;
-        Texture2D title;
+        SpriteFont titleFont;
+        SpriteFont pressEnterFont;
         Texture2D blokTexture;
         Rectangle obstakel;
         Player player;
@@ -41,7 +41,7 @@ namespace GameDev_project
             base.Initialize();
             player = new Player(blokTexture, inputReader);
             obstakel = new Rectangle(400, 400, 30, 30);
-            startscreen = new StartScreen(background, title, dinoHead, pressEnter);
+            startscreen = new StartScreen(background, dinoHead, titleFont, pressEnterFont);
         }
 
         protected override void LoadContent()
@@ -51,9 +51,9 @@ namespace GameDev_project
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             inputReader = new KeyboardReader();
             background = Content.Load<Texture2D>("startscreen");
-            pressEnter = Content.Load<Texture2D>("press-enter");
             dinoHead = Content.Load<Texture2D>("dinohead");
-            title = Content.Load<Texture2D>("title");
+            titleFont = Content.Load<SpriteFont>("title-font");
+            pressEnterFont = Content.Load<SpriteFont>("pressenter-font");
             // TODO: use this.Content to load your game content here
             currentState = Gamestates.Start;
 
