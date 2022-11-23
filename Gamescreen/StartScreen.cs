@@ -12,25 +12,28 @@ namespace GameDev_project.Gamescreen
 {
     internal class StartScreen : IGameObject
     {
-        private Texture2D texture1;
-        private Texture2D texture2;
+        private Texture2D background;
+        private Texture2D dinoHead;
+        private Texture2D woodenPlank;
         private SpriteFont titleFont;
         private SpriteFont pressEnterFont;
 
 
-        public StartScreen(Texture2D texture1,  Texture2D texture2, SpriteFont titleFont, SpriteFont pressEnterFont)
+        public StartScreen(Texture2D background,  Texture2D dinoHead, Texture2D woodenPlank, SpriteFont titleFont, SpriteFont pressEnterFont)
         {
-            this.texture1 = texture1;
-            this.texture2 = texture2;
+            this.background = background;
+            this.dinoHead = dinoHead;
+            this.woodenPlank = woodenPlank;
             this.titleFont = titleFont;
             this.pressEnterFont = pressEnterFont;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture1, new Rectangle(0, 0, 800, 500), Color.Olive);
-            spriteBatch.DrawString(titleFont, "Jurassic Jungle", new Vector2(0, 10), Color.DarkRed);
-            spriteBatch.Draw(texture2, new Rectangle(100, 100, 500, 350), Color.Olive);
+            spriteBatch.Draw(background, new Rectangle(0, 0, 800, 500), Color.Olive);
+            spriteBatch.Draw(woodenPlank, new Rectangle(0, 0, 800, 180), Color.Brown);
+            spriteBatch.DrawString(titleFont, "Jurassic Jungle", new Vector2(60, 60), Color.DarkRed);
+            spriteBatch.Draw(dinoHead, new Rectangle(100, 100, 500, 350), Color.Olive);
             spriteBatch.DrawString(pressEnterFont, "PRESS ENTER", new Vector2(325, 250), Color.White);
         }
 

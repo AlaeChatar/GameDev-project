@@ -19,6 +19,7 @@ namespace GameDev_project
         Texture2D firstLevelBackground3;
         Texture2D firstLevelBackground4;
         Texture2D firstLevelBackground5;
+        Texture2D woodenPlank;
         Texture2D dinoHead;
         SpriteFont titleFont;
         SpriteFont pressEnterFont;
@@ -47,18 +48,20 @@ namespace GameDev_project
             base.Initialize();
             player = new Player(blokTexture, inputReader);
             obstakel = new Rectangle(400, 400, 30, 30);
-            startscreen = new StartScreen(startScreenBackground, dinoHead, titleFont, pressEnterFont);
+            startscreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
         }
 
         protected override void LoadContent()
         {
+            // TODO: use this.Content to load your game content here
             blokTexture = new Texture2D(GraphicsDevice, 1, 1);
             blokTexture.SetData(new[] { Color.White });
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             inputReader = new KeyboardReader();
             startScreenBackground = Content.Load<Texture2D>("startscreen");
             dinoHead = Content.Load<Texture2D>("dinohead");
+            woodenPlank = Content.Load<Texture2D>("wooden-plank");
             titleFont = Content.Load<SpriteFont>("title-font");
             pressEnterFont = Content.Load<SpriteFont>("pressenter-font");
             firstLevelBackground1 = Content.Load<Texture2D>("plx-1");
@@ -66,7 +69,6 @@ namespace GameDev_project
             firstLevelBackground3 = Content.Load<Texture2D>("plx-3");
             firstLevelBackground4 = Content.Load<Texture2D>("plx-4");
             firstLevelBackground5 = Content.Load<Texture2D>("plx-5");
-            // TODO: use this.Content to load your game content here
             currentState = Gamestates.Start;
 
         }
@@ -86,7 +88,7 @@ namespace GameDev_project
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Olive);
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             if (currentState == Gamestates.Start)
