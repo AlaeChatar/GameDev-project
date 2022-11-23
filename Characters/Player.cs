@@ -1,4 +1,5 @@
-﻿using GameDev_project.Interfaces;
+﻿using GameDev_project.Animations;
+using GameDev_project.Interfaces;
 using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,24 +9,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDev_project
+namespace GameDev_project.Characters
 {
     internal class Player : IGameObject, IMovable
     {
         private Texture2D texture;
+        
         public Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
         public IInputReader InputReader { get; set; }
         private MovementManager movementManager;
 
+        //Animation animation;
+
         public Player(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
-            this.InputReader = inputReader;
+            
+            InputReader = inputReader;
             Position = new Vector2(0, 400);
             Speed = new Vector2(2, 2);
             movementManager = new MovementManager();
+
+            //animation.GetFramesFromTextureProperties(texture.Width, y, 6);
         }
 
         public void Draw(SpriteBatch spriteBatch)

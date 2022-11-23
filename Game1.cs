@@ -1,4 +1,5 @@
-﻿using GameDev_project.Gamescreen;
+﻿using GameDev_project.Characters;
+using GameDev_project.Gamescreen;
 using GameDev_project.Interfaces;
 using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
