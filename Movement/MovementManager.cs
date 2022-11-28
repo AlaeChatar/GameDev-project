@@ -42,8 +42,8 @@ namespace GameDev_project.Movement
 
             if (jump == true)
             {
-                float gravity = 1;
-                movable.Velocity += new Vector2(0, 0.25f * gravity);
+                float jumpHeight = 0.5f;
+                movable.Velocity += new Vector2(0, 0.25f * jumpHeight);
             }
 
             if (movable.Position.Y >= currentHeight)

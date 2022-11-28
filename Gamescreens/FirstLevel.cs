@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GameDev_project.Interfaces;
 
-namespace GameDev_project.Gamescreen
+namespace GameDev_project.Gamescreens
 {
     internal class FirstLevel : IGameObject
     {

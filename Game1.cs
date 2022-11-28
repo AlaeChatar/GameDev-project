@@ -1,5 +1,5 @@
 ﻿using GameDev_project.Characters;
-using GameDev_project.Gamescreen;
+using GameDev_project.Gamescreens;
 using GameDev_project.Interfaces;
 using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
@@ -14,6 +14,8 @@ namespace GameDev_project
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        
+        // Startscreen resources
         Texture2D startScreenBackground;
         Texture2D firstLevelBackground1;
         Texture2D firstLevelBackground2;
@@ -24,16 +26,18 @@ namespace GameDev_project
         Texture2D dinoHead;
         SpriteFont titleFont;
         SpriteFont pressEnterFont;
+
+        // Characters
         Texture2D blokTexture;
         Rectangle obstakel;
         Player player;
-        StartScreen startscreen;
-        FirstLevel firstLevel;
         IInputReader inputReader;
-        Vector2 positie = new Vector2(0,0);
+        Vector2 positie = new Vector2(0, 0);
 
-        public enum Gamestates { Start, FirstLevel, FinalLevel, GameOver, Goal }
-        public static Gamestates currentState;
+        // Screens
+        ScreenManager screenManager;
+        StartScreen startScreen;
+        FirstLevel firstLevel;
  
         public Game1()
         {
@@ -49,8 +53,9 @@ namespace GameDev_project
             base.Initialize();
             player = new Player(blokTexture, inputReader);
             obstakel = new Rectangle(400, 400, 30, 30);
-            startscreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
+            startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
+            screenManager = new ScreenManager(player, blokTexture, startScreen, firstLevel);
         }
 
         protected override void LoadContent()
@@ -60,18 +65,16 @@ namespace GameDev_project
             blokTexture.SetData(new[] { Color.White });
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             inputReader = new KeyboardReader();
-            startScreenBackground = Content.Load<Texture2D>("startscreen");
-            dinoHead = Content.Load<Texture2D>("dinohead");
-            woodenPlank = Content.Load<Texture2D>("wooden-plank");
-            titleFont = Content.Load<SpriteFont>("title-font");
-            pressEnterFont = Content.Load<SpriteFont>("pressenter-font");
-            firstLevelBackground1 = Content.Load<Texture2D>("plx-1");
-            firstLevelBackground2 = Content.Load<Texture2D>("plx-2");
-            firstLevelBackground3 = Content.Load<Texture2D>("plx-3");
-            firstLevelBackground4 = Content.Load<Texture2D>("plx-4");
-            firstLevelBackground5 = Content.Load<Texture2D>("plx-5");
-            currentState = Gamestates.Start;
-
+            startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");
+            dinoHead = Content.Load<Texture2D>("Startscreen/dinohead");
+            woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");
+            titleFont = Content.Load<SpriteFont>("Startscreen/title-font");
+            pressEnterFont = Content.Load<SpriteFont>("Startscreen/pressenter-font");
+            firstLevelBackground1 = Content.Load<Texture2D>("FirstLevel/plx-1");
+            firstLevelBackground2 = Content.Load<Texture2D>("FirstLevel/plx-2");
+            firstLevelBackground3 = Content.Load<Texture2D>("FirstLevel/plx-3");
+            firstLevelBackground4 = Content.Load<Texture2D>("FirstLevel/plx-4");
+            firstLevelBackground5 = Content.Load<Texture2D>("FirstLevel/plx-5");
         }
 
         protected override void Update(GameTime gameTime)
@@ -80,11 +83,13 @@ namespace GameDev_project
                 Exit();
 
             // TODO: Add your update logic here
-            player.Update(gameTime);
-            startscreen.Update(gameTime);
-            firstLevel.Update(gameTime);
+            screenManager.Update(gameTime);
             base.Update(gameTime);
-            ChangeGameState();
+
+            if (obstakel.Intersects(player))
+            {
+
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -92,24 +97,9 @@ namespace GameDev_project
             GraphicsDevice.Clear(Color.Olive);
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
-            if (currentState == Gamestates.Start)
-                startscreen.Draw(_spriteBatch);
-           
-            if (currentState == Gamestates.FirstLevel)
-            {
-                firstLevel.Draw(_spriteBatch);
-                player.Draw(_spriteBatch);
-                _spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
-            }
+            screenManager.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);
-        }
-
-        public void ChangeGameState()
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                currentState = Gamestates.FirstLevel;
-
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDev_project.Gamescreen
+namespace GameDev_project.Gamescreens
 {
     internal class StartScreen : IGameObject
     {
