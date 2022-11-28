@@ -57,11 +57,6 @@ namespace GameDev_project.Gamescreens
                 player.Draw(spriteBatch);
                 obstakel = new Rectangle(400, 400, 30, 30);
 
-                if (obstakel.Intersects(player))
-                {
-
-                }
-
                 spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
             }
 
@@ -93,14 +88,18 @@ namespace GameDev_project.Gamescreens
             startScreen.Update(gameTime);
             firstLevel.Update(gameTime);
 
+            if (player.HitBox.Intersects(obstakel))
+                player.IsHit = true;
+            
+
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start || currentState == Gamestates.GameOver)
                 currentState = Gamestates.FirstLevel;
             //if (true)
             //    currentState = Gamestates.FinalLevel;
             //if (boss.IsDead == true && currentState == Gamestates.FinalLevel)
             //    currentState = Gamestates.Goal;
-            //if (player.IsDead == true && currentState == Gamestates.FirstLevel || currentState == Gamestates.FinalLevel)
-            //    currentState = Gamestates.GameOver;
+            if (player.IsDead == true && currentState == Gamestates.FirstLevel || currentState == Gamestates.FinalLevel)
+                currentState = Gamestates.GameOver;
         }
     }
 }

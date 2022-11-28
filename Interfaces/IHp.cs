@@ -11,15 +11,5 @@ namespace GameDev_project.Interfaces
         public int HP { get; set; }
         public bool IsDead { get; set; }
         public bool IsHit { get; set; }
-
-        public int HealthBar()
-        {
-            if (IsHit == true)
-                HP--;
-            if (HP == 0)
-                IsDead = true;
-            
-            return HP;
-        }
     }
 }

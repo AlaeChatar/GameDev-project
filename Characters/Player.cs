@@ -14,7 +14,8 @@ namespace GameDev_project.Characters
     internal class Player : IGameObject, IMovable, IHp
     {
         private Texture2D texture;
-        
+        public Rectangle HitBox { get; set; }
+
         public Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
@@ -30,6 +31,7 @@ namespace GameDev_project.Characters
         public Player(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
+            HitBox = new Rectangle(0, 0, texture.Width, texture.Height);
             
             InputReader = inputReader;
             Position = new Vector2(0, 400);
@@ -44,7 +46,10 @@ namespace GameDev_project.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Red);
+            if (IsHit != true)
+                spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Yellow);
+            else
+                spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Red);
         }
 
         public void Update(GameTime gameTime)
@@ -54,6 +59,11 @@ namespace GameDev_project.Characters
             Position += direction;
 
             movementManager.Move(this);
+
+            if (IsHit == true)
+                HP--;
+            if (HP == 0)
+                IsDead = true;
         }
     }
 }
