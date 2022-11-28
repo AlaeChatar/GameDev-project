@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Characters
 {
-    internal class Player : IGameObject, IMovable
+    internal class Player : IGameObject, IMovable, IHp
     {
         private Texture2D texture;
         
@@ -19,8 +19,12 @@ namespace GameDev_project.Characters
         public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
         public IInputReader InputReader { get; set; }
-        private MovementManager movementManager;
 
+        public bool IsDead { get; set; }
+        public int HP { get; set; }
+        public bool IsHit { get; set; }
+
+        private MovementManager movementManager;
         //Animation animation;
 
         public Player(Texture2D texture, IInputReader inputReader)
@@ -30,8 +34,11 @@ namespace GameDev_project.Characters
             InputReader = inputReader;
             Position = new Vector2(0, 400);
             Speed = new Vector2(2, 2);
-            movementManager = new MovementManager();
 
+            HP = 3;
+            IsDead = false;
+
+            movementManager = new MovementManager();
             //animation.GetFramesFromTextureProperties(texture.Width, y, 6);
         }
 

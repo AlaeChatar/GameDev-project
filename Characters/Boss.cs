@@ -9,12 +9,22 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Characters
 {
-    internal class Boss : IGameObject, IMovable
+    internal class Boss : IGameObject, IMovable, IHp
     {
         public Vector2 Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Vector2 Speed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public Vector2 Velocity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IInputReader InputReader { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public int HP { get; set; }
+        public bool IsDead { get; set; }
+        public bool IsHit { get; set; }
+
+        public Boss()
+        {
+            HP = 10;
+            IsDead = false;
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {

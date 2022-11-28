@@ -29,15 +29,19 @@ namespace GameDev_project
 
         // Characters
         Texture2D blokTexture;
-        Rectangle obstakel;
         Player player;
         IInputReader inputReader;
         Vector2 positie = new Vector2(0, 0);
+        Boss boss;
+        Enemy enemy;
 
         // Screens
         ScreenManager screenManager;
         StartScreen startScreen;
         FirstLevel firstLevel;
+        FinalLevel finalLevel;
+        Goal goal;
+        GameOver gameOver;
  
         public Game1()
         {
@@ -52,10 +56,9 @@ namespace GameDev_project
 
             base.Initialize();
             player = new Player(blokTexture, inputReader);
-            obstakel = new Rectangle(400, 400, 30, 30);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
-            screenManager = new ScreenManager(player, blokTexture, startScreen, firstLevel);
+            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver);
         }
 
         protected override void LoadContent()
@@ -85,11 +88,6 @@ namespace GameDev_project
             // TODO: Add your update logic here
             screenManager.Update(gameTime);
             base.Update(gameTime);
-
-            if (obstakel.Intersects(player))
-            {
-
-            }
         }
 
         protected override void Draw(GameTime gameTime)
