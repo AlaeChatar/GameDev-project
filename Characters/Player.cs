@@ -3,6 +3,7 @@ using GameDev_project.Interfaces;
 using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace GameDev_project.Characters
         public bool IsDead { get; set; }
         public int HP { get; set; }
         public bool IsHit { get; set; }
+
+        public float hitCd;
 
         private MovementManager movementManager;
         //Animation animation;
@@ -47,10 +50,13 @@ namespace GameDev_project.Characters
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(texture, Position, HitBox, Color.Blue);
-            if (IsHit != true)
+            if (hitCd <= 0)
                 spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Yellow);
             else
+            {
                 spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Red);
+                IsHit = false;
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -62,6 +68,8 @@ namespace GameDev_project.Characters
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 35, 35);
 
             movementManager.Move(this);
+
+            hitCd -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
     }
 }

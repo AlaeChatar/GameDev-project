@@ -92,14 +92,11 @@ namespace GameDev_project.Gamescreens
             if (player.HitBox.Intersects(obstakel))
                 player.IsHit = true;
 
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.T))
+            if (player.IsHit == true && player.hitCd <= 0)
             {
-                System.Diagnostics.Debugger.Break();
-            }
-
-            if (player.IsHit == true)
+                player.hitCd = 1;
                 player.HP -= 1;
+            }
                 
             if (player.HP == 0)
                 player.IsDead = true;
