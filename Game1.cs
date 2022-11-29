@@ -27,6 +27,9 @@ namespace GameDev_project
         SpriteFont titleFont;
         SpriteFont pressEnterFont;
 
+        //GameOver resources
+        Texture2D endScreen;
+
         // Characters
         Texture2D blokTexture;
         Player player;
@@ -58,6 +61,9 @@ namespace GameDev_project
             player = new Player(blokTexture, inputReader);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
+            finalLevel = new FinalLevel();
+            goal = new Goal();
+            gameOver = new GameOver(endScreen);
             screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver);
         }
 
@@ -78,6 +84,7 @@ namespace GameDev_project
             firstLevelBackground3 = Content.Load<Texture2D>("FirstLevel/plx-3");
             firstLevelBackground4 = Content.Load<Texture2D>("FirstLevel/plx-4");
             firstLevelBackground5 = Content.Load<Texture2D>("FirstLevel/plx-5");
+            endScreen = Content.Load<Texture2D>("EndScreen/gameover");
         }
 
         protected override void Update(GameTime gameTime)

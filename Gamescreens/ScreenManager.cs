@@ -76,11 +76,7 @@ namespace GameDev_project.Gamescreens
             }
 
             if (currentState == Gamestates.GameOver)
-            {
                 gameOver.Draw(spriteBatch);
-                player.Draw(spriteBatch);
-                spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
-            }
         }
 
         public void Update(GameTime gameTime)
@@ -94,7 +90,7 @@ namespace GameDev_project.Gamescreens
 
             if (player.IsHit == true && player.hitCd <= 0)
             {
-                player.hitCd = 1;
+                player.hitCd = 0.5f;
                 player.HP -= 1;
             }
                 
