@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +58,7 @@ namespace GameDev_project.Gamescreens
                 player.Draw(spriteBatch);
                 obstakel = new Rectangle(400, 400, 30, 30);
 
-                spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
+                spriteBatch.Draw(blokTexture, obstakel, Color.Black);
             }
 
             if (currentState == Gamestates.FinalLevel)
@@ -90,7 +91,19 @@ namespace GameDev_project.Gamescreens
 
             if (player.HitBox.Intersects(obstakel))
                 player.IsHit = true;
-            
+
+            KeyboardState state = Keyboard.GetState();
+            if (state.IsKeyDown(Keys.T))
+            {
+                System.Diagnostics.Debugger.Break();
+            }
+
+            if (player.IsHit == true)
+                player.HP -= 1;
+                
+            if (player.HP == 0)
+                player.IsDead = true;
+
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start || currentState == Gamestates.GameOver)
                 currentState = Gamestates.FirstLevel;

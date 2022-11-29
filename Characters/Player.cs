@@ -31,7 +31,7 @@ namespace GameDev_project.Characters
         public Player(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
-            HitBox = new Rectangle(0, 0, texture.Width, texture.Height);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 35, 35);
             
             InputReader = inputReader;
             Position = new Vector2(0, 400);
@@ -46,6 +46,7 @@ namespace GameDev_project.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(texture, Position, HitBox, Color.Blue);
             if (IsHit != true)
                 spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Yellow);
             else
@@ -58,12 +59,9 @@ namespace GameDev_project.Characters
             direction *= Speed;
             Position += direction;
 
-            movementManager.Move(this);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 35, 35);
 
-            if (IsHit == true)
-                HP--;
-            if (HP == 0)
-                IsDead = true;
+            movementManager.Move(this);
         }
     }
 }
