@@ -26,7 +26,7 @@ namespace GameDev_project.Characters
         public int HP { get; set; }
         public bool IsHit { get; set; }
 
-        public float hitCd;
+        public float invulnerability;
 
         private MovementManager movementManager;
         //Animation animation;
@@ -34,7 +34,6 @@ namespace GameDev_project.Characters
         public Player(Texture2D texture, IInputReader inputReader)
         {
             this.texture = texture;
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 35, 35);
             
             InputReader = inputReader;
             Position = new Vector2(0, 400);
@@ -49,8 +48,11 @@ namespace GameDev_project.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            //hitBox
             spriteBatch.Draw(texture, Position, HitBox, Color.Blue);
-            if (hitCd <= 0)
+
+            //player, hit ? rood : geel
+            if (invulnerability <= 0)
                 spriteBatch.Draw(texture, Position, new Rectangle(0, 0, 30, 30), Color.Yellow);
             else
             {
@@ -65,11 +67,22 @@ namespace GameDev_project.Characters
             direction *= Speed;
             Position += direction;
 
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 35, 35);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 31, 31);
 
             movementManager.Move(this);
 
-            hitCd -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //invincible timer
+            invulnerability -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (IsHit == true && invulnerability <= 0)
+            {
+                //voor hoelang is die invincible na een hit
+                invulnerability = 0.5f;
+                HP -= 1;
+            }
+
+            if (HP == 0)
+                IsDead = true;
         }
     }
 }

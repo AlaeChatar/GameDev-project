@@ -88,15 +88,6 @@ namespace GameDev_project.Gamescreens
             if (player.HitBox.Intersects(obstakel))
                 player.IsHit = true;
 
-            if (player.IsHit == true && player.hitCd <= 0)
-            {
-                player.hitCd = 0.5f;
-                player.HP -= 1;
-            }
-                
-            if (player.HP == 0)
-                player.IsDead = true;
-
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start || currentState == Gamestates.GameOver)
                 currentState = Gamestates.FirstLevel;
