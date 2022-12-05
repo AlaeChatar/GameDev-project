@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Characters;
 using GameDev_project.Gamescreens;
 using GameDev_project.Interfaces;
+using GameDev_project.Map;
 using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -45,6 +46,11 @@ namespace GameDev_project
         FinalLevel finalLevel;
         Goal goal;
         GameOver gameOver;
+
+        //Environment
+        Block block;
+        TileSet tileSet;
+
  
         public Game1()
         {
@@ -65,6 +71,8 @@ namespace GameDev_project
             goal = new Goal();
             gameOver = new GameOver(endScreen);
             screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver);
+            block = new Block();
+            tileSet = new TileSet(blokTexture);
         }
 
         protected override void LoadContent()

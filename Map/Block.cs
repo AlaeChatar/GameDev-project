@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,10 @@ namespace GameDev_project.Map
     {
         public enum BlockType { Sky, Floor1, Floor2, Lava, Grass}
         public BlockType block { get; set; }
-        public Texture2D texture;
+        public Rectangle texture;
+        public Vector2 position;
 
-        public Block(BlockType blockType)
+        public Block(BlockType blockType, Vector2 rectIn)
         {
             if (blockType == BlockType.Sky)
                 block = BlockType.Sky;

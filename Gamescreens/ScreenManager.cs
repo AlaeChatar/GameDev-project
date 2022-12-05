@@ -1,5 +1,6 @@
 ﻿using GameDev_project.Characters;
 using GameDev_project.Interfaces;
+using GameDev_project.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -31,6 +32,9 @@ namespace GameDev_project.Gamescreens
         Boss boss;
         Texture2D blokTexture;
 
+        //Environment
+        TileSet tileSet;
+
         Rectangle obstakel;
 
         public ScreenManager(Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver)
@@ -56,6 +60,8 @@ namespace GameDev_project.Gamescreens
             {
                 firstLevel.Draw(spriteBatch);
                 player.Draw(spriteBatch);
+                tileSet.Draw(spriteBatch);
+
                 obstakel = new Rectangle(400, 400, 30, 30);
 
                 spriteBatch.Draw(blokTexture, obstakel, Color.Black);
@@ -65,6 +71,7 @@ namespace GameDev_project.Gamescreens
             {
                 finalLevel.Draw(spriteBatch);
                 player.Draw(spriteBatch);
+                tileSet.Draw(spriteBatch);
                 spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
             }
 
