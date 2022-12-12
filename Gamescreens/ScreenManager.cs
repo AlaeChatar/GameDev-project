@@ -14,7 +14,7 @@ using static GameDev_project.Game1;
 
 namespace GameDev_project.Gamescreens
 {
-    internal class ScreenManager : IGameObject
+    internal class ScreenManager
     {
         public enum Gamestates { Start, FirstLevel, FinalLevel, GameOver, Goal }
         public static Gamestates currentState = Gamestates.Start;
@@ -32,12 +32,12 @@ namespace GameDev_project.Gamescreens
         Boss boss;
         Texture2D blokTexture;
 
-        //Environment
+        //Map
         TileSet tileSet;
 
         Rectangle obstakel;
 
-        public ScreenManager(Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver)
+        public ScreenManager(Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet)
         {
             this.player = player;
             this.enemy = enemy;
@@ -48,6 +48,7 @@ namespace GameDev_project.Gamescreens
             this.finalLevel = finalLevel;
             this.goal = goal;
             this.gameOver = gameOver;
+            this.tileSet = tileSet;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -89,8 +90,6 @@ namespace GameDev_project.Gamescreens
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
-            startScreen.Update(gameTime);
-            firstLevel.Update(gameTime);
 
             if (player.HitBox.Intersects(obstakel))
                 player.IsHit = true;

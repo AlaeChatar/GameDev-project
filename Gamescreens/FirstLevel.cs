@@ -9,7 +9,7 @@ using GameDev_project.Interfaces;
 
 namespace GameDev_project.Gamescreens
 {
-    internal class FirstLevel : IGameObject
+    internal class FirstLevel
     {
         private Texture2D firstLevelBackground1;
         private Texture2D firstLevelBackground2;
@@ -29,16 +29,11 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(firstLevelBackground1, new Rectangle(0, 0, 800, 500), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground2, new Rectangle(0, 0, 800, 500), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground3, new Rectangle(0, 0, 800, 500), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground4, new Rectangle(0, 0, 800, 500), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground5, new Rectangle(0, 0, 800, 500), Color.Olive);
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
+            spriteBatch.Draw(firstLevelBackground1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(firstLevelBackground2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(firstLevelBackground3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(firstLevelBackground4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(firstLevelBackground5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
         }
     }
 }

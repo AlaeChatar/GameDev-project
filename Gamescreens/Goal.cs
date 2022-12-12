@@ -9,16 +9,14 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Gamescreens
 {
-    internal class Goal : IGameObject
+    internal class Goal
     {
         public void Draw(SpriteBatch spriteBatch)
         {
-            throw new NotImplementedException();
         }
 
         public void Update(GameTime gameTime)
         {
-            throw new NotImplementedException();
         }
     }
 }

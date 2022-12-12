@@ -10,7 +10,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace GameDev_project.Gamescreens
 {
-    internal class GameOver : IGameObject
+    internal class GameOver
     {
         Texture2D endScreen;
 
@@ -21,12 +21,7 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(endScreen, new Rectangle(0, 0, 800, 500), Color.Olive);
-        }
-
-        public void Update(GameTime gameTime)
-        {
-            
+            spriteBatch.Draw(endScreen, new Rectangle(0, 0, 1920, 1080), Color.Olive);
         }
     }
 }

@@ -15,17 +15,16 @@ namespace GameDev_project.Characters
     internal class Player : IGameObject, IMovable, IHp
     {
         private Texture2D texture;
-        public Rectangle HitBox { get; set; }
 
         public Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
         public IInputReader InputReader { get; set; }
 
+        public Rectangle HitBox { get; set; }
         public bool IsDead { get; set; }
         public int HP { get; set; }
         public bool IsHit { get; set; }
-
         public float invulnerability;
 
         private MovementManager movementManager;

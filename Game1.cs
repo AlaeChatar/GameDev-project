@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Timers;
 
 namespace GameDev_project
@@ -48,13 +49,16 @@ namespace GameDev_project
         GameOver gameOver;
 
         //Environment
-        Block block;
+        List<Block> blocks = new List<Block>();
         TileSet tileSet;
 
  
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferWidth = 1920;
+            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.IsFullScreen = true;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -65,14 +69,14 @@ namespace GameDev_project
 
             base.Initialize();
             player = new Player(blokTexture, inputReader);
+            tileSet = new TileSet(blocks);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
             finalLevel = new FinalLevel();
             goal = new Goal();
             gameOver = new GameOver(endScreen);
-            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver);
-            block = new Block();
-            tileSet = new TileSet(blokTexture);
+            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet);
+            
         }
 
         protected override void LoadContent()
@@ -93,6 +97,14 @@ namespace GameDev_project
             firstLevelBackground4 = Content.Load<Texture2D>("FirstLevel/plx-4");
             firstLevelBackground5 = Content.Load<Texture2D>("FirstLevel/plx-5");
             endScreen = Content.Load<Texture2D>("EndScreen/gameover");
+
+            //Map
+            int kollom = 0;
+            for (int i = 0; i < 64; i++)
+            {
+                blocks.Add(new Block(Content.Load<Texture2D>("Block"), new Vector2(kollom, 1050)));
+                kollom += 30;
+            }
         }
 
         protected override void Update(GameTime gameTime)
