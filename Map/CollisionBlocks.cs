@@ -12,7 +12,7 @@ namespace GameDev_project.Map
     {
         public CollisionBlocks(int i, Rectangle newRectangle)
         {
-            texture = Content.Load<Texture2D>("Block" + i);
+            texture = Content.Load<Texture2D>("Blocks/Block" + i);
             this.Rectangle= newRectangle;
         }
     }

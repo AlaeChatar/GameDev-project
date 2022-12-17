@@ -17,7 +17,7 @@ namespace GameDev_project.Map
         public Rectangle Rectangle 
         { 
             get { return Rectangle; } 
-            set { Rectangle = value; } 
+            set { rectangle = value; } 
         }
 
         private static ContentManager content;
