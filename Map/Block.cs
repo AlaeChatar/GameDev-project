@@ -1,5 +1,6 @@
 ﻿using GameDev_project.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,19 @@ namespace GameDev_project.Map
 {
     internal class Block
     {
-        private Texture2D texture;
-        public Vector2 position;
-        public Rectangle rectangle;
+        protected Texture2D texture;
+        private Rectangle rectangle;
+        public Rectangle Rectangle 
+        { 
+            get { return Rectangle; } 
+            set { Rectangle = value; } 
+        }
 
-
-        public Block(Texture2D texture, Vector2 position)
+        private static ContentManager content;
+        public static ContentManager Content
         {
-            this.texture = texture;
-            this.position = position;
-
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+            protected get { return content; }
+            set { content = value; }
         }
 
         public void Draw(SpriteBatch spriteBatch)

@@ -48,8 +48,7 @@ namespace GameDev_project
         Goal goal;
         GameOver gameOver;
 
-        //Environment
-        List<Block> blocks = new List<Block>();
+        //Map
         TileSet tileSet;
 
  
@@ -69,14 +68,13 @@ namespace GameDev_project
 
             base.Initialize();
             player = new Player(blokTexture, inputReader);
-            tileSet = new TileSet(blocks);
+            tileSet = new TileSet();
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
             finalLevel = new FinalLevel();
             goal = new Goal();
             gameOver = new GameOver(endScreen);
-            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet);
-            
+            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet);  
         }
 
         protected override void LoadContent()
@@ -99,12 +97,15 @@ namespace GameDev_project
             endScreen = Content.Load<Texture2D>("EndScreen/gameover");
 
             //Map
-            int kollom = 0;
-            for (int i = 0; i < 64; i++)
+            Block.Content = Content;
+
+            tileSet.Create(new int[,]
             {
-                blocks.Add(new Block(Content.Load<Texture2D>("Block"), new Vector2(kollom, 1050)));
-                kollom += 30;
-            }
+                { 0, 0, 0, 0 },
+                { 0, 0, 0, 1 },
+                { 0, 1, 1, 2 },
+                { 1, 2, 2, 2 },
+            }, 30);
         }
 
         protected override void Update(GameTime gameTime)

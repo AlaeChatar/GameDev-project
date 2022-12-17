@@ -95,7 +95,7 @@ namespace GameDev_project.Gamescreens
                 player.IsHit = true;
 
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start || currentState == Gamestates.GameOver)
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
                 currentState = Gamestates.FirstLevel;
             //if (true)
             //    currentState = Gamestates.FinalLevel;
@@ -103,6 +103,8 @@ namespace GameDev_project.Gamescreens
             //    currentState = Gamestates.Goal;
             if (player.IsDead == true && currentState == Gamestates.FirstLevel || currentState == Gamestates.FinalLevel)
                 currentState = Gamestates.GameOver;
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver)
+                currentState = Gamestates.FirstLevel;
         }
     }
 }

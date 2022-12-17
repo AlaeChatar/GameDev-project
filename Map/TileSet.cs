@@ -13,16 +13,42 @@ namespace GameDev_project.Map
 {
     internal class TileSet
     {
-        List<Block> blocks;
+        private List<CollisionBlocks> collisionBlocks = new List<CollisionBlocks>();
+        public List<CollisionBlocks> CollisionBlocks
+        { 
+            get { return collisionBlocks; } 
+        }
 
-        public TileSet(List<Block> blocks)
+        private int width, height;
+        public int Width
+        { 
+            get { return width; } 
+        }
+        public int Height
         {
-            this.blocks = blocks;
+            get { return height; }
+        }
+
+        public TileSet() {}
+
+        public void Create(int[,] tileSet, int size)
+        {
+            for (int i = 0; i < tileSet.GetLength(1); i++)
+                for (int j = 0; j < tileSet.GetLength(0); j++)
+                {
+                    int number = tileSet[j, i];
+
+                    if (number > 0)
+                        collisionBlocks.Add(new CollisionBlocks(number, new Rectangle(i * size, j * size, size, size)));
+
+                    width = (i + 1) * size;
+                    height= (j + 1) * size;
+                }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (Block block in blocks)
+            foreach (CollisionBlocks block in collisionBlocks)
                 block.Draw(spriteBatch);
         }
     }
