@@ -30,6 +30,7 @@ namespace GameDev_project.Gamescreens
         Player player;
         Enemy enemy;
         Boss boss;
+        Hero hero;
         Texture2D blokTexture;
 
         //Map
@@ -37,8 +38,9 @@ namespace GameDev_project.Gamescreens
 
         Rectangle obstakel;
 
-        public ScreenManager(Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet)
+        public ScreenManager(Hero hero, Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet)
         {
+            this.hero = hero;
             this.player = player;
             this.enemy = enemy;
             this.boss = boss;
@@ -59,13 +61,11 @@ namespace GameDev_project.Gamescreens
 
             if (currentState == Gamestates.FirstLevel)
             {
+                
                 firstLevel.Draw(spriteBatch);
-                player.Draw(spriteBatch);
+                //player.Draw(spriteBatch);
+                hero.Draw(spriteBatch);
                 tileSet.Draw(spriteBatch);
-
-                obstakel = new Rectangle(400, 400, 30, 30);
-
-                spriteBatch.Draw(blokTexture, obstakel, Color.Black);
             }
 
             if (currentState == Gamestates.FinalLevel)
@@ -73,14 +73,12 @@ namespace GameDev_project.Gamescreens
                 finalLevel.Draw(spriteBatch);
                 player.Draw(spriteBatch);
                 tileSet.Draw(spriteBatch);
-                spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
             }
 
             if (currentState == Gamestates.Goal)
             {
                 goal.Draw(spriteBatch);
                 player.Draw(spriteBatch);
-                spriteBatch.Draw(blokTexture, new Rectangle(400, 400, 30, 30), Color.Black);
             }
 
             if (currentState == Gamestates.GameOver)
@@ -89,6 +87,11 @@ namespace GameDev_project.Gamescreens
 
         public void Update(GameTime gameTime)
         {
+            hero.Update(gameTime);
+            foreach (CollisionBlocks block in tileSet.CollisionBlocks)
+            {
+                hero.Collision(block.Rectangle, tileSet.Width, tileSet.Height);
+            }
             player.Update(gameTime);
 
             if (player.HitBox.Intersects(obstakel))

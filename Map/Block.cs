@@ -16,7 +16,7 @@ namespace GameDev_project.Map
         private Rectangle rectangle;
         public Rectangle Rectangle 
         { 
-            get { return Rectangle; } 
+            get { return rectangle; } 
             set { rectangle = value; } 
         }
 

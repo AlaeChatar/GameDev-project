@@ -15,7 +15,6 @@ namespace GameDev_project.Characters
     internal class Player : IGameObject, IMovable, IHp
     {
         private Texture2D texture;
-
         public Vector2 Position { get; set; }
         public Vector2 Speed { get; set; }
         public Vector2 Velocity { get; set; }
@@ -35,7 +34,7 @@ namespace GameDev_project.Characters
             this.texture = texture;
             
             InputReader = inputReader;
-            Position = new Vector2(0, 400);
+            Position = new Vector2(0, 60);
             Speed = new Vector2(2, 2);
 
             HP = 3;

@@ -37,6 +37,7 @@ namespace GameDev_project
         Player player;
         IInputReader inputReader;
         Vector2 positie = new Vector2(0, 0);
+        Hero hero;
         Boss boss;
         Enemy enemy;
 
@@ -66,13 +67,14 @@ namespace GameDev_project
             // TODO: Add your initialization logic here
             tileSet = new TileSet();
             base.Initialize();
+            hero = new Hero(blokTexture);
             player = new Player(blokTexture, inputReader);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
             finalLevel = new FinalLevel();
             goal = new Goal();
             gameOver = new GameOver(endScreen);
-            screenManager = new ScreenManager(player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet);
+            screenManager = new ScreenManager(hero, player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet);
         }
 
         protected override void LoadContent()
@@ -97,9 +99,8 @@ namespace GameDev_project
             //Map
             Block.Content = Content;
 
-            tileSet.Create(new int[,]
-            {
-                {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
+            tileSet.Create(new int[,]            {
+{2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  2,  0,  2,  0,  0,  0,  0,  0,  2,  2},
 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  2,  2},
 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  2,  2},
