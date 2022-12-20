@@ -14,13 +14,14 @@ namespace GameDev_project.Characters
     internal class Hero : IGameObject
     {
         private Texture2D texture;
-        private Vector2 position = new Vector2(500, 500);
+        private Vector2 position = new Vector2(100, 900);
         private Vector2 velocity;
         private Rectangle rectangle;
 
         private bool hasJumped = false;
 
         public Vector2 Position { get { return position; } }
+        public Rectangle HitBox { get; set; }
 
         public Hero(Texture2D texture)
         {
@@ -36,6 +37,11 @@ namespace GameDev_project.Characters
 
             if (velocity.Y < 10)
                 velocity.Y += 0.4f;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+                position = new Vector2(100, 900);
+
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 30, 30);
         }
 
         private void Input(GameTime gameTime)
