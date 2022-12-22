@@ -75,7 +75,6 @@ namespace GameDev_project.Gamescreens
                 case Gamestates.FinalLevel:
                     finalLevel.Draw(spriteBatch);
                     tileSet2.Draw(spriteBatch);
-                    hero.Position = new Vector2(65, 400);
                     hero.Draw(spriteBatch);
                     break;
                 case Gamestates.GameOver:
@@ -99,8 +98,9 @@ namespace GameDev_project.Gamescreens
                     hero.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
             }
             if (currentState == Gamestates.FinalLevel)
-            {
+            { 
                 hero.Update(gameTime);
+                //hero.Position = new Vector2(65, 400);
                 foreach (CollisionBlocks block in tileSet2.CollisionBlocks)
                     hero.Collision(block.Rectangle, tileSet2.Width, tileSet2.Height);
             }            
