@@ -14,7 +14,7 @@ namespace GameDev_project.Characters
     internal class Hero : IGameObject
     {
         private Texture2D texture;
-        private Vector2 position = new Vector2(100, 900);
+        private Vector2 position;
         private Vector2 velocity;
         private Rectangle rectangle;
 
@@ -31,9 +31,10 @@ namespace GameDev_project.Characters
         }
         public Rectangle HitBox { get; set; }
 
-        public Hero(Texture2D texture)
+        public Hero(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
+            this.position = position;
         }
 
         public void Update(GameTime gameTime)

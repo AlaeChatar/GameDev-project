@@ -37,7 +37,8 @@ namespace GameDev_project
         Player player;
         IInputReader inputReader;
         Vector2 positie = new Vector2(0, 0);
-        Hero hero;
+        Hero heroFirstLevel;
+        Hero heroFinalLevel;
         Boss boss;
         Enemy enemy;
 
@@ -69,14 +70,15 @@ namespace GameDev_project
             tileSet1 = new TileSet();
             tileSet2 = new TileSet();
             base.Initialize();
-            hero = new Hero(blokTexture);
+            heroFirstLevel = new Hero(blokTexture, new Vector2(100, 900));
+            heroFinalLevel = new Hero(blokTexture, new Vector2(5, 400));
             player = new Player(blokTexture, inputReader);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
             firstLevel = new FirstLevel(background1, background2, background3, background4, background5);
             finalLevel = new FinalLevel(background1, background2, background3, background4, background5);
             goal = new Goal();
             gameOver = new GameOver(endScreen);
-            screenManager = new ScreenManager(hero, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet1, tileSet2);
+            screenManager = new ScreenManager(heroFirstLevel, heroFinalLevel, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet1, tileSet2);
         }
 
         protected override void LoadContent()
@@ -200,7 +202,7 @@ namespace GameDev_project
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             screenManager.Draw(_spriteBatch);
-            _spriteBatch.DrawString(pressEnterFont, $"{hero.Position.X} : {string.Format("{0:F0}", hero.Position.Y)}", new Vector2(500, 500), Color.Yellow);
+            _spriteBatch.DrawString(pressEnterFont, $"{heroFirstLevel.Position.X} : {string.Format("{0:F0}", heroFirstLevel.Position.Y)}", new Vector2(500, 500), Color.Yellow);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

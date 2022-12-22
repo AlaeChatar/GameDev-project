@@ -31,7 +31,8 @@ namespace GameDev_project.Gamescreens
         //Characters
         Enemy enemy;
         Boss boss;
-        Hero hero;
+        Hero hero1;
+        Hero hero2;
         Texture2D blokTexture;
 
         //Map
@@ -40,9 +41,10 @@ namespace GameDev_project.Gamescreens
 
         Rectangle checkpoint1 = new Rectangle((int)1919, (int)390, 30, 120);
 
-        public ScreenManager(Hero hero, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet, TileSet tileSet2)
+        public ScreenManager(Hero hero1, Hero hero2, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet, TileSet tileSet2)
         {
-            this.hero = hero;
+            this.hero1 = hero1;
+            this.hero2 = hero2;
             this.enemy = enemy;
             this.boss = boss;
             this.blokTexture = blokTexture;
@@ -61,17 +63,15 @@ namespace GameDev_project.Gamescreens
             // Map collision
             if (currentState == Gamestates.FirstLevel)
             {
-                hero.Update(gameTime);
+                hero1.Update(gameTime);
                 foreach (CollisionBlocks block in tileSet1.CollisionBlocks)
-                    hero.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
+                    hero1.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
             }
             if (currentState == Gamestates.FinalLevel)
             {
-                tileSet1 = null;
-                hero.Update(gameTime);
-
+                hero2.Update(gameTime);
                 foreach (CollisionBlocks block in tileSet2.CollisionBlocks)
-                    hero.Collision(block.Rectangle, tileSet2.Width, tileSet2.Height);
+                    hero2.Collision(block.Rectangle, tileSet2.Width, tileSet2.Height);
             }
 
             //if (player.HitBox.Intersects(checkpoint1))
@@ -79,7 +79,7 @@ namespace GameDev_project.Gamescreens
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
                 currentState = Gamestates.FirstLevel;
-            if (hero.HitBox.Intersects(checkpoint1) == true || Keyboard.GetState().IsKeyDown(Keys.L))
+            if (hero1.HitBox.Intersects(checkpoint1) == true || Keyboard.GetState().IsKeyDown(Keys.L))
                 currentState = Gamestates.FinalLevel;
             //if (boss.IsDead == true && currentState == Gamestates.FinalLevel)
             //    currentState = Gamestates.Goal;
@@ -100,13 +100,12 @@ namespace GameDev_project.Gamescreens
                     firstLevel.Draw(spriteBatch);
                     spriteBatch.Draw(blokTexture, checkpoint1, Color.Red);
                     tileSet1.Draw(spriteBatch);
-                    hero.Draw(spriteBatch);
+                    hero1.Draw(spriteBatch);
                     break;
                 case Gamestates.FinalLevel:
                     finalLevel.Draw(spriteBatch);
                     tileSet2.Draw(spriteBatch);
-                    //hero.Position = new Vector2(60, 400);
-                    hero.Draw(spriteBatch);
+                    hero2.Draw(spriteBatch);
                     break;
                 case Gamestates.GameOver:
                     gameOver.Draw(spriteBatch);
