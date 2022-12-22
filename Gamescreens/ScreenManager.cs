@@ -29,7 +29,6 @@ namespace GameDev_project.Gamescreens
         Goal goal;
 
         //Characters
-        Player player;
         Enemy enemy;
         Boss boss;
         Hero hero;
@@ -41,10 +40,9 @@ namespace GameDev_project.Gamescreens
 
         Rectangle checkpoint1 = new Rectangle((int)1919, (int)390, 30, 120);
 
-        public ScreenManager(Hero hero, Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet, TileSet tileSet2)
+        public ScreenManager(Hero hero, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet, TileSet tileSet2)
         {
             this.hero = hero;
-            this.player = player;
             this.enemy = enemy;
             this.boss = boss;
             this.blokTexture = blokTexture;
@@ -57,39 +55,9 @@ namespace GameDev_project.Gamescreens
             this.tileSet2 = tileSet2;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            
-
-            switch (currentState)
-            {   
-                case Gamestates.Start:
-                    startScreen.Draw(spriteBatch);
-                    break;
-                case Gamestates.FirstLevel:
-                    firstLevel.Draw(spriteBatch);
-                    spriteBatch.Draw(blokTexture, checkpoint1, Color.Red);
-                    tileSet1.Draw(spriteBatch);
-                    hero.Draw(spriteBatch);
-                    break;
-                case Gamestates.FinalLevel:
-                    finalLevel.Draw(spriteBatch);
-                    tileSet2.Draw(spriteBatch);
-                    hero.Draw(spriteBatch);
-                    break;
-                case Gamestates.GameOver:
-                    gameOver.Draw(spriteBatch);
-                    break;
-                case Gamestates.Goal:
-                    goal.Draw(spriteBatch);
-                    player.Draw(spriteBatch);
-                    break;
-            }
-        }
-
         public void Update(GameTime gameTime)
         {
-            
+
             // Map collision
             if (currentState == Gamestates.FirstLevel)
             {
@@ -98,12 +66,13 @@ namespace GameDev_project.Gamescreens
                     hero.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
             }
             if (currentState == Gamestates.FinalLevel)
-            { 
+            {
+                tileSet1 = null;
                 hero.Update(gameTime);
-                //hero.Position = new Vector2(65, 400);
+
                 foreach (CollisionBlocks block in tileSet2.CollisionBlocks)
                     hero.Collision(block.Rectangle, tileSet2.Width, tileSet2.Height);
-            }            
+            }
 
             //if (player.HitBox.Intersects(checkpoint1))
             //    player.IsHit = true;
@@ -119,5 +88,34 @@ namespace GameDev_project.Gamescreens
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver)
                 currentState = Gamestates.FirstLevel;
         }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            switch (currentState)
+            {   
+                case Gamestates.Start:
+                    startScreen.Draw(spriteBatch);
+                    break;
+                case Gamestates.FirstLevel:
+                    firstLevel.Draw(spriteBatch);
+                    spriteBatch.Draw(blokTexture, checkpoint1, Color.Red);
+                    tileSet1.Draw(spriteBatch);
+                    hero.Draw(spriteBatch);
+                    break;
+                case Gamestates.FinalLevel:
+                    finalLevel.Draw(spriteBatch);
+                    tileSet2.Draw(spriteBatch);
+                    //hero.Position = new Vector2(60, 400);
+                    hero.Draw(spriteBatch);
+                    break;
+                case Gamestates.GameOver:
+                    gameOver.Draw(spriteBatch);
+                    break;
+                case Gamestates.Goal:
+                    goal.Draw(spriteBatch);
+                    break;
+            }
+        }
+
     }
 }

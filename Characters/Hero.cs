@@ -23,7 +23,11 @@ namespace GameDev_project.Characters
         public Vector2 Position 
         { 
             get { return position; }
-            set { position = value; }
+            set {
+                position.X = value.X;
+                position.Y = value.Y;
+                position = value; 
+            }
         }
         public Rectangle HitBox { get; set; }
 
@@ -45,7 +49,7 @@ namespace GameDev_project.Characters
             if (Keyboard.GetState().IsKeyDown(Keys.R))
                 position = new Vector2(100, 900);
 
-            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 30, 30);
+            HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
 
         private void Input(GameTime gameTime)
