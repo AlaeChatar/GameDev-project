@@ -19,11 +19,11 @@ namespace GameDev_project
         
         // Startscreen resources
         Texture2D startScreenBackground;
-        Texture2D firstLevelBackground1;
-        Texture2D firstLevelBackground2;
-        Texture2D firstLevelBackground3;
-        Texture2D firstLevelBackground4;
-        Texture2D firstLevelBackground5;
+        Texture2D background1;
+        Texture2D background2;
+        Texture2D background3;
+        Texture2D background4;
+        Texture2D background5;
         Texture2D woodenPlank;
         Texture2D dinoHead;
         SpriteFont titleFont;
@@ -72,8 +72,8 @@ namespace GameDev_project
             hero = new Hero(blokTexture);
             player = new Player(blokTexture, inputReader);
             startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            firstLevel = new FirstLevel(firstLevelBackground1, firstLevelBackground2, firstLevelBackground3, firstLevelBackground4, firstLevelBackground5);
-            finalLevel = new FinalLevel();
+            firstLevel = new FirstLevel(background1, background2, background3, background4, background5);
+            finalLevel = new FinalLevel(background1, background2, background3, background4, background5);
             goal = new Goal();
             gameOver = new GameOver(endScreen);
             screenManager = new ScreenManager(hero, player, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet1, tileSet2);
@@ -91,11 +91,11 @@ namespace GameDev_project
             woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");
             titleFont = Content.Load<SpriteFont>("Startscreen/title-font");
             pressEnterFont = Content.Load<SpriteFont>("Startscreen/pressenter-font");
-            firstLevelBackground1 = Content.Load<Texture2D>("FirstLevel/plx-1");
-            firstLevelBackground2 = Content.Load<Texture2D>("FirstLevel/plx-2");
-            firstLevelBackground3 = Content.Load<Texture2D>("FirstLevel/plx-3");
-            firstLevelBackground4 = Content.Load<Texture2D>("FirstLevel/plx-4");
-            firstLevelBackground5 = Content.Load<Texture2D>("FirstLevel/plx-5");
+            background1 = Content.Load<Texture2D>("FirstLevel/plx-1");
+            background2 = Content.Load<Texture2D>("FirstLevel/plx-2");
+            background3 = Content.Load<Texture2D>("FirstLevel/plx-3");
+            background4 = Content.Load<Texture2D>("FirstLevel/plx-4");
+            background5 = Content.Load<Texture2D>("FirstLevel/plx-5");
             endScreen = Content.Load<Texture2D>("EndScreen/gameover");
 
             //Map
@@ -169,7 +169,7 @@ namespace GameDev_project
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  1,  1,  2,  2,  2,  0,  0,  0,  0,  0,  0,  2,  2},
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  1,  0,  0,  0,  0,  0,  2,  2},
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  2,  2},
-{2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  2,  2},
+{2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  2,  2},
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  2,  2},
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  1,  0,  2,  2},
 {2, 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  2},

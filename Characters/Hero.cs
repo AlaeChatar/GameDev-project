@@ -20,7 +20,11 @@ namespace GameDev_project.Characters
 
         private bool hasJumped = false;
 
-        public Vector2 Position { get { return position; } }
+        public Vector2 Position 
+        { 
+            get { return position; }
+            set { position = value; }
+        }
         public Rectangle HitBox { get; set; }
 
         public Hero(Texture2D texture)

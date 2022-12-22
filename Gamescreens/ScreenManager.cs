@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -38,7 +39,7 @@ namespace GameDev_project.Gamescreens
         TileSet tileSet1;
         TileSet tileSet2;
 
-        Rectangle obstakel = new Rectangle((int)1905, (int)390, 30, 120);
+        Rectangle checkpoint1 = new Rectangle((int)1919, (int)390, 30, 120);
 
         public ScreenManager(Hero hero, Player player, Enemy enemy, Boss boss, Texture2D blokTexture, StartScreen startScreen, FirstLevel firstLevel, FinalLevel finalLevel, Goal goal, GameOver gameOver, TileSet tileSet, TileSet tileSet2)
         {
@@ -58,22 +59,24 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            
+
             switch (currentState)
-            {
+            {   
                 case Gamestates.Start:
                     startScreen.Draw(spriteBatch);
                     break;
                 case Gamestates.FirstLevel:
                     firstLevel.Draw(spriteBatch);
-                    //player.Draw(spriteBatch);
-                    spriteBatch.Draw(blokTexture, obstakel, Color.Red);
-                    hero.Draw(spriteBatch);
+                    spriteBatch.Draw(blokTexture, checkpoint1, Color.Red);
                     tileSet1.Draw(spriteBatch);
+                    hero.Draw(spriteBatch);
                     break;
                 case Gamestates.FinalLevel:
                     finalLevel.Draw(spriteBatch);
-                    player.Draw(spriteBatch);
                     tileSet2.Draw(spriteBatch);
+                    hero.Position = new Vector2(65, 400);
+                    hero.Draw(spriteBatch);
                     break;
                 case Gamestates.GameOver:
                     gameOver.Draw(spriteBatch);
@@ -87,20 +90,27 @@ namespace GameDev_project.Gamescreens
 
         public void Update(GameTime gameTime)
         {
-            hero.Update(gameTime);
-            foreach (CollisionBlocks block in tileSet1.CollisionBlocks)
+            
+            // Map collision
+            if (currentState == Gamestates.FirstLevel)
             {
-                hero.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
+                hero.Update(gameTime);
+                foreach (CollisionBlocks block in tileSet1.CollisionBlocks)
+                    hero.Collision(block.Rectangle, tileSet1.Width, tileSet1.Height);
             }
-            player.Update(gameTime);
+            if (currentState == Gamestates.FinalLevel)
+            {
+                hero.Update(gameTime);
+                foreach (CollisionBlocks block in tileSet2.CollisionBlocks)
+                    hero.Collision(block.Rectangle, tileSet2.Width, tileSet2.Height);
+            }            
 
-            if (player.HitBox.Intersects(obstakel))
-                player.IsHit = true;
-
+            //if (player.HitBox.Intersects(checkpoint1))
+            //    player.IsHit = true;
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
                 currentState = Gamestates.FirstLevel;
-            if (hero.HitBox.Intersects(obstakel) == true)
+            if (hero.HitBox.Intersects(checkpoint1) == true || Keyboard.GetState().IsKeyDown(Keys.L))
                 currentState = Gamestates.FinalLevel;
             //if (boss.IsDead == true && currentState == Gamestates.FinalLevel)
             //    currentState = Gamestates.Goal;

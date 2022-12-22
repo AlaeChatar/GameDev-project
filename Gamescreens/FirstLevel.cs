@@ -11,29 +11,29 @@ namespace GameDev_project.Gamescreens
 {
     internal class FirstLevel
     {
-        private Texture2D firstLevelBackground1;
-        private Texture2D firstLevelBackground2;
-        private Texture2D firstLevelBackground3;
-        private Texture2D firstLevelBackground4;
-        private Texture2D firstLevelBackground5;
+        private Texture2D background1;
+        private Texture2D background2;
+        private Texture2D background3;
+        private Texture2D background4;
+        private Texture2D background5;
 
 
-        public FirstLevel(Texture2D firstLevelBackground1, Texture2D firstLevelBackground2, Texture2D firstLevelBackground3, Texture2D firstLevelBackground4, Texture2D firstLevelBackground5)
+        public FirstLevel(Texture2D background1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5)
         {
-            this.firstLevelBackground1 = firstLevelBackground1;
-            this.firstLevelBackground2 = firstLevelBackground2;
-            this.firstLevelBackground3 = firstLevelBackground3;
-            this.firstLevelBackground4 = firstLevelBackground4;
-            this.firstLevelBackground5 = firstLevelBackground5;
+            this.background1 = background1;
+            this.background2 = background2;
+            this.background3 = background3;
+            this.background4 = background4;
+            this.background5 = background5;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(firstLevelBackground1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(firstLevelBackground5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(background1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(background2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
         }
     }
 }
