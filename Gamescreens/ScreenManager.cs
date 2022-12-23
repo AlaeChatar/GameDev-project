@@ -43,8 +43,6 @@ namespace GameDev_project.Gamescreens
 
         public void Update(GameTime gameTime)
         {
-
-            // Map collision
             if (currentState == Gamestates.Level1)
                 level1.Update(gameTime);
             if (currentState == Gamestates.Level2)
@@ -52,8 +50,6 @@ namespace GameDev_project.Gamescreens
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
                 currentState = Gamestates.Level1;
-            if (Keyboard.GetState().IsKeyDown(Keys.L) && currentState == Gamestates.Level1)
-                currentState = Gamestates.Level2;
             //if (boss.IsDead == true && currentState == Gamestates.FinalLevel)
             //    currentState = Gamestates.Goal;
             //if (player.IsDead == true && currentState == Gamestates.FirstLevel || currentState == Gamestates.FinalLevel)

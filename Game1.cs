@@ -1,4 +1,5 @@
-﻿using GameDev_project.Characters;
+﻿using GameDev_project.Animations;
+using GameDev_project.Characters;
 using GameDev_project.Gamescreens;
 using GameDev_project.Interfaces;
 using GameDev_project.Map;
@@ -16,7 +17,7 @@ namespace GameDev_project
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         
-        // Startscreen resources
+        // Screen resources
         Texture2D startScreenBackground;
         Texture2D background1;
         Texture2D background2;
@@ -27,8 +28,6 @@ namespace GameDev_project
         Texture2D dinoHead;
         SpriteFont titleFont;
         SpriteFont pressEnterFont;
-
-        //GameOver resources
         Texture2D endScreen;
 
         // Characters
@@ -48,12 +47,15 @@ namespace GameDev_project
         TileSet tileSet1;
         TileSet tileSet2;
 
+        Camera camera;
+
  
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -67,8 +69,8 @@ namespace GameDev_project
             heroOne = new Hero(blokTexture, new Vector2(100, 900));
             heroTwo = new Hero(blokTexture, new Vector2(10, 420));
             startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, tileSet1, pressEnterFont);
-            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, tileSet2, pressEnterFont);
+            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, tileSet1, camera, pressEnterFont);
+            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, tileSet2, camera, pressEnterFont);
             goal = new Goal();
             gameOver = new GameOver(endScreen);
             screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, pressEnterFont);
@@ -77,9 +79,9 @@ namespace GameDev_project
         protected override void LoadContent()
         {
             // TODO: use this.Content to load your game content here
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
             blokTexture = new Texture2D(GraphicsDevice, 1, 1);
             blokTexture.SetData(new[] { Color.White });
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
             startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");
             dinoHead = Content.Load<Texture2D>("Startscreen/dinohead");
             woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");
@@ -94,7 +96,6 @@ namespace GameDev_project
 
             //Map
             Block.Content = Content;
-
             tileSet1.Create(new int[,]
             {
                 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
@@ -135,7 +136,6 @@ namespace GameDev_project
 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  2,  0,  2,  0,  2,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
 
             }, 30);
-
             tileSet2.Create(new int[,]
             {
                 {2, 2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
@@ -176,6 +176,8 @@ namespace GameDev_project
 {2, 2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  4,  4,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  0,  2,  0,  2,  0,  2,  0,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2,  2},
 
             }, 30);
+
+            camera = new Camera(GraphicsDevice.Viewport);
         }
 
         protected override void Update(GameTime gameTime)
@@ -191,7 +193,7 @@ namespace GameDev_project
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Olive);
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
             // TODO: Add your drawing code here
             screenManager.Draw(_spriteBatch);
             _spriteBatch.End();

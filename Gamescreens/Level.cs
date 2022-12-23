@@ -1,4 +1,5 @@
-﻿using GameDev_project.Characters;
+﻿using GameDev_project.Animations;
+using GameDev_project.Characters;
 using GameDev_project.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,13 +28,14 @@ namespace GameDev_project.Gamescreens
 
         // Map
         TileSet tileSet;
-        Rectangle checkpoint1 = new Rectangle((int)1919, (int)390, 30, 120);
+        Rectangle checkpoint1 = new Rectangle((int)1919, (int)330, 30, 120);
         Rectangle checkpoint2 = new Rectangle((int)-29, (int)330, 30, 120);
 
+        private Camera camera;
         private SpriteFont font;
 
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, TileSet tileSet, SpriteFont font)
+        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, TileSet tileSet, Camera camera, SpriteFont font)
         {
             this.background1 = backkground1;
             this.background2 = background2;
@@ -46,6 +48,7 @@ namespace GameDev_project.Gamescreens
 
             this.tileSet = tileSet;
 
+            this.camera = camera;
             this.font = font;
         }
 
@@ -72,12 +75,16 @@ namespace GameDev_project.Gamescreens
         {
             hero.Update(gameTime);
 
+            // Map collision
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
+            {
                 hero.Collision(block.Rectangle, tileSet.Width, tileSet.Height);
+                camera.Update(hero.Position, tileSet.Width, tileSet.Height);
+            }
 
-            if (hero.HitBox.Intersects(checkpoint1) == true || Keyboard.GetState().IsKeyDown(Keys.L))
+            if (hero.HitBox.Intersects(checkpoint1) == true)
                 currentState = Gamestates.Level2;
-            if (hero.HitBox.Intersects(checkpoint2) == true || Keyboard.GetState().IsKeyDown(Keys.L))
+            if (hero.HitBox.Intersects(checkpoint2) == true)
                 currentState = Gamestates.Level1;
 
             //if (player.HitBox.Intersects(checkpoint1))
