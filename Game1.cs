@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Timers;
+using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project
 {
@@ -53,8 +54,8 @@ namespace GameDev_project
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
-            _graphics.PreferredBackBufferWidth = 1920;
-            _graphics.PreferredBackBufferHeight = 1080;
+            _graphics.PreferredBackBufferWidth = 960;
+            _graphics.PreferredBackBufferHeight = 540;
             _graphics.IsFullScreen = false;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -193,7 +194,13 @@ namespace GameDev_project
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Olive);
-            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
+
+            if (currentState == Gamestates.Start || 
+                currentState == Gamestates.Goal ||
+                currentState == Gamestates.GameOver)
+                _spriteBatch.Begin();
+            else
+                _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
             // TODO: Add your drawing code here
             screenManager.Draw(_spriteBatch);
             _spriteBatch.End();
@@ -201,3 +208,4 @@ namespace GameDev_project
         }
     }
 }
+

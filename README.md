@@ -6,7 +6,7 @@ done:
 - player movement
 - level 1 map
 - level 2 map
-- camera follow player
+- camera follow player?
 - collision
 - gameover screen?
 
