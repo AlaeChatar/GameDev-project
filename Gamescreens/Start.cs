@@ -29,11 +29,16 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(woodenPlank, new Rectangle(0, 0, 1920, 360), Color.Brown);
-            spriteBatch.DrawString(titleFont, "Jurassic Jungle", new Vector2(120, 120), Color.DarkRed);
-            spriteBatch.Draw(dinoHead, new Rectangle(100, 100, 1500, 1050), Color.Olive);
-            spriteBatch.DrawString(pressEnterFont, "PRESS ENTER", new Vector2(775, 600), Color.White);
+            spriteBatch.Draw(background, new Rectangle(0, 0, 960, 540), Color.Olive);
+            spriteBatch.Draw(woodenPlank, new Rectangle(0, 0, 960, 150), Color.Brown);
+            spriteBatch.DrawString(titleFont, "Jurassic Jungle", new Vector2(90, 45), Color.DarkRed);
+            spriteBatch.Draw(dinoHead, new Rectangle(50, 60, 750, 510), Color.Olive);
+            spriteBatch.DrawString(pressEnterFont, "PRESS ENTER", new Vector2(380, 270), Color.White);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            //animate background gif
         }
     }
 }

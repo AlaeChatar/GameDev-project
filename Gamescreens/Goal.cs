@@ -13,10 +13,7 @@ namespace GameDev_project.Gamescreens
     {
         public void Draw(SpriteBatch spriteBatch)
         {
-        }
 
-        public void Update(GameTime gameTime)
-        {
         }
     }
 }

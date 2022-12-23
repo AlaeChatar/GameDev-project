@@ -21,7 +21,7 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(endScreen, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            spriteBatch.Draw(endScreen, new Rectangle(0, 0, 960, 540), Color.Olive);
         }
     }
 }
