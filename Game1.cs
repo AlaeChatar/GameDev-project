@@ -2,7 +2,6 @@
 using GameDev_project.Gamescreens;
 using GameDev_project.Interfaces;
 using GameDev_project.Map;
-using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -34,19 +33,14 @@ namespace GameDev_project
 
         // Characters
         Texture2D blokTexture;
-        Player player;
-        IInputReader inputReader;
-        Vector2 positie = new Vector2(0, 0);
-        Hero heroFirstLevel;
-        Hero heroFinalLevel;
-        Boss boss;
-        Enemy enemy;
+        Hero heroOne;
+        Hero heroTwo;
 
         // Screens
         ScreenManager screenManager;
-        StartScreen startScreen;
-        FirstLevel firstLevel;
-        FinalLevel finalLevel;
+        Start startScreen;
+        Level levelOne;
+        Level levelTwo;
         Goal goal;
         GameOver gameOver;
 
@@ -70,15 +64,14 @@ namespace GameDev_project
             tileSet1 = new TileSet();
             tileSet2 = new TileSet();
             base.Initialize();
-            heroFirstLevel = new Hero(blokTexture, new Vector2(100, 900));
-            heroFinalLevel = new Hero(blokTexture, new Vector2(5, 400));
-            player = new Player(blokTexture, inputReader);
-            startScreen = new StartScreen(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            firstLevel = new FirstLevel(background1, background2, background3, background4, background5);
-            finalLevel = new FinalLevel(background1, background2, background3, background4, background5);
+            heroOne = new Hero(blokTexture, new Vector2(100, 900));
+            heroTwo = new Hero(blokTexture, new Vector2(10, 420));
+            startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
+            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, tileSet1, pressEnterFont);
+            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, tileSet2, pressEnterFont);
             goal = new Goal();
             gameOver = new GameOver(endScreen);
-            screenManager = new ScreenManager(heroFirstLevel, heroFinalLevel, enemy, boss, blokTexture, startScreen, firstLevel, finalLevel, goal, gameOver, tileSet1, tileSet2);
+            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, pressEnterFont);
         }
 
         protected override void LoadContent()
@@ -87,7 +80,6 @@ namespace GameDev_project
             blokTexture = new Texture2D(GraphicsDevice, 1, 1);
             blokTexture.SetData(new[] { Color.White });
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            inputReader = new KeyboardReader();
             startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");
             dinoHead = Content.Load<Texture2D>("Startscreen/dinohead");
             woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");
@@ -202,7 +194,6 @@ namespace GameDev_project
             _spriteBatch.Begin();
             // TODO: Add your drawing code here
             screenManager.Draw(_spriteBatch);
-            _spriteBatch.DrawString(pressEnterFont, $"{heroFirstLevel.Position.X} : {string.Format("{0:F0}", heroFirstLevel.Position.Y)}", new Vector2(500, 500), Color.Yellow);
             _spriteBatch.End();
             base.Draw(gameTime);
         }

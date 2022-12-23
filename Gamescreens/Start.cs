@@ -1,5 +1,4 @@
 ﻿using GameDev_project.Interfaces;
-using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -10,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Gamescreens
 {
-    internal class StartScreen
+    internal class Start
     {
         private Texture2D background;
         private Texture2D dinoHead;
@@ -19,7 +18,7 @@ namespace GameDev_project.Gamescreens
         private SpriteFont pressEnterFont;
 
 
-        public StartScreen(Texture2D background,  Texture2D dinoHead, Texture2D woodenPlank, SpriteFont titleFont, SpriteFont pressEnterFont)
+        public Start(Texture2D background,  Texture2D dinoHead, Texture2D woodenPlank, SpriteFont titleFont, SpriteFont pressEnterFont)
         {
             this.background = background;
             this.dinoHead = dinoHead;
