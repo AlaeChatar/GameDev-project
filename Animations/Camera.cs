@@ -24,17 +24,17 @@ namespace GameDev_project.Animations
 
         public void Update(Vector2 position, int xOffset, int yOffset)
         {
-            if (position.X < viewport.Width / 2)
-                centre.X = viewport.Width / 2;
-            else if (position.X > xOffset - (viewport.Width / 2))
-                centre.X = xOffset - (viewport.Width / 2);
+            if (position.X < viewport.Width / 4)
+                centre.X = viewport.Width / 4;
+            else if (position.X > xOffset - (viewport.Width / 4))
+                centre.X = xOffset - (viewport.Width / 4);
             else
                 centre.X = position.X;
 
-            if (position.Y < viewport.Height / 2)
-                centre.Y = viewport.Height / 2;
-            else if (position.Y > yOffset - (viewport.Height / 2))
-                centre.Y = yOffset - (viewport.Height / 2);
+            if (position.Y < viewport.Height / 4)
+                centre.Y = viewport.Height / 4;
+            else if (position.Y > yOffset - (viewport.Height / 4))
+                centre.Y = yOffset - (viewport.Height / 4);
             else
                 centre.Y = position.Y;
 
