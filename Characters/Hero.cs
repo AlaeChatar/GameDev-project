@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
@@ -29,12 +30,26 @@ namespace GameDev_project.Characters
                 position = value; 
             }
         }
+
+        // Interaction
         public Rectangle HitBox { get; set; }
+        public bool IsDead { get; set; }
+        public int HP { get; set; }
+        public bool IsHit { get; set; }
+        public float invulnerability;
+
+        // Sprite
+        //Animation animation;
 
         public Hero(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
+
+            HP = 3;
+            IsDead = false;
+
+            //animation.GetFramesFromTextureProperties(texture.Width, y, 6);
         }
 
         public void Update(GameTime gameTime)
@@ -47,9 +62,17 @@ namespace GameDev_project.Characters
             if (velocity.Y < 10)
                 velocity.Y += 0.4f;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
-                position = new Vector2(100, 900);
-
+            if (currentState == Gamestates.Level1)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.R))
+                    position = new Vector2(100, 900);
+            }
+            if (currentState == Gamestates.Level2)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.R))
+                    position = new Vector2(100, 350);
+            }
+            
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
 
@@ -95,7 +118,13 @@ namespace GameDev_project.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.Brown);
+            if (invulnerability <= 0)
+                spriteBatch.Draw(texture, rectangle, Color.Yellow);
+            else
+            {
+                spriteBatch.Draw(texture, rectangle, Color.Red);
+                IsHit = false;
+            }
         }
     }
 }
