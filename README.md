@@ -9,12 +9,15 @@ done:
 - camera follow player
 - collision
 - gameover screen?
+- player hit/damage/hp
+- enemies?
+
 
 to-do:
 - main menu buttons
 - options
-- enemies/boss?
-- player attack
+- boss?
+- player attack?
 - victory/goal screen
 - make character class
 - make player, enemy and boss inherit from character
