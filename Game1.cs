@@ -35,6 +35,10 @@ namespace GameDev_project
         Texture2D blokTexture;
         Hero heroOne;
         Hero heroTwo;
+        List<Enemy> enemiesLevel1 = new List<Enemy>();
+        Enemy enemyOne;
+        Enemy enemyTwo;
+        List<Enemy> enemiesLevel2 = new List<Enemy>();
 
         // Screens
         ScreenManager screenManager;
@@ -69,9 +73,11 @@ namespace GameDev_project
             base.Initialize();
             heroOne = new Hero(blokTexture, new Vector2(100, 900));
             heroTwo = new Hero(blokTexture, new Vector2(10, 420));
+            enemiesLevel1.Add(enemyOne = new Enemy(blokTexture, new Vector2(430, 900)));
+            enemiesLevel1.Add(enemyTwo = new Enemy(blokTexture, new Vector2(60, 420)));
             startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, tileSet1, camera, pressEnterFont);
-            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, tileSet2, camera, pressEnterFont);
+            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, enemiesLevel1, tileSet1, camera, pressEnterFont);
+            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, enemiesLevel2, tileSet2, camera, pressEnterFont);
             goal = new Goal();
             gameOver = new GameOver(endScreen);
             screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, pressEnterFont);

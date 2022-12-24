@@ -25,6 +25,7 @@ namespace GameDev_project.Gamescreens
         // Characters
         private Texture2D texture;
         private Hero hero;
+        private List<Enemy> enemies;
 
         // Map
         TileSet tileSet;
@@ -35,7 +36,7 @@ namespace GameDev_project.Gamescreens
         private SpriteFont font;
 
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, TileSet tileSet, Camera camera, SpriteFont font)
         {
             this.background1 = backkground1;
             this.background2 = background2;
@@ -45,6 +46,7 @@ namespace GameDev_project.Gamescreens
 
             this.texture = texture;
             this.hero = hero;
+            this.enemies = enemies;
 
             this.tileSet = tileSet;
 
@@ -61,19 +63,27 @@ namespace GameDev_project.Gamescreens
             spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
 
             // Transition to other level
-            spriteBatch.Draw(texture, checkpoint1, Color.Red);
-            spriteBatch.Draw(texture, checkpoint2, Color.Red);
+            spriteBatch.Draw(texture, checkpoint1, Color.Black);
+            spriteBatch.Draw(texture, checkpoint2, Color.Black);
 
             tileSet.Draw(spriteBatch);
             hero.Draw(spriteBatch);
+            foreach (Enemy enemy in enemies)
+                enemy.Draw(spriteBatch);
 
             // Hero position
-            spriteBatch.DrawString(font, $"{hero.Position.X} : {string.Format("{0:F0}", hero.Position.Y)}", new Vector2(50, 0), Color.Yellow);
+            spriteBatch.DrawString(font, $"{Math.Round(hero.Position.X)} : {string.Format("{0:F0}", Math.Round(hero.Position.Y))}", new Vector2(hero.Position.X - 30, hero.Position.Y - 60), Color.White);
         }
 
         public void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
+            foreach (Enemy enemy in enemies)
+            {
+                enemy.Update(gameTime);
+                if (hero.HitBox.Intersects(enemy.HitBox))
+                    hero.IsHit = true;
+            }
 
             // Map collision
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
@@ -86,9 +96,8 @@ namespace GameDev_project.Gamescreens
                 currentState = Gamestates.Level2;
             if (hero.HitBox.Intersects(checkpoint2) == true)
                 currentState = Gamestates.Level1;
-
-            //if (player.HitBox.Intersects(checkpoint1))
-            //    player.IsHit = true;
+            if (hero.IsDead == true)
+                currentState = Gamestates.GameOver;     
         }
     }
 }

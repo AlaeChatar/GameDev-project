@@ -3,6 +3,7 @@ using GameDev_project.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,9 @@ namespace GameDev_project.Characters
     internal class Hero : IGameObject
     {
         private Texture2D texture;
-        private Vector2 position;
         private Vector2 velocity;
         private Rectangle rectangle;
-
-        private bool hasJumped = false;
-
+        private Vector2 position;
         public Vector2 Position 
         { 
             get { return position; }
@@ -34,9 +32,10 @@ namespace GameDev_project.Characters
         // Interaction
         public Rectangle HitBox { get; set; }
         public bool IsDead { get; set; }
-        public int HP { get; set; }
+        public int Hp { get; set; }
         public bool IsHit { get; set; }
         public float invulnerability;
+        private bool hasJumped = false;
 
         // Sprite
         //Animation animation;
@@ -46,7 +45,7 @@ namespace GameDev_project.Characters
             this.texture = texture;
             this.position = position;
 
-            HP = 3;
+            Hp = 3;
             IsDead = false;
 
             //animation.GetFramesFromTextureProperties(texture.Width, y, 6);
@@ -62,6 +61,7 @@ namespace GameDev_project.Characters
             if (velocity.Y < 10)
                 velocity.Y += 0.4f;
 
+            // Respawn
             if (currentState == Gamestates.Level1)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
@@ -72,21 +72,33 @@ namespace GameDev_project.Characters
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
                     position = new Vector2(100, 350);
             }
-            
+
+            //invincible timer
+            invulnerability -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (IsHit == true && invulnerability <= 0)
+            {
+                //voor hoelang is die invincible na een hit
+                invulnerability = 0.5f;
+                Hp--;
+            }
+
+            if (Hp == 0)
+                IsDead = true;
+
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
 
         private void Input(GameTime gameTime)
         {
 
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             // Om te vermeiden dat lag invloed heeft op onze movement
-            else if (Keyboard.GetState().IsKeyDown(Keys.A))
+            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
                 velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             else velocity.X = 0f;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.W) && hasJumped == false)
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
             {
                 position.Y -= 5f;
                 velocity.Y = -9f;
@@ -123,7 +135,7 @@ namespace GameDev_project.Characters
             else
             {
                 spriteBatch.Draw(texture, rectangle, Color.Red);
-                IsHit = false;
+                IsHit= false;
             }
         }
     }

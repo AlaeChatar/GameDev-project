@@ -52,8 +52,6 @@ namespace GameDev_project.Gamescreens
                 currentState = Gamestates.Level1;
             //if (boss.IsDead == true && currentState == Gamestates.FinalLevel)
             //    currentState = Gamestates.Goal;
-            //if (player.IsDead == true && currentState == Gamestates.FirstLevel || currentState == Gamestates.FinalLevel)
-            //    currentState = Gamestates.GameOver;
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver)
                 currentState = Gamestates.Level1;
         }
