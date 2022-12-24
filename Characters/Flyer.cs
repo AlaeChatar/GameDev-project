@@ -12,19 +12,20 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Enemy1 : IGameObject
+    internal class Flyer : Enemy, IGameObject
     {
         private Texture2D texture;
         private Vector2 velocity;
         private Rectangle rectangle;
         private Vector2 position;
-        public Vector2 Position 
-        { 
+        public Vector2 Position
+        {
             get { return position; }
-            set {
+            set
+            {
                 position.X = value.X;
                 position.Y = value.Y;
-                position = value; 
+                position = value;
             }
         }
 
@@ -38,7 +39,7 @@ namespace GameDev_project.Characters
         // Sprite
         //Animation animation;
 
-        public Enemy1(Texture2D texture, Vector2 position)
+        public Flyer(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
@@ -80,14 +81,14 @@ namespace GameDev_project.Characters
                 position.X -= 3;
                 if (position.X == limitLeft)
                     turn = false;
-            }            
+            }
 
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.Black);
+            spriteBatch.Draw(texture, rectangle, Color.Orange);
         }
     }
 }

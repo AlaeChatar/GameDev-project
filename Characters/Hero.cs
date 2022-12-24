@@ -65,12 +65,20 @@ namespace GameDev_project.Characters
             if (currentState == Gamestates.Level1)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
+                {
                     position = new Vector2(100, 900);
+                    IsDead = false;
+                    Hp = 3;
+                }   
             }
             if (currentState == Gamestates.Level2)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.R))
+                {
                     position = new Vector2(100, 350);
+                    IsDead = false;
+                    Hp = 3;
+                }
             }
 
             //invincible timer

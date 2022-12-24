@@ -25,7 +25,7 @@ namespace GameDev_project.Gamescreens
         // Characters
         private Texture2D texture;
         private Hero hero;
-        private List<Enemy1> enemies;
+        private List<Crawler> enemies;
 
         // Map
         TileSet tileSet;
@@ -36,7 +36,7 @@ namespace GameDev_project.Gamescreens
         private SpriteFont font;
 
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy1> enemies, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Crawler> enemies, TileSet tileSet, Camera camera, SpriteFont font)
         {
             this.background1 = backkground1;
             this.background2 = background2;
@@ -68,7 +68,7 @@ namespace GameDev_project.Gamescreens
 
             tileSet.Draw(spriteBatch);
             hero.Draw(spriteBatch);
-            foreach (Enemy1 enemy in enemies)
+            foreach (Crawler enemy in enemies)
                 enemy.Draw(spriteBatch);
 
             // Hero position
@@ -78,7 +78,7 @@ namespace GameDev_project.Gamescreens
         public void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
-            foreach (Enemy1 enemy in enemies)
+            foreach (Crawler enemy in enemies)
             {
                 enemy.Update(gameTime);
                 if (hero.HitBox.Intersects(enemy.HitBox))

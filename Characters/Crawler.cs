@@ -12,20 +12,19 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Enemy2 : IGameObject
+    internal class Crawler : Enemy, IGameObject
     {
         private Texture2D texture;
         private Vector2 velocity;
         private Rectangle rectangle;
         private Vector2 position;
-        public Vector2 Position
-        {
+        public Vector2 Position 
+        { 
             get { return position; }
-            set
-            {
+            set {
                 position.X = value.X;
                 position.Y = value.Y;
-                position = value;
+                position = value; 
             }
         }
 
@@ -39,7 +38,7 @@ namespace GameDev_project.Characters
         // Sprite
         //Animation animation;
 
-        public Enemy2(Texture2D texture, Vector2 position)
+        public Crawler(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
@@ -81,7 +80,7 @@ namespace GameDev_project.Characters
                 position.X -= 3;
                 if (position.X == limitLeft)
                     turn = false;
-            }
+            }            
 
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
