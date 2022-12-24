@@ -12,19 +12,20 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Enemy : IGameObject
+    internal class Enemy2 : IGameObject
     {
         private Texture2D texture;
         private Vector2 velocity;
         private Rectangle rectangle;
         private Vector2 position;
-        public Vector2 Position 
-        { 
+        public Vector2 Position
+        {
             get { return position; }
-            set {
+            set
+            {
                 position.X = value.X;
                 position.Y = value.Y;
-                position = value; 
+                position = value;
             }
         }
 
@@ -38,7 +39,7 @@ namespace GameDev_project.Characters
         // Sprite
         //Animation animation;
 
-        public Enemy(Texture2D texture, Vector2 position)
+        public Enemy2(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
@@ -80,31 +81,10 @@ namespace GameDev_project.Characters
                 position.X -= 3;
                 if (position.X == limitLeft)
                     turn = false;
-            }            
+            }
 
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
         }
-
-        //public void Collision(Rectangle newRect, int xOffset, int yOffset)
-        //{
-        //    if (rectangle.TouchTopOf(newRect))
-        //    {
-        //        rectangle.Y = newRect.Y - rectangle.Height;
-        //        velocity.Y = 0f;
-        //    }
-        //    if (rectangle.TouchLeftOf(newRect))
-        //        position.X = newRect.X - rectangle.Width - 2; 
-        //    if (rectangle.TouchRightOf(newRect))
-        //        position.X = newRect.X + newRect.Width + 2;
-        //    if (rectangle.TouchBottomOf(newRect))
-        //        velocity.Y = 1f;
-
-        //    if (position.X < 0) position.X = 0;
-        //    if (position.X > xOffset - rectangle.Width) position.X = xOffset - rectangle.Width;
-        //    if (position.Y < 0) velocity.Y = 1f;
-        //    if (position.Y > xOffset - rectangle.Height) position.Y = yOffset - rectangle.Height;
-
-        //}
 
         public void Draw(SpriteBatch spriteBatch)
         {
