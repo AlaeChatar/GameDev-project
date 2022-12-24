@@ -11,6 +11,7 @@ done:
 - gameover screen?
 - player hit/damage/hp
 - enemies?
+- IHealth interface (takeDamage and Die method)
 
 
 to-do:
