@@ -25,18 +25,19 @@ namespace GameDev_project.Gamescreens
         // Characters
         private Texture2D texture;
         private Hero hero;
-        private List<Crawler> enemies;
+        private List<Enemy> enemies;
 
         // Map
         TileSet tileSet;
         Rectangle checkpoint1 = new Rectangle((int)1919, (int)330, 30, 120);
         Rectangle checkpoint2 = new Rectangle((int)-29, (int)330, 30, 120);
+        Rectangle goal = new Rectangle((int)30, (int)870, 30, 60);
 
         private Camera camera;
         private SpriteFont font;
 
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Crawler> enemies, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, TileSet tileSet, Camera camera, SpriteFont font)
         {
             this.background1 = backkground1;
             this.background2 = background2;
@@ -66,19 +67,31 @@ namespace GameDev_project.Gamescreens
             spriteBatch.Draw(texture, checkpoint1, Color.Black);
             spriteBatch.Draw(texture, checkpoint2, Color.Black);
 
+            foreach (Walker enemy in enemies.OfType<Walker>())
+                enemy.Draw(spriteBatch);
+            foreach (Jumper enemy in enemies.OfType<Jumper>())
+                enemy.Draw(spriteBatch);
             tileSet.Draw(spriteBatch);
             hero.Draw(spriteBatch);
-            foreach (Crawler enemy in enemies)
-                enemy.Draw(spriteBatch);
-
+            
             // Hero position
             spriteBatch.DrawString(font, $"{Math.Round(hero.Position.X)} : {string.Format("{0:F0}", Math.Round(hero.Position.Y))}", new Vector2(hero.Position.X - 30, hero.Position.Y - 60), Color.White);
+
+            if (currentState == Gamestates.Level2)
+                spriteBatch.Draw(texture, goal, Color.Blue);
         }
 
         public void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
-            foreach (Crawler enemy in enemies)
+            foreach (Walker enemy in enemies.OfType<Walker>())
+            {
+                enemy.Update(gameTime);
+                if (hero.HitBox.Intersects(enemy.HitBox))
+                    hero.IsHit = true;
+            }
+
+            foreach (Jumper enemy in enemies.OfType<Jumper>())
             {
                 enemy.Update(gameTime);
                 if (hero.HitBox.Intersects(enemy.HitBox))
@@ -96,8 +109,8 @@ namespace GameDev_project.Gamescreens
                 currentState = Gamestates.Level2;
             if (hero.HitBox.Intersects(checkpoint2) == true)
                 currentState = Gamestates.Level1;
-            if (hero.IsDead == true)
-                currentState = Gamestates.GameOver;     
+            if (hero.HitBox.Intersects(goal) == true)
+                currentState = Gamestates.Goal;
         }
     }
 }

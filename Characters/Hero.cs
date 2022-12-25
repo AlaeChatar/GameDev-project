@@ -13,12 +13,9 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Hero : IGameObject
+    internal class Hero : Character, IGameObject, IHealth
     {
-        private Texture2D texture;
         private Vector2 velocity;
-        private Rectangle rectangle;
-        private Vector2 position;
         public Vector2 Position 
         { 
             get { return position; }
@@ -30,75 +27,57 @@ namespace GameDev_project.Characters
         }
 
         // Interaction
-        public Rectangle HitBox { get; set; }
         public bool IsDead { get; set; }
-        public int Hp { get; set; }
+        public int Health { get; set; }
         public bool IsHit { get; set; }
         public float invulnerability;
         private bool hasJumped = false;
 
-        // Sprite
-        //Animation animation;
 
         public Hero(Texture2D texture, Vector2 position)
         {
             this.texture = texture;
             this.position = position;
 
-            Hp = 3;
+            Health = 3;
             IsDead = false;
-
-            //animation.GetFramesFromTextureProperties(texture.Width, y, 6);
         }
 
-        public void Update(GameTime gameTime)
+        public void TakeDamage(GameTime gameTime)
         {
-            position += velocity;
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 30, 30);
-
-            Input(gameTime);
-
-            if (velocity.Y < 10)
-                velocity.Y += 0.4f;
-
-            // Respawn
-            if (currentState == Gamestates.Level1)
-            {
-                if (Keyboard.GetState().IsKeyDown(Keys.R))
-                {
-                    position = new Vector2(100, 900);
-                    IsDead = false;
-                    Hp = 3;
-                }   
-            }
-            if (currentState == Gamestates.Level2)
-            {
-                if (Keyboard.GetState().IsKeyDown(Keys.R))
-                {
-                    position = new Vector2(100, 350);
-                    IsDead = false;
-                    Hp = 3;
-                }
-            }
-
             //invincible timer
             invulnerability -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (IsHit == true && invulnerability <= 0)
             {
                 //voor hoelang is die invincible na een hit
                 invulnerability = 0.5f;
-                Hp--;
+                Health--;
             }
 
-            if (Hp == 0)
+            if (Health <= 0 || position.Y >= 1080)
                 IsDead = true;
+        }
 
-            HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+        public void Respawn()
+        {
+            if (currentState == Gamestates.Level1 && Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                IsHit = false;
+                IsDead = false;
+                Health = 3;
+                position = new Vector2(100, 900);
+            }
+            if (currentState == Gamestates.Level2 && Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                IsHit = false;
+                IsDead = false;
+                Health = 3;
+                position = new Vector2(100, 350);
+            }
         }
 
         private void Input(GameTime gameTime)
         {
-
             if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             // Om te vermeiden dat lag invloed heeft op onze movement
@@ -136,6 +115,22 @@ namespace GameDev_project.Characters
 
         }
 
+        public void Update(GameTime gameTime)
+        {
+            position += velocity;
+            rectangle = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+
+            Input(gameTime);
+
+            if (velocity.Y < 10)
+                velocity.Y += 0.4f;
+
+            Respawn();
+            TakeDamage(gameTime);
+
+            HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (invulnerability <= 0)
@@ -143,7 +138,7 @@ namespace GameDev_project.Characters
             else
             {
                 spriteBatch.Draw(texture, rectangle, Color.Red);
-                IsHit= false;
+                IsHit = false;
             }
         }
     }

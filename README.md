@@ -9,12 +9,14 @@ done:
 - camera follow player
 - collision
 - gameover screen?
+- victory screen?
+- enemies
+- player take damage
+- SOLID character with inheritance
 
 to-do:
 - main menu buttons
 - options
-- enemies/boss?
+- boss?
 - player attack
-- victory/goal screen
-- make character class
-- make player, enemy and boss inherit from character
+- take damage from lava
