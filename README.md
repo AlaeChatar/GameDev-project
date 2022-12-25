@@ -14,9 +14,12 @@ done:
 - player take damage
 - SOLID character with inheritance
 
+
 to-do:
 - main menu buttons
 - options
-- boss?
+- enemies/boss?
 - player attack
-- take damage from lava
+- victory/goal screen
+- make character class
+- make player, enemy and boss inherit from character
