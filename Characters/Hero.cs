@@ -1,9 +1,9 @@
-﻿using GameDev_project.Collision;
+﻿using GameDev_project.Animations;
+using GameDev_project.Collision;
 using GameDev_project.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,31 +16,28 @@ namespace GameDev_project.Characters
     internal class Hero : Character, IGameObject, IHealth
     {
         private Vector2 velocity;
-        public Vector2 Position 
-        { 
-            get { return position; }
-            set {
-                position.X = value.X;
-                position.Y = value.Y;
-                position = value; 
-            }
-        }
+        private Color hurt;
+        private bool right;
+        private bool left;
 
-        // Interaction
+        // IHealth
         public bool IsDead { get; set; }
         public int Health { get; set; }
         public bool IsHit { get; set; }
+
         public float invulnerability;
         private bool hasJumped = false;
 
 
-        public Hero(Texture2D texture, Vector2 position)
+        public Hero(Texture2D textureRight, Texture2D textureLeft, Vector2 position)
         {
-            this.texture = texture;
+            this.textureRight = textureRight;
+            this.textureLeft = textureLeft;
             this.position = position;
-
             Health = 3;
             IsDead = false;
+            animation = new Animation();
+            animation.GetFramesFromTextureProperties(textureRight.Width, textureRight.Height, 6, 1);
         }
 
         public void TakeDamage(GameTime gameTime)
@@ -78,11 +75,19 @@ namespace GameDev_project.Characters
 
         private void Input(GameTime gameTime)
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
-                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
             // Om te vermeiden dat lag invloed heeft op onze movement
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                right = true;
+                left = false;
+            }
             else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
                 velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                left = true;
+                right = false;
+            }
             else velocity.X = 0f;
 
             if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
@@ -95,51 +100,51 @@ namespace GameDev_project.Characters
 
         public void Collision(Rectangle newRect, int xOffset, int yOffset)
         {
-            if (rectangle.TouchTopOf(newRect))
+            if (HitBox.TouchTopOf(newRect))
             {
-                rectangle.Y = newRect.Y - rectangle.Height;
+                hitBox.Y = newRect.Y - hitBox.Height;
                 velocity.Y = 0f;
                 hasJumped = false;
             }
-            if (rectangle.TouchLeftOf(newRect))
-                position.X = newRect.X - rectangle.Width - 2; 
-            if (rectangle.TouchRightOf(newRect))
+            if (hitBox.TouchLeftOf(newRect))
+                position.X = newRect.X - hitBox.Width - 2;
+            if (hitBox.TouchRightOf(newRect))
                 position.X = newRect.X + newRect.Width + 2;
-            if (rectangle.TouchBottomOf(newRect))
+            if (hitBox.TouchBottomOf(newRect))
                 velocity.Y = 1f;
 
             if (position.X < 0) position.X = 0;
-            if (position.X > xOffset - rectangle.Width) position.X = xOffset - rectangle.Width;
+            if (position.X > xOffset - hitBox.Width) position.X = xOffset - hitBox.Width;
             if (position.Y < 0) velocity.Y = 1f;
-            if (position.Y > xOffset - rectangle.Height) position.Y = yOffset - rectangle.Height;
-
+            if (position.Y > xOffset - hitBox.Height) position.Y = yOffset - hitBox.Height;
         }
 
         public void Update(GameTime gameTime)
         {
             position += velocity;
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 30, 30);
-
             Input(gameTime);
-
+            
             if (velocity.Y < 10)
                 velocity.Y += 0.4f;
 
             Respawn();
             TakeDamage(gameTime);
 
+            if (invulnerability <= 0)
+                hurt = Color.White;
+            else
+                hurt = Color.Black;
+
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+            animation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (invulnerability <= 0)
-                spriteBatch.Draw(texture, rectangle, Color.Yellow);
-            else
-            {
-                spriteBatch.Draw(texture, rectangle, Color.Red);
-                IsHit = false;
-            }
+            if (right == true)
+                spriteBatch.Draw(textureRight, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, hurt);
+            if (left == true)
+                spriteBatch.Draw(textureLeft, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, hurt);
         }
     }
 }

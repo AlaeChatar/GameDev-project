@@ -12,11 +12,11 @@ namespace GameDev_project.Characters
 {
     internal class Enemy : Character
     {
-        private bool turn;
-        private bool bounce;
+        public bool turn;
+        public bool bounce;
 
-        int limit1;
-        int limit2;
+        private int limit1;
+        private int limit2;
 
         public void Turn()
         {

@@ -1,4 +1,5 @@
-﻿using GameDev_project.Collision;
+﻿using GameDev_project.Animations;
+using GameDev_project.Collision;
 using GameDev_project.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,34 +15,28 @@ namespace GameDev_project.Characters
 {
     internal class Walker : Enemy, IGameObject
     {
-        public Vector2 Position 
-        { 
-            get { return position; }
-            set {
-                position.X = value.X;
-                position.Y = value.Y;
-                position = value; 
-            }
-        }
-
-        public Walker(Texture2D texture, Vector2 position)
+        public Walker(Texture2D textureRight, Texture2D textureLeft, Vector2 position)
         {
-            this.texture = texture;
+            this.textureRight = textureRight;
+            this.textureLeft = textureLeft;
             this.position = position;
+            animation = new Animation();
+            animation.GetFramesFromTextureProperties(textureRight.Width, textureRight.Height, 6, 1);
         }
 
         public void Update(GameTime gameTime)
         {
-            rectangle = new Rectangle((int)position.X, (int)position.Y, 30, 30);
-
             Turn();            
-
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+            animation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, Color.Black);
+            if (turn == false)
+                spriteBatch.Draw(textureRight, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
+            if (turn == true)
+                spriteBatch.Draw(textureLeft, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
         }
     }
 }

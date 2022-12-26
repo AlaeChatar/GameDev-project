@@ -32,10 +32,22 @@ namespace GameDev_project
         Texture2D youLose;
         Texture2D youWin;
 
-        // Characters
+        // Sprites
         Texture2D blokTexture;
-        Hero heroOne;
-        Hero heroTwo;
+        // Character
+        // Hero
+        Texture2D heroRight;
+        Texture2D heroLeft;
+        Texture2D heroJump;
+        Texture2D heroDeath;
+        // Enemy
+        // Walker
+        Texture2D walkerRight;
+        Texture2D walkerLeft;
+
+        // Characters
+        Hero hero1;
+        Hero hero2;
         List<Enemy> enemiesLevel1 = new List<Enemy>();
         List<Enemy> enemiesLevel2 = new List<Enemy>();
 
@@ -73,18 +85,18 @@ namespace GameDev_project
             base.Initialize();
 
             // Player
-            heroOne = new Hero(blokTexture, new Vector2(100, 900));
-            heroTwo = new Hero(blokTexture, new Vector2(10, 420));
+            hero1 = new Hero(heroRight, heroLeft, new Vector2(100, 900));
+            hero2 = new Hero(heroRight, heroLeft, new Vector2(10, 420));
 
             // Enemies level 1
-            enemiesLevel1.Add(new Walker(blokTexture, new Vector2(430, 900)));
-            enemiesLevel1.Add(new Walker(blokTexture, new Vector2(60, 420)));
+            enemiesLevel1.Add(new Walker(walkerRight, walkerLeft, new Vector2(430, 900)));
+            enemiesLevel1.Add(new Walker(walkerRight, walkerLeft, new Vector2(60, 420)));
             enemiesLevel1.Add(new Jumper(blokTexture, new Vector2(1020, 1080)));
 
             // Enemies level 2
-            enemiesLevel2.Add(new Walker(blokTexture, new Vector2(1380, 480)));
-            enemiesLevel2.Add(new Walker(blokTexture, new Vector2(1470, 630)));
-            enemiesLevel2.Add(new Walker(blokTexture, new Vector2(800, 750)));
+            enemiesLevel2.Add(new Walker(walkerRight, walkerLeft, new Vector2(1380, 480)));
+            enemiesLevel2.Add(new Walker(walkerRight, walkerLeft, new Vector2(1470, 630)));
+            enemiesLevel2.Add(new Walker(walkerRight, walkerLeft, new Vector2(800, 750)));
             enemiesLevel2.Add(new Jumper(blokTexture, new Vector2(840, 300)));
             enemiesLevel2.Add(new Jumper(blokTexture, new Vector2(1020, 390)));
             enemiesLevel2.Add(new Jumper(blokTexture, new Vector2(1200, 300)));
@@ -96,19 +108,32 @@ namespace GameDev_project
 
             // Screens
             startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, heroOne, enemiesLevel1, tileSet1, camera, pressEnterFont);
-            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, heroTwo, enemiesLevel2, tileSet2, camera, pressEnterFont);
+            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, hero1, enemiesLevel1, tileSet1, camera, pressEnterFont);
+            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, hero2, enemiesLevel2, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
-            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, heroOne, heroTwo);
+            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
         }
 
         protected override void LoadContent()
         {
             // TODO: use this.Content to load your game content here
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            // Sprites
             blokTexture = new Texture2D(GraphicsDevice, 1, 1);
             blokTexture.SetData(new[] { Color.White });
+            // Character
+            // Hero
+            heroRight = Content.Load<Texture2D>("Character/Hero/Gunner-Run1");
+            heroLeft = Content.Load<Texture2D>("Character/Hero/Gunner-Run2");
+            // Enemy
+            // Walker
+            walkerRight = Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk1");
+            walkerLeft = Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk2");
+            // Jumper
+
+
             startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");
             dinoHead = Content.Load<Texture2D>("Startscreen/dinohead");
             woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");

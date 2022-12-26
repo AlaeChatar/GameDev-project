@@ -10,7 +10,6 @@ namespace GameDev_project.Animations
     internal class Animation
     {
         public AnimationFrame CurrentFrame { get; set; }
-        private List<List<AnimationFrame>> animations;
         private List<AnimationFrame> frames;
         private int counter;
         private double secondCounter = 0;
@@ -18,7 +17,6 @@ namespace GameDev_project.Animations
 
         public Animation()
         {
-            animations = new List<List<AnimationFrame>>();
             frames = new List<AnimationFrame>();
         }
 
@@ -26,6 +24,20 @@ namespace GameDev_project.Animations
         {
             frames.Add(frame);
             CurrentFrame = frames[0];
+        }
+
+        public void GetFramesFromTextureProperties(int width, int height, int numberOfWidthSprites, int numberOfHeightSprites)
+        {
+            int widthOfFrame = width / numberOfWidthSprites;
+            int heightOfFrame = height / numberOfHeightSprites;
+
+            for (int y = 0; y <= height - heightOfFrame; y += heightOfFrame)
+            {
+                for (int x = 0; x <= width - widthOfFrame; x += widthOfFrame)
+                {
+                    AddFrame(new AnimationFrame(new Rectangle(x, y, widthOfFrame, heightOfFrame)));
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -42,21 +54,8 @@ namespace GameDev_project.Animations
             }
 
             if (counter >= frames.Count)
-            {
                 counter = 0;
-            }
-        }
-
-        public void GetFramesFromTextureProperties(int width, int height, int numberOfWidthSprites)
-        {
-            int widthOfFrame = width / numberOfWidthSprites;
-
-            for (int x = 0; x <= numberOfWidthSprites; x++)
-            {
-                frames.Add(new AnimationFrame(new Rectangle(x * 640, height, widthOfFrame, 640)));
-            }
-
-            animations.Add(frames);
+            
         }
     }
 }

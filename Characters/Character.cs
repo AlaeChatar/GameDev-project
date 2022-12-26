@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDev_project.Animations;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,24 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Characters
 {
-    internal class Character
+    internal abstract class Character
     {
-        public Texture2D texture;
+        public Texture2D textureRight;
+        public Texture2D textureLeft;
         public Vector2 position;
-        public Rectangle rectangle;
-        public Rectangle HitBox { get; set; }
+        public Vector2 Position
+        {
+            get { return position; }
+            set { position = value; }
+        }
+
+        public Rectangle hitBox;
+        public Rectangle HitBox
+        { 
+            get { return hitBox; }
+            set { hitBox = value; } 
+        }
+
+        public Animation animation;
     }
 }
