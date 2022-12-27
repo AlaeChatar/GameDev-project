@@ -16,7 +16,6 @@ namespace GameDev_project.Characters
     internal class Hero : Character, IGameObject, IHealth
     {
         private Vector2 velocity;
-        private Color hurt;
         private bool right;
         private bool left;
 
@@ -29,15 +28,19 @@ namespace GameDev_project.Characters
         private bool hasJumped = false;
 
 
-        public Hero(Texture2D textureRight, Texture2D textureLeft, Vector2 position)
+        public Hero(List<Texture2D> textures, Vector2 position)
         {
-            this.textureRight = textureRight;
-            this.textureLeft = textureLeft;
+            this.textures = textures;
             this.position = position;
             Health = 3;
             IsDead = false;
             animation = new Animation();
-            animation.GetFramesFromTextureProperties(textureRight.Width, textureRight.Height, 6, 1);
+            animation.GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 6, 1);
+            animation.GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 6, 1);
+            animation.GetFramesFromTextureProperties(textures[2].Width, textures[2].Height, 4, 1);
+            animation.GetFramesFromTextureProperties(textures[3].Width, textures[3].Height, 4, 1);
+            animation.GetFramesFromTextureProperties(textures[4].Width, textures[4].Height, 2, 1);
+            animation.GetFramesFromTextureProperties(textures[5].Width, textures[5].Height, 6, 1);
         }
 
         public void TakeDamage(GameTime gameTime)
@@ -50,7 +53,7 @@ namespace GameDev_project.Characters
                 invulnerability = 0.5f;
                 Health--;
             }
-
+            
             if (Health <= 0 || position.Y >= 1080)
                 IsDead = true;
         }
@@ -129,22 +132,23 @@ namespace GameDev_project.Characters
 
             Respawn();
             TakeDamage(gameTime);
-
-            if (invulnerability <= 0)
-                hurt = Color.White;
-            else
-                hurt = Color.Black;
-
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
             animation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (right == true)
-                spriteBatch.Draw(textureRight, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, hurt);
-            if (left == true)
-                spriteBatch.Draw(textureLeft, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, hurt);
+            if (velocity.X == 0)
+                spriteBatch.Draw(textures[2], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+            else if (right == true)
+                spriteBatch.Draw(textures[0], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+            else if (left == true)
+                spriteBatch.Draw(textures[1], new Vector2(position.X - 20, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+            else if (IsHit == true && invulnerability <= 0)
+            {
+                spriteBatch.Draw(textures[4], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                IsHit = false;
+            }
         }
     }
 }

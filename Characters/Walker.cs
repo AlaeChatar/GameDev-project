@@ -15,13 +15,13 @@ namespace GameDev_project.Characters
 {
     internal class Walker : Enemy, IGameObject
     {
-        public Walker(Texture2D textureRight, Texture2D textureLeft, Vector2 position)
+        public Walker(List<Texture2D> textures, Vector2 position)
         {
-            this.textureRight = textureRight;
-            this.textureLeft = textureLeft;
+            this.textures = textures;
             this.position = position;
             animation = new Animation();
-            animation.GetFramesFromTextureProperties(textureRight.Width, textureRight.Height, 6, 1);
+            animation.GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 6, 1);
+            animation.GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 6, 1);
         }
 
         public void Update(GameTime gameTime)
@@ -34,9 +34,9 @@ namespace GameDev_project.Characters
         public void Draw(SpriteBatch spriteBatch)
         {
             if (turn == false)
-                spriteBatch.Draw(textureRight, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
+                spriteBatch.Draw(textures[0], new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
             if (turn == true)
-                spriteBatch.Draw(textureLeft, new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
+                spriteBatch.Draw(textures[1], new Vector2(position.X, position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
         }
     }
 }

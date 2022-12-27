@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../Resources/Fire ball/fireball1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../Resources/Fire ball/fireball1.png;Character/Enemy/Jumper/fireball1.png
+
+#begin ../../Resources/Fire ball/fireball2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../Resources/Fire ball/fireball2.png;Character/Enemy/Jumper/fireball2.png
+
 #begin Blocks/Block1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -85,7 +109,7 @@
 /processorParam:TextureFormat=Color
 /build:Character/Enemy/Walker/babydino-walk2.png
 
-#begin Character/Hero/Gunner-Death.png
+#begin Character/Hero/Biker_death.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -95,9 +119,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Character/Hero/Gunner-Death.png
+/build:Character/Hero/Biker_death.png
 
-#begin Character/Hero/Gunner-Idle.png
+#begin Character/Hero/Biker_hurt.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -107,9 +131,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Character/Hero/Gunner-Idle.png
+/build:Character/Hero/Biker_hurt.png
 
-#begin Character/Hero/Gunner-Jump.png
+#begin Character/Hero/Biker_idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -119,9 +143,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Character/Hero/Gunner-Jump.png
+/build:Character/Hero/Biker_idle.png
 
-#begin Character/Hero/Gunner-Run1.png
+#begin Character/Hero/Biker_jump.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -131,9 +155,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Character/Hero/Gunner-Run1.png
+/build:Character/Hero/Biker_jump.png
 
-#begin Character/Hero/Gunner-Run2.png
+#begin Character/Hero/Biker_run.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -143,7 +167,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Character/Hero/Gunner-Run2.png
+/build:Character/Hero/Biker_run.png
+
+#begin Character/Hero/Biker_run2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_run2.png
 
 #begin EndScreen/gameover.jpg
 /importer:TextureImporter

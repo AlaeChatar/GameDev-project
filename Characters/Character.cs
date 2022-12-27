@@ -11,8 +11,7 @@ namespace GameDev_project.Characters
 {
     internal abstract class Character
     {
-        public Texture2D textureRight;
-        public Texture2D textureLeft;
+        public List<Texture2D> textures;
         public Vector2 position;
         public Vector2 Position
         {
