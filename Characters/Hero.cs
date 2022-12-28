@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
 using GameDev_project.Interfaces;
+using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -13,25 +14,39 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Hero : Character, IGameObject, IHealth
+    internal class Hero : Character, IGameObject, IHealth, IMovable
     {
-        private Vector2 velocity;
-        private bool right;
-        private bool left;
+        public Vector2 velocity;
+        private bool lookLeft;
+        public float invulnerability;
+        public bool hasJumped;
+        private IInputReader inputReader;
+        private MovementManager movementManager;
+
 
         // IHealth
         public bool IsDead { get; set; }
         public int Health { get; set; }
         public bool IsHit { get; set; }
+        public Vector2 Velocity 
+        { 
+            get { return velocity; }
+            set { velocity = value; }
+        }
+        public IInputReader InputReader 
+        { 
+            get { return inputReader; }
+            set { inputReader = value; } 
+        }
 
-        public float invulnerability;
-        private bool hasJumped = false;
-
-
-        public Hero(List<Texture2D> textures, Vector2 position)
+        public Hero(List<Texture2D> textures, Vector2 position, IInputReader inputReader)
         {
             this.textures = textures;
             this.position = position;
+            this.inputReader = inputReader;
+            movementManager= new MovementManager();
+            velocity = new Vector2(2,2);
+
             Health = 3;
             IsDead = false;
             animation = new Animation();
@@ -76,60 +91,44 @@ namespace GameDev_project.Characters
             }
         }
 
-        private void Input(GameTime gameTime)
-        {
-            // Om te vermeiden dat lag invloed heeft op onze movement
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-                right = true;
-                left = false;
-            }
-            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-                left = true;
-                right = false;
-            }
-            else velocity.X = 0f;
+        //public void Move(GameTime gameTime)
+        //{
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
-            {
-                position.Y -= 5f;
-                velocity.Y = -9f;
-                hasJumped = true;
-            }
+        //    // Om te vermeiden dat lag invloed heeft op onze movement
+        //    if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+        //    {
+        //        velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+        //        lookLeft = false;
+        //    }
+        //    else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+        //    {
+        //        velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+        //        lookLeft = true;
+        //    }
+        //    else velocity.X = 0f;
+
+        //    if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
+        //    {
+        //        position.Y -= 5f;
+        //        velocity.Y = -9f;
+        //        hasJumped = true;
+        //    }
+        //}
+
+        private void Move()
+        {
+            // position += velocity;
+            movementManager.Move(this);
+
+            //if (velocity.Y < 10)
+            //    velocity.Y += 0.4f;
         }
 
-        public void Collision(Rectangle newRect, int xOffset, int yOffset)
-        {
-            if (HitBox.TouchTopOf(newRect))
-            {
-                hitBox.Y = newRect.Y - hitBox.Height;
-                velocity.Y = 0f;
-                hasJumped = false;
-            }
-            if (hitBox.TouchLeftOf(newRect))
-                position.X = newRect.X - hitBox.Width - 2;
-            if (hitBox.TouchRightOf(newRect))
-                position.X = newRect.X + newRect.Width + 2;
-            if (hitBox.TouchBottomOf(newRect))
-                velocity.Y = 1f;
-
-            if (position.X < 0) position.X = 0;
-            if (position.X > xOffset - hitBox.Width) position.X = xOffset - hitBox.Width;
-            if (position.Y < 0) velocity.Y = 1f;
-            if (position.Y > xOffset - hitBox.Height) position.Y = yOffset - hitBox.Height;
-        }
 
         public void Update(GameTime gameTime)
         {
-            position += velocity;
-            Input(gameTime);
-            
-            if (velocity.Y < 10)
-                velocity.Y += 0.4f;
-
+            // Move(gameTime);
+            Move();
             Respawn();
             TakeDamage(gameTime);
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
@@ -138,17 +137,24 @@ namespace GameDev_project.Characters
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            // Hitbox
+            if (IsHit == false)
+                spriteBatch.Draw(textures[6], hitBox, Color.Blue);
+            else
+            {
+                spriteBatch.Draw(textures[6], hitBox, Color.Red);
+                spriteBatch.Draw(textures[4], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                if (invulnerability >= 0)
+                    IsHit = false;
+            }
+
+            // Animation
             if (velocity.X == 0)
                 spriteBatch.Draw(textures[2], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
-            else if (right == true)
+            else if (lookLeft == false)
                 spriteBatch.Draw(textures[0], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
-            else if (left == true)
+            else if (lookLeft == true)
                 spriteBatch.Draw(textures[1], new Vector2(position.X - 20, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
-            else if (IsHit == true && invulnerability <= 0)
-            {
-                spriteBatch.Draw(textures[4], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
-                IsHit = false;
-            }
         }
     }
 }

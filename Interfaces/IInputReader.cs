@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Interfaces
 {
-    internal interface IHealth
+    internal interface IInputReader
     {
-        public int Health { get; set; }
-        public bool IsDead { get; set; }
-        public bool IsHit { get; set; }
+        Vector2 ReadInput();
+        public bool IsDestinationInput { get; }
+
     }
 }

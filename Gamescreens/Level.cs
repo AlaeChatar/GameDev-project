@@ -1,5 +1,6 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Characters;
+using GameDev_project.Collision;
 using GameDev_project.Map;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +37,9 @@ namespace GameDev_project.Gamescreens
         private Camera camera;
         private SpriteFont font;
 
+        // Collision
+        private EnemyCollision enemyCollision;
+        private HeroCollision heroCollision;
 
         public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, TileSet tileSet, Camera camera, SpriteFont font)
         {
@@ -53,6 +57,9 @@ namespace GameDev_project.Gamescreens
 
             this.camera = camera;
             this.font = font;
+
+            enemyCollision = new EnemyCollision();
+            heroCollision = new HeroCollision();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -84,24 +91,12 @@ namespace GameDev_project.Gamescreens
         public void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
-            foreach (Walker enemy in enemies.OfType<Walker>())
-            {
-                enemy.Update(gameTime);
-                if (hero.HitBox.Intersects(enemy.HitBox))
-                    hero.IsHit = true;
-            }
-
-            foreach (Jumper enemy in enemies.OfType<Jumper>())
-            {
-                enemy.Update(gameTime);
-                if (hero.HitBox.Intersects(enemy.HitBox))
-                    hero.IsHit = true;
-            }
+            enemyCollision.TouchEnemy(hero, enemies, gameTime);
 
             // Map collision
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
             {
-                hero.Collision(block.Rectangle, tileSet.Width, tileSet.Height);
+                heroCollision.Collide(hero, block.Rectangle, tileSet.Width, tileSet.Height);
                 camera.Update(hero.Position, tileSet.Width, tileSet.Height);
             }
 
