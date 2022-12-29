@@ -1,7 +1,6 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
 using GameDev_project.Interfaces;
-using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,37 +13,22 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Characters
 {
-    internal class Hero : Character, IGameObject, IHealth, IMovable
+    internal class Hero : Character, IGameObject, IHealth
     {
         public Vector2 velocity;
         private bool lookLeft;
         public float invulnerability;
         public bool hasJumped;
-        private IInputReader inputReader;
-        private MovementManager movementManager;
-
 
         // IHealth
         public bool IsDead { get; set; }
         public int Health { get; set; }
         public bool IsHit { get; set; }
-        public Vector2 Velocity 
-        { 
-            get { return velocity; }
-            set { velocity = value; }
-        }
-        public IInputReader InputReader 
-        { 
-            get { return inputReader; }
-            set { inputReader = value; } 
-        }
 
-        public Hero(List<Texture2D> textures, Vector2 position, IInputReader inputReader)
+        public Hero(List<Texture2D> textures, Vector2 position)
         {
             this.textures = textures;
             this.position = position;
-            this.inputReader = inputReader;
-            movementManager= new MovementManager();
             velocity = new Vector2(2,2);
 
             Health = 3;
@@ -91,44 +75,35 @@ namespace GameDev_project.Characters
             }
         }
 
-        //public void Move(GameTime gameTime)
-        //{
-
-        //    // Om te vermeiden dat lag invloed heeft op onze movement
-        //    if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
-        //    {
-        //        velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-        //        lookLeft = false;
-        //    }
-        //    else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
-        //    {
-        //        velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
-        //        lookLeft = true;
-        //    }
-        //    else velocity.X = 0f;
-
-        //    if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
-        //    {
-        //        position.Y -= 5f;
-        //        velocity.Y = -9f;
-        //        hasJumped = true;
-        //    }
-        //}
-
-        private void Move()
+        public void Move(GameTime gameTime)
         {
-            // position += velocity;
-            movementManager.Move(this);
+            // Om te vermeiden dat lag invloed heeft op onze movement
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                lookLeft = false;
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                lookLeft = true;
+            }
+            else velocity.X = 0f;
 
-            //if (velocity.Y < 10)
-            //    velocity.Y += 0.4f;
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
+            {
+                position.Y -= 5f;
+                velocity.Y = -9f;
+                hasJumped = true;
+            }
         }
-
 
         public void Update(GameTime gameTime)
         {
-            // Move(gameTime);
-            Move();
+            position += velocity;
+            Move(gameTime);
+            if (velocity.Y < 10)
+                velocity.Y += 0.4f;
             Respawn();
             TakeDamage(gameTime);
             HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);

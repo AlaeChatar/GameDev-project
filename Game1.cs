@@ -3,7 +3,6 @@ using GameDev_project.Characters;
 using GameDev_project.Gamescreens;
 using GameDev_project.Interfaces;
 using GameDev_project.Map;
-using GameDev_project.Movement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -79,8 +78,8 @@ namespace GameDev_project
             base.Initialize();
 
             // Player
-            hero1 = new Hero(heroTextures, new Vector2(100, 900), new KeyboardReader());
-            hero2 = new Hero(heroTextures, new Vector2(10, 420), new KeyboardReader());
+            hero1 = new Hero(heroTextures, new Vector2(100, 900));
+            hero2 = new Hero(heroTextures, new Vector2(10, 420));
 
             // Enemies level 1
             enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(430, 900)));
