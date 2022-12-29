@@ -18,8 +18,5 @@ done:
 to-do:
 - main menu buttons
 - options
-- enemies/boss?
-- player attack
-- victory/goal screen
-- make character class
-- make player, enemy and boss inherit from character
+- movement SOLID
+- Design patterns
