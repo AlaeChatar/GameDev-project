@@ -79,8 +79,8 @@ namespace GameDev_project
             base.Initialize();
 
             // Player
-            hero1 = new Hero(heroTextures, new Vector2(100, 900), new KeyboardReader());
-            hero2 = new Hero(heroTextures, new Vector2(10, 420), new KeyboardReader());
+            hero1 = new Hero(heroTextures, new Vector2(100, 900), new MovementManager());
+            hero2 = new Hero(heroTextures, new Vector2(10, 420), new MovementManager());
 
             // Enemies level 1
             enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(430, 900)));

@@ -1,5 +1,6 @@
 ﻿using GameDev_project.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,31 +11,27 @@ namespace GameDev_project.Movement
 {
     internal class MovementManager
     {
-        public bool hasJumped;
-
-        public void Move(IMovable movable)
+        public void Move(GameTime gameTime, Vector2 position, Vector2 velocity, bool hasJumped, bool lookLeft)
         {
-            movable.Position += movable.Velocity;
-
-            Vector2 direction = movable.InputReader.ReadInput();
-            if (movable.InputReader.IsDestinationInput)
+            // Om te vermeiden dat lag invloed heeft op onze movement
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                direction -= movable.Position;
-                direction.Normalize();
+                velocity.X = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                lookLeft = false;
             }
-
-            Vector2 afstand = direction * movable.Velocity;
-            movable.Position += afstand;
-
-            if (direction.Y < 0 && hasJumped == false)
+            else if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                movable.Position -= new Vector2(0, 5f);
-                movable.Velocity = new Vector2(0, -9f);
+                velocity.X = -(float)gameTime.ElapsedGameTime.TotalMilliseconds / 3;
+                lookLeft = true;
+            }
+            else velocity.X = 0f;
+
+            if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
+            {
+                position.Y -= 5f;
+                velocity.Y = -9f;
                 hasJumped = true;
             }
-
-            if (movable.Velocity.Y < 10)
-                movable.Velocity += new Vector2(0, 0.4f);
         }
 
     }
