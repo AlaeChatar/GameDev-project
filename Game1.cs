@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Gamescreens;
 using GameDev_project.Map;
+using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -42,6 +43,8 @@ namespace GameDev_project
         Hero hero2;
         List<Enemy> enemiesLevel1 = new List<Enemy>();
         List<Enemy> enemiesLevel2 = new List<Enemy>();
+        List<Lava> lava1 = new List<Lava>();
+        List<Lava> lava2 = new List<Lava>();
 
         // Screens
         ScreenManager screenManager;
@@ -98,10 +101,20 @@ namespace GameDev_project
             enemiesLevel2.Add(new Jumper(jumperTextures, new Vector2(570, 1050)));
             enemiesLevel2.Add(new Jumper(jumperTextures, new Vector2(330, 1020)));
 
+            // Lava
+            lava1.Add(new Lava(blokTexture, new Vector2(965, 920), 110, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(815, 260), 80, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(995, 260), 80, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(1175, 260), 80, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(1355, 260), 80, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(305, 920), 80, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(545, 920), 230, 30));
+            lava2.Add(new Lava(blokTexture, new Vector2(965, 920), 230, 30));
+
             // Screens
             startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, hero1, enemiesLevel1, tileSet1, camera, pressEnterFont);
-            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, hero2, enemiesLevel2, tileSet2, camera, pressEnterFont);
+            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, hero1, enemiesLevel1, lava1, tileSet1, camera, pressEnterFont);
+            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, hero2, enemiesLevel2, lava2, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
             screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
@@ -115,16 +128,13 @@ namespace GameDev_project
             // Sprites
             blokTexture = new Texture2D(GraphicsDevice, 1, 1);
             blokTexture.SetData(new[] { Color.White });
-            // Hero
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_run"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_run2"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_idle"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_jump"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_death"));
-            // Walker
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk1"));
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk2"));
-            // Jumper
             jumperTextures.Add(Content.Load<Texture2D>("Character/Enemy/Jumper/fireball1"));
 
             startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");

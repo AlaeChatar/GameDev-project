@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
 using GameDev_project.Map;
+using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,11 +28,13 @@ namespace GameDev_project.Gamescreens
         private Texture2D texture;
         private Hero hero;
         private List<Enemy> enemies;
+        private List<Lava> lava;
 
         // Map
         TileSet tileSet;
         Rectangle checkpoint1 = new Rectangle((int)1919, (int)330, 30, 120);
         Rectangle checkpoint2 = new Rectangle((int)-29, (int)330, 30, 120);
+        Rectangle lava1 = new Rectangle((int)965, (int)920, 110, 30);
         Rectangle goal = new Rectangle((int)30, (int)870, 30, 60);
 
         private Camera camera;
@@ -41,7 +44,7 @@ namespace GameDev_project.Gamescreens
         private EnemyCollision enemyCollision;
         private HeroCollision heroCollision;
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, List<Lava> lava, TileSet tileSet, Camera camera, SpriteFont font)
         {
             this.background1 = backkground1;
             this.background2 = background2;
@@ -52,6 +55,7 @@ namespace GameDev_project.Gamescreens
             this.texture = texture;
             this.hero = hero;
             this.enemies = enemies;
+            this.lava = lava;
 
             this.tileSet = tileSet;
 
@@ -69,6 +73,10 @@ namespace GameDev_project.Gamescreens
             spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
             spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
             spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+
+            // Lava
+            foreach (Lava lava in lava)
+                lava.Draw(spriteBatch);
 
             // Transition to other level
             spriteBatch.Draw(texture, checkpoint1, Color.Black);
@@ -98,6 +106,12 @@ namespace GameDev_project.Gamescreens
             {
                 heroCollision.Collide(hero, block.Rectangle, tileSet.Width, tileSet.Height);
                 camera.Update(hero.position, tileSet.Width, tileSet.Height);
+            }
+
+            foreach (Lava lava in lava)
+            {
+                if (hero.hitBox.Intersects(lava.hitBox))
+                    hero.health.IsHit = true;
             }
 
             if (hero.hitBox.Intersects(checkpoint1) == true)

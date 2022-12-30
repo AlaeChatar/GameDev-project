@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Objects
 {
-    internal abstract class Object
+    internal class Object
     {
         public List<Texture2D> textures;
         public Vector2 position;
