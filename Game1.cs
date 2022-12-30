@@ -1,8 +1,7 @@
 ﻿using GameDev_project.Animations;
-using GameDev_project.Characters;
 using GameDev_project.Gamescreens;
-using GameDev_project.Interfaces;
 using GameDev_project.Map;
+using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -121,9 +120,7 @@ namespace GameDev_project
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_run2"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_idle"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_jump"));
-            heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_hurt"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_death"));
-            heroTextures.Add(blokTexture);
             // Walker
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk1"));
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk2"));

@@ -1,4 +1,5 @@
 ﻿using GameDev_project.Animations;
+using GameDev_project.Objects.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,24 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDev_project.Characters
+namespace GameDev_project.Objects
 {
-    internal abstract class Character
+    internal abstract class Object
     {
         public List<Texture2D> textures;
         public Vector2 position;
-        public Vector2 Position
-        {
-            get { return position; }
-            set { position = value; }
-        }
-
         public Rectangle hitBox;
-        public Rectangle HitBox
-        { 
-            get { return hitBox; }
-            set { hitBox = value; } 
-        }
+        public Life health;
 
         public Animation animation;
     }

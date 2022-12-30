@@ -1,5 +1,4 @@
-﻿using GameDev_project.Characters;
-using GameDev_project.Interfaces;
+﻿using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace GameDev_project.Collision
     {
         public void Collide(Hero hero, Rectangle newRect, int xOffset, int yOffset)
         {
-            if (hero.HitBox.TouchTopOf(newRect))
+            if (hero.hitBox.TouchTopOf(newRect))
             {
                 hero.hitBox.Y = newRect.Y - hero.hitBox.Height;
                 hero.velocity.Y = 0f;

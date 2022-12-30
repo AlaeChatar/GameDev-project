@@ -1,7 +1,7 @@
 ﻿using GameDev_project.Animations;
-using GameDev_project.Characters;
 using GameDev_project.Collision;
 using GameDev_project.Map;
+using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -82,7 +82,7 @@ namespace GameDev_project.Gamescreens
             hero.Draw(spriteBatch);
             
             // Hero position
-            spriteBatch.DrawString(font, $"{Math.Round(hero.Position.X)} : {string.Format("{0:F0}", Math.Round(hero.Position.Y))}", new Vector2(hero.Position.X - 30, hero.Position.Y - 60), Color.White);
+            spriteBatch.DrawString(font, $"{Math.Round(hero.position.X)} : {string.Format("{0:F0}", Math.Round(hero.position.Y))}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
 
             if (currentState == Gamestates.Level2)
                 spriteBatch.Draw(texture, goal, Color.Blue);
@@ -97,14 +97,14 @@ namespace GameDev_project.Gamescreens
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
             {
                 heroCollision.Collide(hero, block.Rectangle, tileSet.Width, tileSet.Height);
-                camera.Update(hero.Position, tileSet.Width, tileSet.Height);
+                camera.Update(hero.position, tileSet.Width, tileSet.Height);
             }
 
-            if (hero.HitBox.Intersects(checkpoint1) == true)
+            if (hero.hitBox.Intersects(checkpoint1) == true)
                 currentState = Gamestates.Level2;
-            if (hero.HitBox.Intersects(checkpoint2) == true)
+            if (hero.hitBox.Intersects(checkpoint2) == true)
                 currentState = Gamestates.Level1;
-            if (hero.HitBox.Intersects(goal) == true)
+            if (hero.hitBox.Intersects(goal) == true)
                 currentState = Gamestates.Goal;
         }
     }

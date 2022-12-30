@@ -1,5 +1,4 @@
-﻿using GameDev_project.Interfaces;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static GameDev_project.Gamescreens.ScreenManager;
 
-namespace GameDev_project.Characters
+namespace GameDev_project.Objects.Characters
 {
-    internal class Enemy : Character
+    internal class Enemy : Object
     {
         public bool turn;
         public bool bounce;
@@ -94,7 +93,7 @@ namespace GameDev_project.Characters
                 }
                 else if (position.X == 840 ||
                          position.X == 1020 ||
-                         position.X == 1200 || 
+                         position.X == 1200 ||
                          position.X == 1380)
                 {
                     limit1 = 100;

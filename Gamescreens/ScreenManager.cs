@@ -1,6 +1,5 @@
-﻿using GameDev_project.Characters;
-using GameDev_project.Interfaces;
-using GameDev_project.Map;
+﻿using GameDev_project.Map;
+using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -54,11 +53,11 @@ namespace GameDev_project.Gamescreens
 
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
                 currentState = Gamestates.Level1;
-            if (hero1.IsDead == true || hero2.IsDead == true)
+            if (hero1.health.IsDead == true || hero2.health.IsDead == true)
                 currentState = Gamestates.GameOver;
-            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero1.IsDead == true)
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero1.health.IsDead == true)
                 currentState = Gamestates.Level1;
-            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.IsDead == true)
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.health.IsDead == true)
                 currentState = Gamestates.Level2;
         }
 

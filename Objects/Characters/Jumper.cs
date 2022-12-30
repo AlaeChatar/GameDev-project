@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
-using GameDev_project.Interfaces;
+using GameDev_project.Objects.Interfaces;
+using GameDev_project.Objects.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -11,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static GameDev_project.Gamescreens.ScreenManager;
 
-namespace GameDev_project.Characters
+namespace GameDev_project.Objects.Characters
 {
     internal class Jumper : Enemy, IGameObject
     {
@@ -19,6 +20,7 @@ namespace GameDev_project.Characters
         {
             this.textures = textures;
             this.position = position;
+            health = new Life(999);
             animation = new Animation();
             animation.GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 5, 1);
         }
@@ -26,7 +28,7 @@ namespace GameDev_project.Characters
         public void Update(GameTime gameTime)
         {
             Bounce();
-            HitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+            hitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
             animation.Update(gameTime);
         }
 

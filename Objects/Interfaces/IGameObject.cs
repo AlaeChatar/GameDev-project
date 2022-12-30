@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDev_project.Interfaces
+namespace GameDev_project.Objects.Interfaces
 {
     internal interface IGameObject
     {
