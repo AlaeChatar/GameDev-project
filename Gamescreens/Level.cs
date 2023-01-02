@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,25 +18,18 @@ namespace GameDev_project.Gamescreens
 {
     internal class Level
     {
-        // Background
-        private Texture2D background1;
-        private Texture2D background2;
-        private Texture2D background3;
-        private Texture2D background4;
-        private Texture2D background5;
-
-        // Characters
+        // Objects
         private Texture2D texture;
         private Hero hero;
         private List<Enemy> enemies;
         private List<Lava> lava;
+        private List<Item> eggs;
+        private Item escape;
 
         // Map
         TileSet tileSet;
         Rectangle checkpoint1 = new Rectangle((int)1919, (int)330, 30, 120);
         Rectangle checkpoint2 = new Rectangle((int)-29, (int)330, 30, 120);
-        Rectangle lava1 = new Rectangle((int)965, (int)920, 110, 30);
-        Rectangle goal = new Rectangle((int)30, (int)870, 30, 60);
 
         private Camera camera;
         private SpriteFont font;
@@ -44,19 +38,14 @@ namespace GameDev_project.Gamescreens
         private EnemyCollision enemyCollision;
         private HeroCollision heroCollision;
 
-        public Level(Texture2D backkground1, Texture2D background2, Texture2D background3, Texture2D background4, Texture2D background5, Texture2D texture, Hero hero, List<Enemy> enemies, List<Lava> lava, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D texture, Hero hero, List<Enemy> enemies, List<Lava> lava, List<Item> eggs, Item escape, TileSet tileSet, Camera camera, SpriteFont font)
         {
-            this.background1 = backkground1;
-            this.background2 = background2;
-            this.background3 = background3;
-            this.background4 = background4;
-            this.background5 = background5;
-
             this.texture = texture;
             this.hero = hero;
             this.enemies = enemies;
             this.lava = lava;
-
+            this.eggs = eggs;
+            this.escape = escape;
             this.tileSet = tileSet;
 
             this.camera = camera;
@@ -68,17 +57,16 @@ namespace GameDev_project.Gamescreens
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(background2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-
-            // Lava
             foreach (Lava lava in lava)
                 lava.Draw(spriteBatch);
 
-            // Transition to other level
+            foreach (Item egg in eggs)
+            {
+                if (egg.collected == false)
+                    egg.Draw(spriteBatch);
+            }
+
+
             spriteBatch.Draw(texture, checkpoint1, Color.Black);
             spriteBatch.Draw(texture, checkpoint2, Color.Black);
 
@@ -93,13 +81,22 @@ namespace GameDev_project.Gamescreens
             spriteBatch.DrawString(font, $"{Math.Round(hero.position.X)} : {string.Format("{0:F0}", Math.Round(hero.position.Y))}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
 
             if (currentState == Gamestates.Level2)
-                spriteBatch.Draw(texture, goal, Color.Blue);
+                escape.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime)
         {
             hero.Update(gameTime);
             enemyCollision.TouchEnemy(hero, enemies, gameTime);
+
+            foreach (Item egg in eggs)
+            {
+                egg.Update(gameTime);
+                if (hero.hitBox.Intersects(egg.hitBox))
+                    egg.collected = true;
+            }
+
+            escape.Update(gameTime);
 
             // Map collision
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
@@ -114,11 +111,11 @@ namespace GameDev_project.Gamescreens
                     hero.health.IsHit = true;
             }
 
-            if (hero.hitBox.Intersects(checkpoint1) == true)
+            if (hero.hitBox.Intersects(checkpoint1))
                 currentState = Gamestates.Level2;
-            if (hero.hitBox.Intersects(checkpoint2) == true)
+            if (hero.hitBox.Intersects(checkpoint2))
                 currentState = Gamestates.Level1;
-            if (hero.hitBox.Intersects(goal) == true)
+            if (hero.hitBox.Intersects(escape.hitBox))
                 currentState = Gamestates.Goal;
         }
     }

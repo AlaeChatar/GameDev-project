@@ -26,10 +26,15 @@ namespace GameDev_project.Objects.Characters
                     limit1 = 860;
                     limit2 = 430;
                 }
-                else if (position.Y == 420)
+                else if (position.Y == 420 && position.X == 60)
                 {
                     limit1 = 430;
                     limit2 = 60;
+                }
+                else if (position.Y == 420 && position.X == 1400)
+                {
+                    limit1 = 1790;
+                    limit2 = 1400;
                 }
             }
             else

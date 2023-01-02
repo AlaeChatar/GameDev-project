@@ -1,5 +1,4 @@
-﻿using GameDev_project.Animations;
-using GameDev_project.Objects.Interfaces;
+﻿using GameDev_project.Objects.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

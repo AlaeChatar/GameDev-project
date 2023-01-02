@@ -37,14 +37,18 @@ namespace GameDev_project
         List<Texture2D> heroTextures = new List<Texture2D>();
         List<Texture2D> walkerTextures = new List<Texture2D>();
         List<Texture2D> jumperTextures = new List<Texture2D>();
+        List<Texture2D> gateTextures = new List<Texture2D>();
 
-        // Characters
+        // Objects
         Hero hero1;
         Hero hero2;
         List<Enemy> enemiesLevel1 = new List<Enemy>();
         List<Enemy> enemiesLevel2 = new List<Enemy>();
         List<Lava> lava1 = new List<Lava>();
         List<Lava> lava2 = new List<Lava>();
+        List<Item> eggs1 = new List<Item>();
+        List<Item> eggs2 = new List<Item>();
+        Item gate;
 
         // Screens
         ScreenManager screenManager;
@@ -83,12 +87,11 @@ namespace GameDev_project
             hero1 = new Hero(heroTextures, new Vector2(100, 900));
             hero2 = new Hero(heroTextures, new Vector2(10, 420));
 
-            // Enemies level 1
+            // Enemies
             enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(430, 900)));
             enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(60, 420)));
+            enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(1400, 420)));
             enemiesLevel1.Add(new Jumper(jumperTextures, new Vector2(1020, 1080)));
-
-            // Enemies level 2
             enemiesLevel2.Add(new Walker(walkerTextures, new Vector2(1380, 480)));
             enemiesLevel2.Add(new Walker(walkerTextures, new Vector2(1470, 630)));
             enemiesLevel2.Add(new Walker(walkerTextures, new Vector2(800, 750)));
@@ -111,10 +114,23 @@ namespace GameDev_project
             lava2.Add(new Lava(blokTexture, new Vector2(545, 920), 230, 30));
             lava2.Add(new Lava(blokTexture, new Vector2(965, 920), 230, 30));
 
+            // Coins
+            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(60, 700), 7, 1));
+            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(740, 530), 7, 1));
+            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1820, 600), 7, 1));
+            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(60, 320), 7, 1));
+            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(60, 700), 7, 1));
+            eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1700, 300), 7, 1));
+            eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1820, 480), 7, 1));
+            eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1560, 590), 7, 1));
+            eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1760, 620), 7, 1));
+
+            gate = new Item(Content.Load<Texture2D>("Object/portal"), new Vector2(30, 870), 7, 5);
+
             // Screens
             startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(background1, background2, background3, background4, background5, blokTexture, hero1, enemiesLevel1, lava1, tileSet1, camera, pressEnterFont);
-            levelTwo = new Level(background1, background2, background3, background4, background5, blokTexture, hero2, enemiesLevel2, lava2, tileSet2, camera, pressEnterFont);
+            levelOne = new Level(blokTexture, hero1, enemiesLevel1, lava1, eggs1, gate, tileSet1, camera, pressEnterFont);
+            levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
             screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
@@ -258,6 +274,11 @@ namespace GameDev_project
             else
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
             // TODO: Add your drawing code here
+            _spriteBatch.Draw(background1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            _spriteBatch.Draw(background2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            _spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            _spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            _spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
             screenManager.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

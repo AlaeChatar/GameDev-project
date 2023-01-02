@@ -265,7 +265,7 @@
 /processorParam:TextureFormat=Color
 /build:Object/egg.png
 
-#begin Object/gate.png
+#begin Object/portal.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -275,7 +275,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Object/gate.png
+/build:Object/portal.png
 
 #begin StartScreen/dinohead.png
 /importer:TextureImporter
