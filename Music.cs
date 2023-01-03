@@ -18,7 +18,7 @@ namespace GameDev_project
         static Song intro;
         static Song clear;
         static Song fail;
-        static Song song;
+        static Song song = intro;
 
         public static void Initialize(ContentManager content)
         {
@@ -28,7 +28,7 @@ namespace GameDev_project
             fail = content.Load<Song>("Soundtrack/Quest_Failed");
         }
 
-        public void ChangeTrack(Gamestates state)
+        public static void ChangeTrack(Gamestates state)
         {
             if (state == Gamestates.Start)
                 song = intro;

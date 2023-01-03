@@ -15,9 +15,9 @@ using static GameDev_project.Game1;
 
 namespace GameDev_project.Gamescreens
 {
+    public enum Gamestates { Start, Level1, Level2, GameOver, Goal }
     internal class ScreenManager
     {
-        public enum Gamestates { Start, Level1, Level2, GameOver, Goal }
         public static Gamestates currentState = Gamestates.Start;
 
         //Screens
@@ -41,6 +41,7 @@ namespace GameDev_project.Gamescreens
 
             this.hero1 = hero1;
             this.hero2 = hero2;
+            Music.ChangeTrack(currentState);
             Music.Play();
         }
 
@@ -58,9 +59,7 @@ namespace GameDev_project.Gamescreens
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero1.health.IsDead == true)
                 currentState = Gamestates.Level1;
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.health.IsDead == true)
-                currentState = Gamestates.Level2;
-            
-            Music.ChangeTrack(currentState);
+                currentState = Gamestates.Level2;            
         }
 
         public void Draw(SpriteBatch spriteBatch)
