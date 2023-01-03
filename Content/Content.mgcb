@@ -277,6 +277,30 @@
 /processorParam:TextureFormat=Color
 /build:Object/portal.png
 
+#begin Soundtrack/A_Hero_Return.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/A_Hero_Return.mp3
+
+#begin Soundtrack/Proof_of_a_Hero.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/Proof_of_a_Hero.mp3
+
+#begin Soundtrack/Quest_Clear.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/Quest_Clear.mp3
+
+#begin Soundtrack/Quest_Failed.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/Quest_Failed.mp3
+
 #begin StartScreen/dinohead.png
 /importer:TextureImporter
 /processor:TextureProcessor

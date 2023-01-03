@@ -6,10 +6,12 @@ using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Timers;
 using static GameDev_project.Gamescreens.ScreenManager;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace GameDev_project
 {
@@ -37,7 +39,6 @@ namespace GameDev_project
         List<Texture2D> heroTextures = new List<Texture2D>();
         List<Texture2D> walkerTextures = new List<Texture2D>();
         List<Texture2D> jumperTextures = new List<Texture2D>();
-        List<Texture2D> gateTextures = new List<Texture2D>();
 
         // Objects
         Hero hero1;
@@ -63,7 +64,7 @@ namespace GameDev_project
         TileSet tileSet2;
 
         Camera camera;
-
+        Music music;
  
         public Game1()
         {
@@ -81,6 +82,7 @@ namespace GameDev_project
             // Map
             tileSet1 = new TileSet();
             tileSet2 = new TileSet();
+            music = new Music();
             base.Initialize();
 
             // Player
@@ -167,7 +169,6 @@ namespace GameDev_project
             youWin = Content.Load<Texture2D>("EndScreen/youwin");
 
             //Map
-
             Block.Content = Content;
             tileSet1.Create(new int[,]
             {
@@ -251,6 +252,7 @@ namespace GameDev_project
             }, 30);
 
             camera = new Camera(GraphicsDevice.Viewport);
+            music.Initialize(Content);
         }
 
         protected override void Update(GameTime gameTime)
