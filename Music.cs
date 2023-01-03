@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using GameDev_project.Gamescreens;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project
 {
-    public static class Music
+    public  class Music
     {
         static Song soundtrack;
         static Song intro;
@@ -27,15 +28,15 @@ namespace GameDev_project
             fail = content.Load<Song>("Soundtrack/Quest_Failed");
         }
 
-        public static void ChangeTrack()
+        public void ChangeTrack(Gamestates state)
         {
-            if (currentState == Gamestates.Start)
+            if (state == Gamestates.Start)
                 song = intro;
-            if (currentState == Gamestates.Level1 || currentState == Gamestates.Level2)
+            if (state == Gamestates.Level1 || state == Gamestates.Level2)
                 song = soundtrack;
-            if (currentState == Gamestates.Goal)
+            if (state == Gamestates.Goal)
                 song = clear;
-            if (currentState == Gamestates.GameOver)
+            if (state == Gamestates.GameOver)
                 song = fail;
         }
 

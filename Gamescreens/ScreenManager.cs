@@ -60,7 +60,7 @@ namespace GameDev_project.Gamescreens
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.health.IsDead == true)
                 currentState = Gamestates.Level2;
             
-            Music.ChangeTrack();
+            Music.ChangeTrack(currentState);
         }
 
         public void Draw(SpriteBatch spriteBatch)
