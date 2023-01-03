@@ -31,7 +31,18 @@ namespace GameDev_project.Gamescreens
         Hero hero1;
         Hero hero2;
 
-        Music music;
+        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2)
+        {
+            this.startScreen = startScreen;
+            this.level1 = level1;
+            this.level2 = level2;
+            this.goal = goal;
+            this.gameOver = gameOver;
+
+            this.hero1 = hero1;
+            this.hero2 = hero2;
+            Music.Play();
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -49,22 +60,7 @@ namespace GameDev_project.Gamescreens
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.health.IsDead == true)
                 currentState = Gamestates.Level2;
             
-            music.ChangeTrack();
-        }
-
-        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2)
-        {
-            this.startScreen = startScreen;
-            this.level1 = level1;
-            this.level2 = level2;
-            this.goal = goal;
-            this.gameOver = gameOver;
-
-            this.hero1 = hero1;
-            this.hero2 = hero2;
-
-            music = new Music();
-            music.Play();
+            Music.ChangeTrack();
         }
 
         public void Draw(SpriteBatch spriteBatch)

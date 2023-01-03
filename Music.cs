@@ -11,15 +11,15 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project
 {
-    internal class Music
+    public static class Music
     {
-        Song soundtrack;
-        Song intro;
-        Song clear;
-        Song fail;
-        Song song;
+        static Song soundtrack;
+        static Song intro;
+        static Song clear;
+        static Song fail;
+        static Song song;
 
-        public void Initialize(ContentManager content)
+        public static void Initialize(ContentManager content)
         {
             soundtrack = content.Load<Song>("Soundtrack/A_Hero_Return");
             intro = content.Load<Song>("Soundtrack/Proof_of_a_Hero");
@@ -27,7 +27,7 @@ namespace GameDev_project
             fail = content.Load<Song>("Soundtrack/Quest_Failed");
         }
 
-        public void ChangeTrack()
+        public static void ChangeTrack()
         {
             if (currentState == Gamestates.Start)
                 song = intro;
@@ -39,7 +39,7 @@ namespace GameDev_project
                 song = fail;
         }
 
-        public void Play()
+        public static void Play()
         {
             MediaPlayer.Play(song);
         }

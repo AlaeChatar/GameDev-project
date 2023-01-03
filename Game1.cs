@@ -64,7 +64,6 @@ namespace GameDev_project
         TileSet tileSet2;
 
         Camera camera;
-        Music music;
  
         public Game1()
         {
@@ -82,7 +81,6 @@ namespace GameDev_project
             // Map
             tileSet1 = new TileSet();
             tileSet2 = new TileSet();
-            music = new Music();
             base.Initialize();
 
             // Player
@@ -252,7 +250,7 @@ namespace GameDev_project
             }, 30);
 
             camera = new Camera(GraphicsDevice.Viewport);
-            music.Initialize(Content);
+            Music.Initialize(Content);
         }
 
         protected override void Update(GameTime gameTime)
