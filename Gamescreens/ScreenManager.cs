@@ -15,10 +15,10 @@ using static GameDev_project.Game1;
 
 namespace GameDev_project.Gamescreens
 {
-    public enum Gamestates { Start, Level1, Level2, GameOver, Goal }
+    public enum GameStates { Start, Level1, Level2, GameOver, Goal }
     internal class ScreenManager
     {
-        public static Gamestates currentState = Gamestates.Start;
+        public static GameStates currentState;
 
         //Screens
         Start startScreen;
@@ -31,7 +31,9 @@ namespace GameDev_project.Gamescreens
         Hero hero1;
         Hero hero2;
 
-        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2)
+        Music music;
+
+        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2, Music music)
         {
             this.startScreen = startScreen;
             this.level1 = level1;
@@ -41,44 +43,48 @@ namespace GameDev_project.Gamescreens
 
             this.hero1 = hero1;
             this.hero2 = hero2;
-            Music.ChangeTrack(currentState);
-            Music.Play();
+
+            this.music = music;
+
+            currentState = GameStates.Start;
         }
 
         public void Update(GameTime gameTime)
         {
-            if (currentState == Gamestates.Level1)
+            if (currentState == GameStates.Level1)
                 level1.Update(gameTime);
-            if (currentState == Gamestates.Level2)
+            if (currentState == GameStates.Level2)
                 level2.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == Gamestates.Start)
-                currentState = Gamestates.Level1;
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == GameStates.Start)
+                currentState = GameStates.Level1;
             if (hero1.health.IsDead == true || hero2.health.IsDead == true)
-                currentState = Gamestates.GameOver;
-            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero1.health.IsDead == true)
-                currentState = Gamestates.Level1;
-            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == Gamestates.GameOver && hero2.health.IsDead == true)
-                currentState = Gamestates.Level2;            
+                currentState = GameStates.GameOver;
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == GameStates.GameOver && hero1.health.IsDead == true)
+                currentState = GameStates.Level1;
+            if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == GameStates.GameOver && hero2.health.IsDead == true)
+                currentState = GameStates.Level2;
+
+            music.Play();
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             switch (currentState)
             {   
-                case Gamestates.Start:
+                case GameStates.Start:
                     startScreen.Draw(spriteBatch);
                     break;
-                case Gamestates.Level1:
+                case GameStates.Level1:
                     level1.Draw(spriteBatch);
                     break;
-                case Gamestates.Level2:
+                case GameStates.Level2:
                     level2.Draw(spriteBatch);
                     break;
-                case Gamestates.GameOver:
+                case GameStates.GameOver:
                     gameOver.Draw(spriteBatch);
                     break;
-                case Gamestates.Goal:
+                case GameStates.Goal:
                     goal.Draw(spriteBatch);
                     break;
             }

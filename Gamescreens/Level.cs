@@ -80,7 +80,7 @@ namespace GameDev_project.Gamescreens
             // Hero position
             spriteBatch.DrawString(font, $"{Math.Round(hero.position.X)} : {string.Format("{0:F0}", Math.Round(hero.position.Y))}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
 
-            if (currentState == Gamestates.Level2)
+            if (currentState == GameStates.Level2)
                 escape.Draw(spriteBatch);
         }
 
@@ -112,11 +112,11 @@ namespace GameDev_project.Gamescreens
             }
 
             if (hero.hitBox.Intersects(checkpoint1))
-                currentState = Gamestates.Level2;
+                currentState = GameStates.Level2;
             if (hero.hitBox.Intersects(checkpoint2))
-                currentState = Gamestates.Level1;
+                currentState = GameStates.Level1;
             if (hero.hitBox.Intersects(escape.hitBox))
-                currentState = Gamestates.Goal;
+                currentState = GameStates.Goal;
         }
     }
 }

@@ -40,14 +40,14 @@ namespace GameDev_project.Objects.LifeSpan
 
         public  Vector2 Respawn(Vector2 position, int health)
         {
-            if (currentState == Gamestates.Level1 && Keyboard.GetState().IsKeyDown(Keys.R))
+            if (currentState == GameStates.Level1 && Keyboard.GetState().IsKeyDown(Keys.R))
             {
                 IsHit = false;
                 IsDead = false;
                 Health = health;
                 return new Vector2(100, 900);
             }
-            if (currentState == Gamestates.Level2 && Keyboard.GetState().IsKeyDown(Keys.R))
+            if (currentState == GameStates.Level2 && Keyboard.GetState().IsKeyDown(Keys.R))
             {
                 IsHit = false;
                 IsDead = false;

@@ -1,4 +1,5 @@
 ﻿using GameDev_project.Gamescreens;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Media;
 using System;
@@ -12,37 +13,51 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project
 {
-    public  class Music
+    internal class Music
     {
-        static Song soundtrack;
-        static Song intro;
-        static Song clear;
-        static Song fail;
-        static Song song = intro;
+        Song soundtrack;
+        Song intro;
+        Song clear;
+        Song fail;
 
-        public static void Initialize(ContentManager content)
+        private static bool isPlaying = false;
+
+        public Music(Song intro, Song background, Song clear, Song fail)
         {
-            soundtrack = content.Load<Song>("Soundtrack/A_Hero_Return");
-            intro = content.Load<Song>("Soundtrack/Proof_of_a_Hero");
-            clear = content.Load<Song>("Soundtrack/Quest_Clear");
-            fail = content.Load<Song>("Soundtrack/Quest_Failed");
+            this.intro = intro;
+            soundtrack = background;
+            this.clear = clear;
+            this.fail = fail;
         }
 
-        public static void ChangeTrack(Gamestates state)
+        public void Play()
         {
-            if (state == Gamestates.Start)
-                song = intro;
-            if (state == Gamestates.Level1 || state == Gamestates.Level2)
-                song = soundtrack;
-            if (state == Gamestates.Goal)
-                song = clear;
-            if (state == Gamestates.GameOver)
-                song = fail;
-        }
+            MediaPlayer.IsRepeating = true;
 
-        public static void Play()
-        {
-            MediaPlayer.Play(song);
+            if ((currentState == GameStates.Level1 || currentState == GameStates.Level2))
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(soundtrack);
+                isPlaying = true;
+            }
+            if (currentState == GameStates.Start && isPlaying == false)
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(intro);
+                isPlaying = true;
+            }
+            if (currentState == GameStates.Goal && isPlaying == false)
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(clear);
+                isPlaying = true;
+            }
+            if (currentState == GameStates.GameOver && isPlaying == false)
+            {
+                MediaPlayer.Stop();
+                MediaPlayer.Play(fail);
+                isPlaying = true;
+            }
         }
     }
 }

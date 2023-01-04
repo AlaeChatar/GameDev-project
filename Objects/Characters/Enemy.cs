@@ -20,7 +20,7 @@ namespace GameDev_project.Objects.Characters
 
         public void Turn()
         {
-            if (currentState == Gamestates.Level1)
+            if (currentState == GameStates.Level1)
             {
                 if (position.Y == 900)
                 {
@@ -74,7 +74,7 @@ namespace GameDev_project.Objects.Characters
 
         public void Bounce()
         {
-            if (currentState == Gamestates.Level1)
+            if (currentState == GameStates.Level1)
             {
                 if (position.X == 1020)
                 {

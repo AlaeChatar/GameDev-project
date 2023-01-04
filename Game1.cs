@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
+using System.Runtime.ConstrainedExecution;
 using System.Timers;
 using static GameDev_project.Gamescreens.ScreenManager;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
@@ -64,7 +66,12 @@ namespace GameDev_project
         TileSet tileSet2;
 
         Camera camera;
- 
+        Music music;
+        Song soundtrack;
+        Song intro;
+        Song clear;
+        Song fail;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -133,7 +140,8 @@ namespace GameDev_project
             levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
-            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
+            music = new Music(intro, soundtrack, clear, fail);
+            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, music);
         }
 
         protected override void LoadContent()
@@ -250,7 +258,11 @@ namespace GameDev_project
             }, 30);
 
             camera = new Camera(GraphicsDevice.Viewport);
-            Music.Initialize(Content);
+
+            soundtrack = Content.Load<Song>("Soundtrack/A_Hero_Return");
+            intro = Content.Load<Song>("Soundtrack/Proof_of_a_Hero");
+            clear = Content.Load<Song>("Soundtrack/Quest_Clear");
+            fail = Content.Load<Song>("Soundtrack/Quest_Failed");
         }
 
         protected override void Update(GameTime gameTime)
@@ -267,9 +279,9 @@ namespace GameDev_project
         {
             GraphicsDevice.Clear(Color.Olive);
 
-            if (currentState == Gamestates.Start || 
-                currentState == Gamestates.Goal ||
-                currentState == Gamestates.GameOver)
+            if (currentState == GameStates.Start ||
+                currentState == GameStates.Goal ||
+                currentState == GameStates.GameOver)
                 _spriteBatch.Begin();
             else
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);

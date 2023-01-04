@@ -14,8 +14,6 @@ namespace GameDev_project.Objects
     internal class Item : Object, IGameObject
     {
         private Texture2D texture;
-        private int width;
-        private int height;
         private int numberOfFrames;
         private int numberOfRows;
         public bool collected;
