@@ -3,7 +3,9 @@ using GameDev_project.Gamescreens;
 using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
+using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
@@ -22,7 +24,7 @@ namespace GameDev_project
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         
-        // Screen resources
+        // Resources
         Texture2D startScreenBackground;
         Texture2D background1;
         Texture2D background2;
@@ -35,6 +37,7 @@ namespace GameDev_project
         SpriteFont pressEnterFont;
         Texture2D youLose;
         Texture2D youWin;
+        Texture2D heart;
 
         // Sprites
         Texture2D blokTexture;
@@ -66,11 +69,6 @@ namespace GameDev_project
         TileSet tileSet2;
 
         Camera camera;
-        Music music;
-        Song soundtrack;
-        Song intro;
-        Song clear;
-        Song fail;
 
         public Game1()
         {
@@ -140,8 +138,7 @@ namespace GameDev_project
             levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
-            music = new Music(intro, soundtrack, clear, fail);
-            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, music);
+            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
         }
 
         protected override void LoadContent()
@@ -157,6 +154,7 @@ namespace GameDev_project
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_idle"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_jump"));
             heroTextures.Add(Content.Load<Texture2D>("Character/Hero/Biker_death"));
+            heroTextures.Add(Content.Load<Texture2D>("Character/Hero/heart"));
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk1"));
             walkerTextures.Add(Content.Load<Texture2D>("Character/Enemy/Walker/babydino-walk2"));
             jumperTextures.Add(Content.Load<Texture2D>("Character/Enemy/Jumper/fireball1"));
@@ -259,10 +257,8 @@ namespace GameDev_project
 
             camera = new Camera(GraphicsDevice.Viewport);
 
-            soundtrack = Content.Load<Song>("Soundtrack/A_Hero_Return");
-            intro = Content.Load<Song>("Soundtrack/Proof_of_a_Hero");
-            clear = Content.Load<Song>("Soundtrack/Quest_Clear");
-            fail = Content.Load<Song>("Soundtrack/Quest_Failed");
+            Soundtrack.Initialize(Content);
+            Sfx.Initialize(Content);
         }
 
         protected override void Update(GameTime gameTime)
@@ -272,6 +268,7 @@ namespace GameDev_project
 
             // TODO: Add your update logic here
             screenManager.Update(gameTime);
+            Soundtrack.Play();
             base.Update(gameTime);
         }
 

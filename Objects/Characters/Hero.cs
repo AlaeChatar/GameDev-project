@@ -2,9 +2,12 @@
 using GameDev_project.Collision;
 using GameDev_project.Objects.Interfaces;
 using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +68,8 @@ namespace GameDev_project.Objects.Characters
                 velocity.Y += 0.4f;
             if (health.IsDead == true)
                 position = health.Respawn(position, 3);
+            if (health.IsHit == true)
+                Sfx.Hurt();    
             health.TakeDamage(gameTime, position);
             hitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
             animation.Update(gameTime);
@@ -102,6 +107,25 @@ namespace GameDev_project.Objects.Characters
                 }
                 else
                     spriteBatch.Draw(textures[1], new Vector2(position.X - 20, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+            }
+
+            if (health.Health == 3)
+            {
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.White);
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.White);
+                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
+            }
+            else if (health.Health == 2)
+            {
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.Black);
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.White);
+                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
+            }
+            else if (health.Health == 1)
+            {
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.Black);
+                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.Black);
+                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
             }
         }
     }

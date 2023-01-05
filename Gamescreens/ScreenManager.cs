@@ -1,6 +1,7 @@
 ﻿using GameDev_project.Map;
 using GameDev_project.Objects.Characters;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -31,9 +32,7 @@ namespace GameDev_project.Gamescreens
         Hero hero1;
         Hero hero2;
 
-        Music music;
-
-        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2, Music music)
+        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2)
         {
             this.startScreen = startScreen;
             this.level1 = level1;
@@ -43,8 +42,6 @@ namespace GameDev_project.Gamescreens
 
             this.hero1 = hero1;
             this.hero2 = hero2;
-
-            this.music = music;
 
             currentState = GameStates.Start;
         }
@@ -64,8 +61,6 @@ namespace GameDev_project.Gamescreens
                 currentState = GameStates.Level1;
             if (Keyboard.GetState().IsKeyDown(Keys.R) && currentState == GameStates.GameOver && hero2.health.IsDead == true)
                 currentState = GameStates.Level2;
-
-            music.Play();
         }
 
         public void Draw(SpriteBatch spriteBatch)

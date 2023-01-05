@@ -3,6 +3,7 @@ using GameDev_project.Collision;
 using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
+using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,8 @@ namespace GameDev_project.Gamescreens
 {
     internal class Level
     {
+        private int collected;
+
         // Objects
         private Texture2D texture;
         private Hero hero;
@@ -64,6 +67,13 @@ namespace GameDev_project.Gamescreens
             {
                 if (egg.collected == false)
                     egg.Draw(spriteBatch);
+
+                if (hero.hitBox.Intersects(egg.hitBox))
+                {
+                    Sfx.Collect();
+                    egg.hitBox = new Rectangle(0, 0, 0, 0);
+                    collected++;
+                }
             }
 
 
@@ -78,7 +88,7 @@ namespace GameDev_project.Gamescreens
             hero.Draw(spriteBatch);
             
             // Hero position
-            spriteBatch.DrawString(font, $"{Math.Round(hero.position.X)} : {string.Format("{0:F0}", Math.Round(hero.position.Y))}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
+            //spriteBatch.DrawString(font, $"Eggs: {collected}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
 
             if (currentState == GameStates.Level2)
                 escape.Draw(spriteBatch);

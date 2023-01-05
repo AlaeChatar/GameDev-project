@@ -1,6 +1,8 @@
 ﻿using GameDev_project.Gamescreens;
+using GameDev_project.Objects.Characters;
 using GameDev_project.Objects.Interfaces;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,7 @@ namespace GameDev_project.Objects.LifeSpan
             if (IsHit == true && Invulnerability <= 0)
             {
                 //voor hoelang is die invincible na een hit
-                Invulnerability = 0.5f;
+                Invulnerability = 1f;
                 Health--;
             }
 
@@ -38,7 +40,7 @@ namespace GameDev_project.Objects.LifeSpan
                 IsDead = true;
         }
 
-        public  Vector2 Respawn(Vector2 position, int health)
+        public Vector2 Respawn(Vector2 position, int health)
         {
             if (currentState == GameStates.Level1 && Keyboard.GetState().IsKeyDown(Keys.R))
             {

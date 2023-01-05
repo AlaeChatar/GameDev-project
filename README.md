@@ -13,10 +13,9 @@ done:
 - enemies
 - player take damage
 - SOLID character with inheritance
+- music
 
 
 to-do:
-- main menu buttons
-- options
 - movement SOLID
 - Design patterns

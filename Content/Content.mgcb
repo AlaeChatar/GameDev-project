@@ -13,90 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../Resources/Fire ball/fireball1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Fire ball/fireball1.png;Character/Enemy/Jumper/fireball1.png
-
-#begin ../../Resources/Fire ball/fireball2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Fire ball/fireball2.png;Character/Enemy/Jumper/fireball2.png
-
-#begin ../../Resources/Player/Biker_death.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Player/Biker_death.png;Character/Hero/Biker_death.png
-
-#begin ../../Resources/Player/Biker_idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Player/Biker_idle.png;Character/Hero/Biker_idle.png
-
-#begin ../../Resources/Player/Biker_jump.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Player/Biker_jump.png;Character/Hero/Biker_jump.png
-
-#begin ../../Resources/Player/Biker_run.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Player/Biker_run.png;Character/Hero/Biker_run.png
-
-#begin ../../Resources/Player/Biker_run2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:../../Resources/Player/Biker_run2.png;Character/Hero/Biker_run2.png
-
 #begin Blocks/Block1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -145,6 +61,30 @@
 /processorParam:TextureFormat=Color
 /build:Blocks/Block4.png
 
+#begin Character/Enemy/Jumper/fireball1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Enemy/Jumper/fireball1.png
+
+#begin Character/Enemy/Jumper/fireball2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Enemy/Jumper/fireball2.png
+
 #begin Character/Enemy/Walker/babydino-walk1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -168,6 +108,78 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Character/Enemy/Walker/babydino-walk2.png
+
+#begin Character/Hero/Biker_death.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_death.png
+
+#begin Character/Hero/Biker_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_idle.png
+
+#begin Character/Hero/Biker_jump.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_jump.png
+
+#begin Character/Hero/Biker_run.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_run.png
+
+#begin Character/Hero/Biker_run2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/Biker_run2.png
+
+#begin Character/Hero/heart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Character/Hero/heart.png
 
 #begin EndScreen/gameover.jpg
 /importer:TextureImporter
@@ -277,29 +289,41 @@
 /processorParam:TextureFormat=Color
 /build:Object/portal.png
 
-#begin Soundtrack/A_Hero_Return.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Soundtrack/Game_Over.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Soundtrack/A_Hero_Return.mp3
+/build:Soundtrack/Game_Over.wav
 
-#begin Soundtrack/Proof_of_a_Hero.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Soundtrack/Glavenus_Theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Soundtrack/Proof_of_a_Hero.mp3
+/build:Soundtrack/Glavenus_Theme.wav
 
-#begin Soundtrack/Quest_Clear.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Soundtrack/hurt.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Soundtrack/Quest_Clear.mp3
+/build:Soundtrack/hurt.wav
 
-#begin Soundtrack/Quest_Failed.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
+#begin Soundtrack/pickup.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:Soundtrack/Quest_Failed.mp3
+/build:Soundtrack/pickup.wav
+
+#begin Soundtrack/Proof_of_a_Hero.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/Proof_of_a_Hero.wav
+
+#begin Soundtrack/Valstrax_Theme.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Soundtrack/Valstrax_Theme.wav
 
 #begin StartScreen/dinohead.png
 /importer:TextureImporter
