@@ -7,20 +7,25 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
-namespace GameDev_project.Gamescreens
+namespace GameDev_project.Gamescreens.Screens
 {
-    internal class GameOver
+    internal class GameOver : Screen
     {
         Texture2D endScreen;
 
         public GameOver(Texture2D texture)
         {
-            this.endScreen = texture;
+            endScreen = texture;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void PrintScreen(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(endScreen, new Rectangle(0, 0, 960, 540), Color.Olive);
+        }
+
+        public override void RefreshScreen(GameTime gameTime)
+        {
+            throw new NotImplementedException();
         }
     }
 }

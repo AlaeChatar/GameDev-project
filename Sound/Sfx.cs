@@ -20,7 +20,7 @@ namespace GameDev_project.Sound
         {
             collect = content.Load<SoundEffect>("Soundtrack/pickup");
             collectInstance = collect.CreateInstance();
-            collectInstance.Volume = 0.3f;
+            collectInstance.Volume = 1f;
             hurt = content.Load<SoundEffect>("Soundtrack/hurt");
             hurtInstance = hurt.CreateInstance();
             hurtInstance.Volume = 0.2f;

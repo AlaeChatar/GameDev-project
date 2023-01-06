@@ -13,23 +13,23 @@ namespace GameDev_project.Collision
     {
         public void Collide(Hero hero, Rectangle newRect, int xOffset, int yOffset)
         {
-            if (hero.hitBox.TouchTopOf(newRect))
+            if (hero.HitBox.TouchTopOf(newRect))
             {
-                hero.hitBox.Y = newRect.Y - hero.hitBox.Height;
-                hero.velocity.Y = 0f;
-                hero.hasJumped = false;
+                hero.HitBox = new Rectangle(hero.HitBox.X, newRect.Y - hero.HitBox.Height, 30, 30);
+                hero.Velocity = new Vector2(hero.Velocity.X, 0f);
+                hero.HasJumped = false;
             }
-            if (hero.hitBox.TouchLeftOf(newRect))
-                hero.position.X = newRect.X - hero.hitBox.Width - 2;
-            if (hero.hitBox.TouchRightOf(newRect))
-                hero.position.X = newRect.X + newRect.Width + 2;
-            if (hero.hitBox.TouchBottomOf(newRect))
-                hero.velocity.Y = 1f;
+            if (hero.HitBox.TouchLeftOf(newRect))
+                hero.Position = new Vector2(newRect.X - hero.HitBox.Width - 2, hero.Position.Y);
+            if (hero.HitBox.TouchRightOf(newRect))
+                hero.Position = new Vector2(newRect.X + newRect.Width + 2, hero.Position.Y);
+            if (hero.HitBox.TouchBottomOf(newRect))
+                hero.Velocity = new Vector2(hero.Velocity.X, 1f);
 
-            if (hero.position.X < 0) hero.position.X = 0;
-            if (hero.position.X > xOffset - hero.hitBox.Width) hero.position.X = xOffset - hero.hitBox.Width;
-            if (hero.position.Y < 0) hero.velocity.Y = 1f;
-            if (hero.position.Y > xOffset - hero.hitBox.Height) hero.position.Y = yOffset - hero.hitBox.Height;
+            if (hero.Position.X < 0) hero.Position = new Vector2(0, hero.Position.Y);
+            if (hero.Position.X > xOffset - hero.HitBox.Width) hero.Position = new Vector2(xOffset - hero.HitBox.Width, hero.Position.Y);
+            if (hero.Position.Y < 0) hero.Velocity = new Vector2(hero.Velocity.X, 1f);
+            if (hero.Position.Y > xOffset - hero.HitBox.Height) hero.Position = new Vector2(hero.Position.X, yOffset - hero.HitBox.Height);
         }
     }
 }

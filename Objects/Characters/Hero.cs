@@ -19,16 +19,42 @@ namespace GameDev_project.Objects.Characters
 {
     internal class Hero : Object, IGameObject
     {
-        public Vector2 velocity;
         private bool lookLeft;
-        public bool hasJumped;
+        private bool hasJumped;
+        public bool HasJumped 
+        { 
+            get { return hasJumped; } 
+            set { hasJumped = value; }
+        }
 
-        public Hero(List<Texture2D> textures, Vector2 position)
+        private Vector2 velocity;
+        public Vector2 Velocity 
+        { 
+            get { return velocity; }
+            set { velocity = value; }
+        }
+
+        private Life health;
+        public Life Health 
+        { 
+            get { return health; } 
+            set { health = value; } 
+        }
+
+        private Vector2 spawn;
+        public Vector2 Spawn 
+        { 
+            get { return spawn; }
+            set { spawn = value; }
+        }
+
+        public Hero(List<Texture2D> textures, Vector2 position, Life health)
         {
             this.textures = textures;
-            this.position = position;
+            this.Position = position;
+            spawn = position;
             velocity = new Vector2(2, 2);
-            health = new Life(3);
+            this.health = health;
             animation = new Animation();
             animation.GetFramesFromTextureProperties(textures[0].Width, textures[0].Height, 6, 1);
             animation.GetFramesFromTextureProperties(textures[1].Width, textures[1].Height, 6, 1);
@@ -54,7 +80,7 @@ namespace GameDev_project.Objects.Characters
 
             if ((Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Space)) && hasJumped == false)
             {
-                position.Y -= 5f;
+                Position -= new Vector2(0, 5f);
                 velocity.Y = -9f;
                 hasJumped = true;
             }
@@ -62,16 +88,16 @@ namespace GameDev_project.Objects.Characters
 
         public void Update(GameTime gameTime)
         {
-            position += velocity;
+            Position += velocity;
             Move(gameTime);
             if (velocity.Y < 10)
                 velocity.Y += 0.4f;
             if (health.IsDead == true)
-                position = health.Respawn(position, 3);
+                Position = Health.Respawn(spawn, 3);
             if (health.IsHit == true)
                 Sfx.Hurt();    
-            health.TakeDamage(gameTime, position);
-            hitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
+            Health.TakeDamage(gameTime, Position);
+            HitBox = new Rectangle((int)Position.X, (int)Position.Y, 30, 30);
             animation.Update(gameTime);
         }
 
@@ -81,52 +107,35 @@ namespace GameDev_project.Objects.Characters
             {
                 if (health.Invulnerability >= 0)
                 {
-                    spriteBatch.Draw(textures[2], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
+                    spriteBatch.Draw(textures[2], new Vector2(Position.X, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
                     health.IsHit = false;
                 }
                 else
-                    spriteBatch.Draw(textures[2], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                    spriteBatch.Draw(textures[2], new Vector2(Position.X, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
             }
             else if (lookLeft == false)
             {
                 if (health.Invulnerability >= 0)
                 {
-                    spriteBatch.Draw(textures[0], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
+                    spriteBatch.Draw(textures[0], new Vector2(Position.X, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
                     health.IsHit = false;
                 }
                 else
-                    spriteBatch.Draw(textures[0], new Vector2(position.X, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                    spriteBatch.Draw(textures[0], new Vector2(Position.X, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
 
             }
             else if (lookLeft == true)
             {
                 if (health.Invulnerability >= 0)
                 {
-                    spriteBatch.Draw(textures[1], new Vector2(position.X - 20, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
+                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 20, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
                     health.IsHit = false;
                 }
                 else
-                    spriteBatch.Draw(textures[1], new Vector2(position.X - 20, position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 20, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
             }
 
-            if (health.Health == 3)
-            {
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.White);
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.White);
-                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
-            }
-            else if (health.Health == 2)
-            {
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.Black);
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.White);
-                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
-            }
-            else if (health.Health == 1)
-            {
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 20, position.Y - 20), Color.Black);
-                spriteBatch.Draw(textures[5], new Vector2(position.X + 10, position.Y - 20), Color.Black);
-                spriteBatch.Draw(textures[5], new Vector2(position.X, position.Y - 20), Color.White);
-            }
+            health.ShowHealth(spriteBatch, textures[5], Position);
         }
     }
 }

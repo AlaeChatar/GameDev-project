@@ -3,6 +3,7 @@ using GameDev_project.Collision;
 using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
+using GameDev_project.Objects.Characters.Enemies;
 using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,9 +16,9 @@ using System.Text;
 using System.Threading.Tasks;
 using static GameDev_project.Gamescreens.ScreenManager;
 
-namespace GameDev_project.Gamescreens
+namespace GameDev_project.Gamescreens.Screens
 {
-    internal class Level
+    internal class Level : Screen
     {
         private int collected;
 
@@ -31,8 +32,8 @@ namespace GameDev_project.Gamescreens
 
         // Map
         TileSet tileSet;
-        Rectangle checkpoint1 = new Rectangle((int)1919, (int)330, 30, 120);
-        Rectangle checkpoint2 = new Rectangle((int)-29, (int)330, 30, 120);
+        Rectangle checkpoint1 = new Rectangle(1919, 330, 30, 120);
+        Rectangle checkpoint2 = new Rectangle(-29, 330, 30, 120);
 
         private Camera camera;
         private SpriteFont font;
@@ -58,7 +59,7 @@ namespace GameDev_project.Gamescreens
             heroCollision = new HeroCollision();
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void PrintScreen(SpriteBatch spriteBatch)
         {
             foreach (Lava lava in lava)
                 lava.Draw(spriteBatch);
@@ -68,10 +69,10 @@ namespace GameDev_project.Gamescreens
                 if (egg.collected == false)
                     egg.Draw(spriteBatch);
 
-                if (hero.hitBox.Intersects(egg.hitBox))
+                if (hero.HitBox.Intersects(egg.HitBox))
                 {
                     Sfx.Collect();
-                    egg.hitBox = new Rectangle(0, 0, 0, 0);
+                    egg.HitBox = new Rectangle(0, 0, 0, 0);
                     collected++;
                 }
             }
@@ -86,23 +87,28 @@ namespace GameDev_project.Gamescreens
                 enemy.Draw(spriteBatch);
             tileSet.Draw(spriteBatch);
             hero.Draw(spriteBatch);
-            
+
             // Hero position
             //spriteBatch.DrawString(font, $"Eggs: {collected}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
 
-            if (currentState == GameStates.Level2)
+            if (CurrentState == GameStates.Level2)
                 escape.Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime)
+        public override void RefreshScreen(GameTime gameTime)
         {
             hero.Update(gameTime);
             enemyCollision.TouchEnemy(hero, enemies, gameTime);
 
+            foreach (Walker enemy in enemies.OfType<Walker>())
+                enemy.Update(gameTime);
+            foreach (Jumper enemy in enemies.OfType<Jumper>())
+                enemy.Update(gameTime);
+
             foreach (Item egg in eggs)
             {
                 egg.Update(gameTime);
-                if (hero.hitBox.Intersects(egg.hitBox))
+                if (hero.HitBox.Intersects(egg.HitBox))
                     egg.collected = true;
             }
 
@@ -112,21 +118,21 @@ namespace GameDev_project.Gamescreens
             foreach (CollisionBlocks block in tileSet.CollisionBlocks)
             {
                 heroCollision.Collide(hero, block.Rectangle, tileSet.Width, tileSet.Height);
-                camera.Update(hero.position, tileSet.Width, tileSet.Height);
+                camera.Update(hero.Position, tileSet.Width, tileSet.Height);
             }
 
             foreach (Lava lava in lava)
             {
-                if (hero.hitBox.Intersects(lava.hitBox))
-                    hero.health.IsHit = true;
+                if (hero.HitBox.Intersects(lava.HitBox))
+                    hero.Health.IsHit = true;
             }
 
-            if (hero.hitBox.Intersects(checkpoint1))
-                currentState = GameStates.Level2;
-            if (hero.hitBox.Intersects(checkpoint2))
-                currentState = GameStates.Level1;
-            if (hero.hitBox.Intersects(escape.hitBox))
-                currentState = GameStates.Goal;
+            if (hero.HitBox.Intersects(checkpoint1))
+                CurrentState = GameStates.Level2;
+            if (hero.HitBox.Intersects(checkpoint2))
+                CurrentState = GameStates.Level1;
+            if (hero.HitBox.Intersects(escape.HitBox))
+                CurrentState = GameStates.Goal;
         }
     }
 }

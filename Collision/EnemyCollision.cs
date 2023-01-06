@@ -1,4 +1,5 @@
 ﻿using GameDev_project.Objects.Characters;
+using GameDev_project.Objects.Characters.Enemies;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ namespace GameDev_project.Collision
             foreach (Walker enemy in enemies.OfType<Walker>())
             {
                 enemy.Update(gameTime);
-                if (hero.hitBox.Intersects(enemy.hitBox))
-                    hero.health.IsHit = true;
+                if (hero.HitBox.Intersects(enemy.HitBox))
+                    hero.Health.IsHit = true;
             }
 
             foreach (Jumper enemy in enemies.OfType<Jumper>())
             {
                 enemy.Update(gameTime);
-                if (hero.hitBox.Intersects(enemy.hitBox))
-                    hero.health.IsHit = true;
+                if (hero.HitBox.Intersects(enemy.HitBox))
+                    hero.Health.IsHit = true;
             }
         }
     }

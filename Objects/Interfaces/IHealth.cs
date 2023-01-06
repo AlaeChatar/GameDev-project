@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,8 @@ namespace GameDev_project.Objects.Interfaces
         public bool IsDead { get; set; }
         public bool IsHit { get; set; }
         public float Invulnerability { get; set; }
-        void TakeDamage(GameTime gameTime, Vector2 position);
-        Vector2 Respawn(Vector2 position, int health);
+
+        void ShowHealth(SpriteBatch spriteBatch, Texture2D texture, Vector2 position);
+        
     }
 }

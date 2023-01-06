@@ -31,7 +31,7 @@ namespace GameDev_project.Sound
             introInstance.Volume = 0.3f;
             soundtrack = content.Load<SoundEffect>("Soundtrack/Valstrax_Theme");
             soundtrackInstance = soundtrack.CreateInstance();
-            soundtrackInstance.Volume = 0.1f;
+            soundtrackInstance.Volume = 0.2f;
             clear = content.Load<SoundEffect>("Soundtrack/Proof_of_a_Hero");
             clearInstance = clear.CreateInstance();
             clearInstance.Volume = 0.3f;
@@ -40,9 +40,9 @@ namespace GameDev_project.Sound
             failInstance.Volume = 0.3f;
         }
 
-        public static void Play()
+        public static void Music()
         {
-            switch (currentState)
+            switch (CurrentState)
             {
                 case GameStates.Start:
                     introInstance.Play();

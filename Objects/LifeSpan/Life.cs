@@ -42,22 +42,32 @@ namespace GameDev_project.Objects.LifeSpan
 
         public Vector2 Respawn(Vector2 position, int health)
         {
-            if (currentState == GameStates.Level1 && Keyboard.GetState().IsKeyDown(Keys.R))
-            {
-                IsHit = false;
-                IsDead = false;
-                Health = health;
-                return new Vector2(100, 900);
-            }
-            if (currentState == GameStates.Level2 && Keyboard.GetState().IsKeyDown(Keys.R))
-            {
-                IsHit = false;
-                IsDead = false;
-                Health = health;
-                return new Vector2(100, 350);
-            }
-
+            IsHit = false;
+            IsDead = false;
+            Health = health;
             return position;
+        }
+
+        public void ShowHealth(SpriteBatch spriteBatch, Texture2D texture, Vector2 position)
+        {
+            if (Health == 3)
+            {
+                spriteBatch.Draw(texture, new Vector2(position.X + 20, position.Y - 20), Color.White);
+                spriteBatch.Draw(texture, new Vector2(position.X + 10, position.Y - 20), Color.White);
+                spriteBatch.Draw(texture, new Vector2(position.X, position.Y - 20), Color.White);
+            }
+            else if (Health == 2)
+            {
+                spriteBatch.Draw(texture, new Vector2(position.X + 20, position.Y - 20), Color.Black);
+                spriteBatch.Draw(texture, new Vector2(position.X + 10, position.Y - 20), Color.White);
+                spriteBatch.Draw(texture, new Vector2(position.X, position.Y - 20), Color.White);
+            }
+            else if (Health == 1)
+            {
+                spriteBatch.Draw(texture, new Vector2(position.X + 20, position.Y - 20), Color.Black);
+                spriteBatch.Draw(texture, new Vector2(position.X + 10, position.Y - 20), Color.Black);
+                spriteBatch.Draw(texture, new Vector2(position.X, position.Y - 20), Color.White);
+            }
         }
     }
 }

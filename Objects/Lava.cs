@@ -19,7 +19,7 @@ namespace GameDev_project.Objects
         public Lava(Texture2D texture, Vector2 position, int width, int height)
         {
             this.texture = texture;
-            this.position = position;
+            this.Position = position;
             this.width = width;
             this.height = height;
             hitBox = new Rectangle((int)position.X, (int)position.Y, width, height);

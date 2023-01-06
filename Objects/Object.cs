@@ -10,11 +10,23 @@ using System.Threading.Tasks;
 
 namespace GameDev_project.Objects
 {
-    internal class Object
+    abstract class Object
     {
-        public List<Texture2D> textures;
-        public Vector2 position;
-        public Rectangle hitBox;
+        protected List<Texture2D> textures;
+        private Vector2 position;
+        public virtual Vector2 Position 
+        { 
+            get { return position; }
+            set { position = value; }
+        }
+
+        protected Rectangle hitBox;
+        public Rectangle HitBox 
+        { 
+            get { return hitBox; } 
+            set { hitBox = value; }
+        }
+
         public Life health;
 
         public Animation animation;

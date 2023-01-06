@@ -1,8 +1,11 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Gamescreens;
+using GameDev_project.Gamescreens.Screens;
 using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
+using GameDev_project.Objects.Characters.Enemies;
+using GameDev_project.Objects.LifeSpan;
 using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -26,6 +29,7 @@ namespace GameDev_project
         
         // Resources
         Texture2D startScreenBackground;
+        Texture2D border;
         Texture2D background1;
         Texture2D background2;
         Texture2D background3;
@@ -37,13 +41,14 @@ namespace GameDev_project
         SpriteFont pressEnterFont;
         Texture2D youLose;
         Texture2D youWin;
-        Texture2D heart;
 
         // Sprites
         Texture2D blokTexture;
         List<Texture2D> heroTextures = new List<Texture2D>();
         List<Texture2D> walkerTextures = new List<Texture2D>();
         List<Texture2D> jumperTextures = new List<Texture2D>();
+
+        Life health;
 
         // Objects
         Hero hero1;
@@ -88,9 +93,11 @@ namespace GameDev_project
             tileSet2 = new TileSet();
             base.Initialize();
 
+            health = new Life(3);
+
             // Player
-            hero1 = new Hero(heroTextures, new Vector2(100, 900));
-            hero2 = new Hero(heroTextures, new Vector2(10, 420));
+            hero1 = new Hero(heroTextures, new Vector2(100, 900), health);
+            hero2 = new Hero(heroTextures, new Vector2(10, 420), health);
 
             // Enemies
             enemiesLevel1.Add(new Walker(walkerTextures, new Vector2(430, 900)));
@@ -133,12 +140,12 @@ namespace GameDev_project
             gate = new Item(Content.Load<Texture2D>("Object/portal"), new Vector2(30, 870), 7, 5);
 
             // Screens
-            startScreen = new Start(startScreenBackground, dinoHead, woodenPlank, titleFont, pressEnterFont);
+            startScreen = new Start(startScreenBackground, border, dinoHead, woodenPlank, titleFont, pressEnterFont);
             levelOne = new Level(blokTexture, hero1, enemiesLevel1, lava1, eggs1, gate, tileSet1, camera, pressEnterFont);
             levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera, pressEnterFont);
             goal = new Goal(youWin);
             gameOver = new GameOver(youLose);
-            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2);
+            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, health);
         }
 
         protected override void LoadContent()
@@ -160,6 +167,7 @@ namespace GameDev_project
             jumperTextures.Add(Content.Load<Texture2D>("Character/Enemy/Jumper/fireball1"));
 
             startScreenBackground = Content.Load<Texture2D>("Startscreen/karina-formanova-rainforest-animation");
+            border = Content.Load<Texture2D>("Startscreen/dark_border");
             dinoHead = Content.Load<Texture2D>("Startscreen/dinohead");
             woodenPlank = Content.Load<Texture2D>("Startscreen/wooden-plank");
             titleFont = Content.Load<SpriteFont>("Startscreen/title-font");
@@ -268,7 +276,7 @@ namespace GameDev_project
 
             // TODO: Add your update logic here
             screenManager.Update(gameTime);
-            Soundtrack.Play();
+            Soundtrack.Music();
             base.Update(gameTime);
         }
 
@@ -276,9 +284,9 @@ namespace GameDev_project
         {
             GraphicsDevice.Clear(Color.Olive);
 
-            if (currentState == GameStates.Start ||
-                currentState == GameStates.Goal ||
-                currentState == GameStates.GameOver)
+            if (CurrentState == GameStates.Start ||
+                CurrentState == GameStates.Goal ||
+                CurrentState == GameStates.GameOver)
                 _spriteBatch.Begin();
             else
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);

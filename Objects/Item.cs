@@ -21,7 +21,7 @@ namespace GameDev_project.Objects
         public Item(Texture2D texture, Vector2 position, int numberOfFrames, int numberOfRows)
         {
             this.texture = texture;
-            this.position = position;
+            this.Position = position;
             this.numberOfFrames = numberOfFrames;
             this.numberOfRows = numberOfRows;
             collected = false;
