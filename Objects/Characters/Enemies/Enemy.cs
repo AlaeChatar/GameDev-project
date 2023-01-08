@@ -13,15 +13,14 @@ namespace GameDev_project.Objects.Characters.Enemies
 {
     internal class Enemy : Object
     {
+        protected bool turn;
         protected IEnemyBehavior enemyBehavior;
         public override Vector2 Position { get => enemyBehavior.Position; set => base.Position = value; }
-        protected bool turn;
-        public bool Flip { get => enemyBehavior.Flip; set => Flip = value; }
+        public bool Flip { get => enemyBehavior.Turn; set => Flip = value; }
 
-
-        public void PerformMovement()
+        public void Move()
         {
-            enemyBehavior.Move();
+            enemyBehavior.Movement();
         }
     }
 }

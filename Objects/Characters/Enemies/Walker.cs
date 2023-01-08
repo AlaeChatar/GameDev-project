@@ -2,7 +2,7 @@
 using GameDev_project.Collision;
 using GameDev_project.Objects.Characters.Enemies.Movement;
 using GameDev_project.Objects.Interfaces;
-using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Objects.Characters.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -30,16 +30,16 @@ namespace GameDev_project.Objects.Characters.Enemies
 
         public void Update(GameTime gameTime)
         {
-            PerformMovement();
+            Move();
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 30, 30);
             animation.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (Flip == false)
+            if (enemyBehavior.Turn == false)
                 spriteBatch.Draw(textures[0], new Vector2(Position.X, Position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
-            if (Flip == true)
+            if (enemyBehavior.Turn == true)
                 spriteBatch.Draw(textures[1], new Vector2(Position.X, Position.Y - 10), animation.CurrentFrame.SourceRectangle, Color.White);
         }
     }

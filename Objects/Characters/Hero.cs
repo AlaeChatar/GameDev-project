@@ -1,7 +1,7 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
+using GameDev_project.Objects.Characters.LifeSpan;
 using GameDev_project.Objects.Interfaces;
-using GameDev_project.Objects.LifeSpan;
 using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -24,8 +24,9 @@ namespace GameDev_project.Objects.Characters
         public bool HasJumped 
         { 
             get { return hasJumped; } 
-            set { hasJumped = value; }
+            set { hasJumped= value; }
         }
+
 
         private Vector2 velocity;
         public Vector2 Velocity 
@@ -128,11 +129,11 @@ namespace GameDev_project.Objects.Characters
             {
                 if (health.Invulnerability >= 0)
                 {
-                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 20, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
+                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 10, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.Red);
                     health.IsHit = false;
                 }
                 else
-                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 20, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
+                    spriteBatch.Draw(textures[1], new Vector2(Position.X - 10, Position.Y - 20), animation.CurrentFrame.SourceRectangle, Color.White);
             }
 
             health.ShowHealth(spriteBatch, textures[5], Position);

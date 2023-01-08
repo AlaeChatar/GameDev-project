@@ -2,7 +2,7 @@
 using GameDev_project.Collision;
 using GameDev_project.Objects.Characters.Enemies.Movement;
 using GameDev_project.Objects.Interfaces;
-using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Objects.Characters.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -29,7 +29,7 @@ namespace GameDev_project.Objects.Characters.Enemies
 
         public void Update(GameTime gameTime)
         {
-            PerformMovement();
+            Move();
             HitBox = new Rectangle((int)Position.X, (int)Position.Y, 30, 30);
             animation.Update(gameTime);
         }

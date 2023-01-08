@@ -16,7 +16,12 @@ namespace GameDev_project.Objects
         private Texture2D texture;
         private int numberOfFrames;
         private int numberOfRows;
-        public bool collected;
+        private bool collected;
+        public bool Collected 
+        { 
+            get { return collected; } 
+            set { collected = value; } 
+        }
 
         public Item(Texture2D texture, Vector2 position, int numberOfFrames, int numberOfRows)
         {
@@ -25,7 +30,6 @@ namespace GameDev_project.Objects
             this.numberOfFrames = numberOfFrames;
             this.numberOfRows = numberOfRows;
             collected = false;
-
             hitBox = new Rectangle((int)position.X, (int)position.Y, 30, 30);
             animation= new Animation();
             animation.GetFramesFromTextureProperties(texture.Width, texture.Height, numberOfFrames, numberOfRows);

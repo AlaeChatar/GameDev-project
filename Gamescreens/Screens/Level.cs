@@ -1,5 +1,6 @@
 ﻿using GameDev_project.Animations;
 using GameDev_project.Collision;
+using GameDev_project.Gamescreens.Interfaces;
 using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
@@ -18,12 +19,16 @@ using static GameDev_project.Gamescreens.ScreenManager;
 
 namespace GameDev_project.Gamescreens.Screens
 {
-    internal class Level : Screen
+    internal class Level : Screen, IDisplay
     {
-        private int collected;
+        private int counterEggs;
+        public int CounterEggs 
+        { 
+            get { return counterEggs; } 
+            set { counterEggs = value; }
+        }
 
         // Objects
-        private Texture2D texture;
         private Hero hero;
         private List<Enemy> enemies;
         private List<Lava> lava;
@@ -36,13 +41,12 @@ namespace GameDev_project.Gamescreens.Screens
         Rectangle checkpoint2 = new Rectangle(-29, 330, 30, 120);
 
         private Camera camera;
-        private SpriteFont font;
 
         // Collision
         private EnemyCollision enemyCollision;
         private HeroCollision heroCollision;
 
-        public Level(Texture2D texture, Hero hero, List<Enemy> enemies, List<Lava> lava, List<Item> eggs, Item escape, TileSet tileSet, Camera camera, SpriteFont font)
+        public Level(Texture2D texture, Hero hero, List<Enemy> enemies, List<Lava> lava, List<Item> eggs, Item escape, TileSet tileSet, Camera camera)
         {
             this.texture = texture;
             this.hero = hero;
@@ -53,30 +57,21 @@ namespace GameDev_project.Gamescreens.Screens
             this.tileSet = tileSet;
 
             this.camera = camera;
-            this.font = font;
 
             enemyCollision = new EnemyCollision();
             heroCollision = new HeroCollision();
         }
 
-        public override void PrintScreen(SpriteBatch spriteBatch)
+        public void PrintScreen(SpriteBatch spriteBatch)
         {
             foreach (Lava lava in lava)
                 lava.Draw(spriteBatch);
 
             foreach (Item egg in eggs)
             {
-                if (egg.collected == false)
+                if (egg.Collected == false)
                     egg.Draw(spriteBatch);
-
-                if (hero.HitBox.Intersects(egg.HitBox))
-                {
-                    Sfx.Collect();
-                    egg.HitBox = new Rectangle(0, 0, 0, 0);
-                    collected++;
-                }
             }
-
 
             spriteBatch.Draw(texture, checkpoint1, Color.Black);
             spriteBatch.Draw(texture, checkpoint2, Color.Black);
@@ -88,14 +83,11 @@ namespace GameDev_project.Gamescreens.Screens
             tileSet.Draw(spriteBatch);
             hero.Draw(spriteBatch);
 
-            // Hero position
-            //spriteBatch.DrawString(font, $"Eggs: {collected}", new Vector2(hero.position.X - 30, hero.position.Y - 60), Color.White);
-
             if (CurrentState == GameStates.Level2)
                 escape.Draw(spriteBatch);
         }
 
-        public override void RefreshScreen(GameTime gameTime)
+        public void RefreshScreen(GameTime gameTime)
         {
             hero.Update(gameTime);
             enemyCollision.TouchEnemy(hero, enemies, gameTime);
@@ -109,7 +101,12 @@ namespace GameDev_project.Gamescreens.Screens
             {
                 egg.Update(gameTime);
                 if (hero.HitBox.Intersects(egg.HitBox))
-                    egg.collected = true;
+                {
+                    Sfx.Collect();
+                    egg.Collected = true;
+                    counterEggs++;
+                    egg.HitBox = new Rectangle(2000, 2000, 0, 0);
+                }
             }
 
             escape.Update(gameTime);

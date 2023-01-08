@@ -1,5 +1,5 @@
 ﻿using GameDev_project.Animations;
-using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Objects.Characters.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

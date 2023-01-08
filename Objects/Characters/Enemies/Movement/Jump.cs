@@ -11,31 +11,31 @@ namespace GameDev_project.Objects.Characters.Enemies.Movement
 {
     internal class Jump : IEnemyBehavior
     {
-        public int limit1 { get; set; }
-        public int limit2 { get; set; }
         private Vector2 position;
         Vector2 IEnemyBehavior.Position { get => position; set => position = value; }
-        private bool flip;
-        bool IEnemyBehavior.Flip { get => flip; set => flip = value; }
+        private bool turn;
+        bool IEnemyBehavior.Turn { get => turn; set => turn = value; }
+        public int Limit1 { get; set; }
+        public int Limit2 { get; set; }
 
         public Jump(Vector2 position)
         {
             this.position = position;
         }
 
-        public void Move()
+        public void Movement()
         {
             if (CurrentState == GameStates.Level1)
             {
                 if (position.X == 1020)
                 {
-                    limit1 = 700;
-                    limit2 = 1080;
+                    Limit1 = 700;
+                    Limit2 = 1080;
                 }
                 else
                 {
-                    limit1 = 430;
-                    limit2 = 60;
+                    Limit1 = 430;
+                    Limit2 = 60;
                 }
             }
             else
@@ -45,31 +45,31 @@ namespace GameDev_project.Objects.Characters.Enemies.Movement
                     position.X == 570 ||
                     position.X == 330)
                 {
-                    limit1 = 700;
-                    limit2 = 1080;
+                    Limit1 = 700;
+                    Limit2 = 1080;
                 }
                 else if (position.X == 840 ||
                          position.X == 1020 ||
                          position.X == 1200 ||
                          position.X == 1380)
                 {
-                    limit1 = 100;
-                    limit2 = 390;
+                    Limit1 = 100;
+                    Limit2 = 390;
                 }
             }
 
             // Enemy go up and down
-            if (flip == false)
+            if (turn == false)
             {
                 position.Y -= 3;
-                if (position.Y <= limit1)
-                    flip = true;
+                if (position.Y <= Limit1)
+                    turn = true;
             }
-            if (flip == true)
+            if (turn == true)
             {
                 position.Y += 3;
-                if (position.Y >= limit2)
-                    flip = false;
+                if (position.Y >= Limit2)
+                    turn = false;
             }
         }
     }

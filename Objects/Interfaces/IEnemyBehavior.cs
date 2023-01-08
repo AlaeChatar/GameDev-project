@@ -9,10 +9,10 @@ namespace GameDev_project.Objects.Interfaces
 {
     internal interface IEnemyBehavior
     {
-        public int limit1 { get; set; }
-        public int limit2 { get; set; }
-        public Vector2 Position { get; protected set; }
-        public bool Flip { get; protected set; }
-        public void Move();
+        public Vector2 Position { get; set; }
+        public bool Turn { get; set; }
+        public int Limit1 { get; set; }
+        public int Limit2 { get; set; }
+        public void Movement();
     }
 }

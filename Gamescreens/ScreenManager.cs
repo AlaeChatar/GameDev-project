@@ -1,7 +1,7 @@
 ﻿using GameDev_project.Gamescreens.Screens;
 using GameDev_project.Map;
 using GameDev_project.Objects.Characters;
-using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Objects.Characters.LifeSpan;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,6 +36,7 @@ namespace GameDev_project.Gamescreens
             set { currentState = value; }
         }
 
+        SpriteFont font;
 
         //Screens
         Start startScreen;
@@ -49,8 +50,9 @@ namespace GameDev_project.Gamescreens
         Hero hero2;
         Life life;
 
-        public ScreenManager(Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2, Life life)
+        public ScreenManager(SpriteFont font, Start startScreen, Level level1, Level level2, Goal goal, GameOver gameOver, Hero hero1, Hero hero2, Life life)
         {
+            this.font = font;
             this.startScreen = startScreen;
             this.level1 = level1;
             this.level2 = level2;
@@ -62,13 +64,8 @@ namespace GameDev_project.Gamescreens
             this.life = life;
         }
 
-        public void Update(GameTime gameTime)
+        public void ChangeState()
         {
-            if (currentState == GameStates.Level1)
-                level1.RefreshScreen(gameTime);
-            if (currentState == GameStates.Level2)
-                level2.RefreshScreen(gameTime);
-
             if (Keyboard.GetState().IsKeyDown(Keys.Enter) && currentState == GameStates.Start)
                 currentState = GameStates.Level1;
             if (hero1.Health.IsDead == true || hero2.Health.IsDead == true)
@@ -81,6 +78,30 @@ namespace GameDev_project.Gamescreens
             }
         }
 
+        public void Update(GameTime gameTime)
+        {
+            ChangeState();
+
+            switch (currentState)
+            {
+                case GameStates.Start:
+                    startScreen.RefreshScreen(gameTime);
+                    break;
+                case GameStates.Level1:
+                    level1.RefreshScreen(gameTime);
+                    break;
+                case GameStates.Level2:
+                    level2.RefreshScreen(gameTime);
+                    break;
+                case GameStates.GameOver:
+                    gameOver.RefreshScreen(gameTime);
+                    break;
+                case GameStates.Goal:
+                    goal.RefreshScreen(gameTime);
+                    break;
+            }
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             switch (currentState)
@@ -90,9 +111,11 @@ namespace GameDev_project.Gamescreens
                     break;
                 case GameStates.Level1:
                     level1.PrintScreen(spriteBatch);
+                    spriteBatch.DrawString(font, $"Eggs: {level1.CounterEggs + level2.CounterEggs}/8", new Vector2(hero1.Position.X - 25, hero1.Position.Y - 60), Color.White);
                     break;
                 case GameStates.Level2:
                     level2.PrintScreen(spriteBatch);
+                    spriteBatch.DrawString(font, $"Eggs: {level1.CounterEggs + level2.CounterEggs}/8", new Vector2(hero2.Position.X - 25, hero2.Position.Y - 60), Color.White);
                     break;
                 case GameStates.GameOver:
                     gameOver.PrintScreen(spriteBatch);

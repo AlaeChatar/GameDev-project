@@ -11,70 +11,70 @@ namespace GameDev_project.Objects.Characters.Enemies.Movement
 {
     internal class TurnAround : IEnemyBehavior
     {
-        public int limit1 { get; set; }
-        public int limit2 { get; set; }
         private Vector2 position;
         Vector2 IEnemyBehavior.Position { get => position; set => position = value; }
-        private bool flip;
-        bool IEnemyBehavior.Flip { get => flip; set => flip = value; }
+        private bool turn;
+        bool IEnemyBehavior.Turn { get => turn; set => turn = value; }
+        public int Limit1 { get; set; }
+        public int Limit2 { get; set; }
 
-        public TurnAround(Vector2 position, bool flip)
+        public TurnAround(Vector2 position, bool turn)
         {
             this.position = position;
-            this.flip = flip;
+            this.turn = turn;
         }
 
-        public void Move()
+        public void Movement()
         {
             if (CurrentState == GameStates.Level1)
             {
                 if (position.Y == 900)
                 {
-                    limit1 = 860;
-                    limit2 = 430;
+                    Limit1 = 860;
+                    Limit2 = 430;
                 }
                 else if (position.Y == 420 && position.X == 60)
                 {
-                    limit1 = 430;
-                    limit2 = 60;
+                    Limit1 = 430;
+                    Limit2 = 60;
                 }
                 else if (position.Y == 420 && position.X == 1400)
                 {
-                    limit1 = 1790;
-                    limit2 = 1400;
+                    Limit1 = 1790;
+                    Limit2 = 1400;
                 }
             }
             else
             {
                 if (position.Y == 480)
                 {
-                    limit1 = 1830;
-                    limit2 = 1380;
+                    Limit1 = 1830;
+                    Limit2 = 1380;
                 }
                 else if (position.Y == 630)
                 {
-                    limit1 = 1470;
-                    limit2 = 1120;
+                    Limit1 = 1470;
+                    Limit2 = 1120;
                 }
                 else if (position.Y == 750)
                 {
-                    limit1 = 1030;
-                    limit2 = 800;
+                    Limit1 = 1030;
+                    Limit2 = 800;
                 }
             }
 
             // Enemy go left and right
-            if (flip == false)
+            if (turn == false)
             {
                 position.X += 1;
-                if (position.X >= limit1)
-                    flip = true;
+                if (position.X >= Limit1)
+                    turn = true;
             }
-            if (flip == true)
+            if (turn == true)
             {
                 position.X -= 1;
-                if (position.X <= limit2)
-                    flip = false;
+                if (position.X <= Limit2)
+                    turn = false;
             }
         }
     }

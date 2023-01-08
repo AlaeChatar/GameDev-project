@@ -5,7 +5,7 @@ using GameDev_project.Map;
 using GameDev_project.Objects;
 using GameDev_project.Objects.Characters;
 using GameDev_project.Objects.Characters.Enemies;
-using GameDev_project.Objects.LifeSpan;
+using GameDev_project.Objects.Characters.LifeSpan;
 using GameDev_project.Sound;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -131,7 +131,6 @@ namespace GameDev_project
             eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(740, 530), 7, 1));
             eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1820, 600), 7, 1));
             eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(60, 320), 7, 1));
-            eggs1.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(60, 700), 7, 1));
             eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1700, 300), 7, 1));
             eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1820, 480), 7, 1));
             eggs2.Add(new Item(Content.Load<Texture2D>("Object/egg"), new Vector2(1560, 590), 7, 1));
@@ -141,11 +140,11 @@ namespace GameDev_project
 
             // Screens
             startScreen = new Start(startScreenBackground, border, dinoHead, woodenPlank, titleFont, pressEnterFont);
-            levelOne = new Level(blokTexture, hero1, enemiesLevel1, lava1, eggs1, gate, tileSet1, camera, pressEnterFont);
-            levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera, pressEnterFont);
-            goal = new Goal(youWin);
+            levelOne = new Level(blokTexture, hero1, enemiesLevel1, lava1, eggs1, gate, tileSet1, camera);
+            levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera);
+            goal = new Goal(youWin, pressEnterFont, levelOne, levelTwo);
             gameOver = new GameOver(youLose);
-            screenManager = new ScreenManager(startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, health);
+            screenManager = new ScreenManager(pressEnterFont, startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, health);
         }
 
         protected override void LoadContent()

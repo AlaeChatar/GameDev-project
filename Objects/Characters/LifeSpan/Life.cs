@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static GameDev_project.Gamescreens.ScreenManager;
 
-namespace GameDev_project.Objects.LifeSpan
+namespace GameDev_project.Objects.Characters.LifeSpan
 {
     internal class Life : IHealth
     {

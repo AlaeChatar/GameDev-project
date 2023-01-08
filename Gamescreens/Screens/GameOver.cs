@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDev_project.Gamescreens.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,21 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace GameDev_project.Gamescreens.Screens
 {
-    internal class GameOver : Screen
+    internal class GameOver : Screen, IDisplay
     {
-        Texture2D endScreen;
-
         public GameOver(Texture2D texture)
         {
-            endScreen = texture;
+            this.texture = texture;
         }
 
-        public override void PrintScreen(SpriteBatch spriteBatch)
+        public void PrintScreen(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(endScreen, new Rectangle(0, 0, 960, 540), Color.Olive);
+            spriteBatch.Draw(texture, new Rectangle(0, 0, 960, 540), Color.Olive);
         }
 
-        public override void RefreshScreen(GameTime gameTime)
+        public void RefreshScreen(GameTime gameTime)
         {
-            throw new NotImplementedException();
+            // Extra: hero death animation
         }
     }
 }
