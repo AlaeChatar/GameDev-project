@@ -18,17 +18,15 @@ namespace GameDev_project.Gamescreens.Screens
         private Texture2D dinoHead;
         private Texture2D woodenPlank;
         private SpriteFont titleFont;
-        private SpriteFont pressEnterFont;
-        private float timer;
 
-        public Start(Texture2D background, Texture2D border, Texture2D dinoHead, Texture2D woodenPlank, SpriteFont titleFont, SpriteFont pressEnterFont)
+        public Start(Texture2D background, Texture2D border, Texture2D dinoHead, Texture2D woodenPlank, SpriteFont titleFont, SpriteFont font)
         {
             this.texture = background;
             this.border = border;
             this.dinoHead = dinoHead;
             this.woodenPlank = woodenPlank;
             this.titleFont = titleFont;
-            this.pressEnterFont = pressEnterFont;
+            this.font = font;
         }
 
         public void PrintScreen(SpriteBatch spriteBatch)
@@ -39,9 +37,9 @@ namespace GameDev_project.Gamescreens.Screens
             spriteBatch.DrawString(titleFont, "Jurassic Jungle", new Vector2(90, 45), Color.DarkRed);
             spriteBatch.Draw(dinoHead, new Rectangle(50, 60, 750, 510), Color.Olive);
             if (timer <= .5)
-                spriteBatch.DrawString(pressEnterFont, "PRESS ENTER", new Vector2(380, 270), Color.Transparent);
+                spriteBatch.DrawString(font, "PRESS ENTER", new Vector2(380, 270), Color.Transparent);
             else
-                spriteBatch.DrawString(pressEnterFont, "PRESS ENTER", new Vector2(380, 270), Color.White); 
+                spriteBatch.DrawString(font, "PRESS ENTER", new Vector2(380, 270), Color.White); 
         }
 
         public void RefreshScreen(GameTime gameTime)

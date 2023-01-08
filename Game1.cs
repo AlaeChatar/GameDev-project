@@ -143,7 +143,7 @@ namespace GameDev_project
             levelOne = new Level(blokTexture, hero1, enemiesLevel1, lava1, eggs1, gate, tileSet1, camera);
             levelTwo = new Level(blokTexture, hero2, enemiesLevel2, lava2, eggs2, gate, tileSet2, camera);
             goal = new Goal(youWin, pressEnterFont, levelOne, levelTwo);
-            gameOver = new GameOver(youLose);
+            gameOver = new GameOver(youLose, pressEnterFont);
             screenManager = new ScreenManager(pressEnterFont, startScreen, levelOne, levelTwo, goal, gameOver, hero1, hero2, health);
         }
 
@@ -281,8 +281,6 @@ namespace GameDev_project
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Olive);
-
             if (CurrentState == GameStates.Start ||
                 CurrentState == GameStates.Goal ||
                 CurrentState == GameStates.GameOver)
@@ -290,11 +288,16 @@ namespace GameDev_project
             else
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.Transform);
             // TODO: Add your drawing code here
-            _spriteBatch.Draw(background1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            _spriteBatch.Draw(background2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            _spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            _spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
-            _spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            if (CurrentState == GameStates.Level1 || CurrentState == GameStates.Level2)
+            {
+                _spriteBatch.Draw(background1, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+                _spriteBatch.Draw(background2, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+                _spriteBatch.Draw(background3, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+                _spriteBatch.Draw(background4, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+                _spriteBatch.Draw(background5, new Rectangle(0, 0, 1920, 1080), Color.Olive);
+            }
+            else
+                GraphicsDevice.Clear(Color.Black);
             screenManager.Draw(_spriteBatch);
             _spriteBatch.End();
             base.Draw(gameTime);

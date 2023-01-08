@@ -14,7 +14,6 @@ namespace GameDev_project.Gamescreens.Screens
 {
     internal class Goal : Screen, IDisplay
     {
-        SpriteFont font;
         Animation animation;
         Level level1, level2;
 
@@ -30,15 +29,15 @@ namespace GameDev_project.Gamescreens.Screens
 
         public void PrintScreen(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(0, 0, 960, texture.Height), animation.CurrentFrame.SourceRectangle, Color.White);
+            spriteBatch.Draw(texture, new Rectangle(60, 0, 800, 400), animation.CurrentFrame.SourceRectangle, Color.White);
             if(level1.CounterEggs + level2.CounterEggs < 1)
-                spriteBatch.DrawString(font, "You survived! But ignored my golden eggs...", new Vector2(960 / 2 - font.MeasureString("You survived! But ignored my golden eggs...").Length() / 2, 450), Color.White);
+                spriteBatch.DrawString(font, "You survived! But ignored my golden eggs...", new Vector2(960 / 2 - font.MeasureString("You survived! But ignored my golden eggs...").Length() / 2, 400), Color.White);
             else if (level1.CounterEggs + level2.CounterEggs <= 3)
-                spriteBatch.DrawString(font, $"Not bad, you collected {level1.CounterEggs + level2.CounterEggs} out of 8 eggs", new Vector2(960 / 2 - font.MeasureString($"Not bad, you collected {level1.CounterEggs + level2.CounterEggs} out of 8 eggs").Length() / 2, 450), Color.White);
+                spriteBatch.DrawString(font, $"Not bad, you collected {level1.CounterEggs + level2.CounterEggs} out of 8 eggs", new Vector2(960 / 2 - font.MeasureString($"Not bad, you collected {level1.CounterEggs + level2.CounterEggs} out of 8 eggs").Length() / 2, 400), Color.White);
             else if (level1.CounterEggs + level2.CounterEggs <= 7)
-                spriteBatch.DrawString(font, "Good job, you almost got all the eggs", new Vector2(960 / 2 - font.MeasureString("Good job, you almost got all the eggs").Length() / 2, 450), Color.White);
+                spriteBatch.DrawString(font, "Good job, you almost got all the eggs", new Vector2(960 / 2 - font.MeasureString("Good job, you almost got all the eggs").Length() / 2, 400), Color.White);
             else if (level1.CounterEggs + level2.CounterEggs == 8)
-                spriteBatch.DrawString(font, "WOW! You collected all the eggs!", new Vector2(960 / 2 - font.MeasureString("WOW! You collected all the eggs!").Length() / 2, 450), Color.White);
+                spriteBatch.DrawString(font, "WOW! You collected all the eggs!", new Vector2(960 / 2 - font.MeasureString("WOW! You collected all the eggs!").Length() / 2, 400), Color.White);
         }
 
         public void RefreshScreen(GameTime gameTime)

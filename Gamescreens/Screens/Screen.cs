@@ -10,5 +10,8 @@ namespace GameDev_project.Gamescreens.Screens
     abstract class Screen
     {
         protected Texture2D texture;
+        protected SpriteFont font;
+        protected float timer;
+
     }
 }

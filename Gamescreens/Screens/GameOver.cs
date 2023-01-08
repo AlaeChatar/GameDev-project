@@ -12,19 +12,26 @@ namespace GameDev_project.Gamescreens.Screens
 {
     internal class GameOver : Screen, IDisplay
     {
-        public GameOver(Texture2D texture)
+        public GameOver(Texture2D texture, SpriteFont font)
         {
             this.texture = texture;
+            this.font = font;
         }
 
         public void PrintScreen(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, new Rectangle(0, 0, 960, 540), Color.Olive);
+            spriteBatch.Draw(texture, new Rectangle(80, 0, 800, 400), Color.Olive);
+            if (timer <= .5)
+                spriteBatch.DrawString(font, "Press R to try again", new Vector2(960 / 2 - font.MeasureString("Press R to try again").Length() / 2, 400), Color.Transparent);
+            else
+                spriteBatch.DrawString(font, "Press R to try again", new Vector2(960 / 2 - font.MeasureString("Press R to try again").Length() / 2, 400), Color.White);
         }
 
         public void RefreshScreen(GameTime gameTime)
         {
-            // Extra: hero death animation
+            timer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (timer <= 0)
+                timer = 1f;
         }
     }
 }
