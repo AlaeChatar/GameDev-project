@@ -14,8 +14,5 @@ done:
 - player take damage
 - SOLID character with inheritance
 - music
-
-
-to-do:
-- movement SOLID
-- Design patterns
+- Strategy and State Pattern
+- Enemy movement SOLID
